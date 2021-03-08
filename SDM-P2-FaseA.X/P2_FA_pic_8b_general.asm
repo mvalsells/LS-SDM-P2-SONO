@@ -1,9 +1,10 @@
     LIST P=PIC18F4321	F=INHX32
     #include <p18f4321.inc>
 
-    CONFIG OSC=HS	    ;Oscillador -> High Speed
+    CONFIG OSC=HSPLL	    ;Oscillador -> High Speed
     CONFIG PBADEN=DIG	    ;PORTB com a Digital (el posem a 0)
     CONFIG WDT=OFF	    ;Desactivem el Watch Dog Timer
+    CONFIG LVP = OFF	    ;Evitar resets eusart
     
     ORG 0x000
     GOTO MAIN
