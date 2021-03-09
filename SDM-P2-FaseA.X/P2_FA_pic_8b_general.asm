@@ -9,13 +9,15 @@
     ;vars
     display0 EQU 0x00   ; 7seg
     display1 EQU 0x01
-    display3 EQU 0x02
-    display4 EQU 0x03
-    display5 EQU 0x04
-    display6 EQU 0x05
-    display7 EQU 0x06
-    display8 EQU 0x07
-    display9 EQU 0x08
+    display2 EQU 0x02
+    display3 EQU 0x03
+    display4 EQU 0x04
+    display5 EQU 0x05
+    display6 EQU 0x06
+    display7 EQU 0x07
+    display8 EQU 0x08
+    display9 EQU 0x09
+    eusart_input EQU 0x10
     
     ORG 0x000
     GOTO MAIN
@@ -23,16 +25,7 @@
     GOTO HIGH_RSI
     ORG 0x018
     retfie FAST
-;-------------------------------------------------------------------------------
-MAIN
-    call INIT_PORTS
-    call INIT_OSC
-    call INIT_EUSART
-    call INIT_VARS
-LOOP
-    ;codi
-    goto LOOP
-;-------------------------------------------------------------------------------
+
 INIT_PORTS
     ;A
     movlw b'00100001'
@@ -85,6 +78,53 @@ INIT_EUSART
     bsf RCSTA,4,0;CREN
     bsf BAUDCON,1,0;WUE wake up, no para mai
     return
+;-------------------------------------------------------------------------------
 HIGH_RSI
-    RETFIE FAST
+    retfie FAST
+    
+MAIN
+    call INIT_PORTS
+    call INIT_OSC
+    call INIT_EUSART
+    call INIT_VARS
+    
+LOOP
+    ;codi
+    btfsc PIR1,5,0
+    call LECTOR_EUSART
+    
+    ;call PWM
+    
+    goto LOOP
+;-------------------------------------------------------------------------------
+    
+LECTOR_EUSART
+    movf RCREG
+    movwf eusart_input,0
+    
+    
+    return
+MODE_I
+    ;fixar 7seg a 0
+    movf display0,0,0
+    movwf LATD,0
+    ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
+    
+    return
+MODE_R
+    movf display1,0,0
+    movwf LATD,0
+    ;mostrar nom
+    ;mostrar últimes mesures màx 200 són.
+    return
+MODE_M
+    movf display2,0,0
+    movwf LATD,0
+    ;mostrar ultima mesura si no estem a 0 de mesures
+    return
+MODE_D
+    movf display3,0,0
+    movwf LATD,0
+    ;pulsadors +5º -5º per pulsador
+    return
 END
