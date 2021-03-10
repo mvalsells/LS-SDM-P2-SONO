@@ -72,10 +72,6 @@ INIT_VARS
     movlw b'11001111'
     movwf display9,0
     return
-INIT_OSC
-
-    
-    return
 INIT_EUSART
     movlw b'00100100'
     movwf TXSTA,0
@@ -95,7 +91,7 @@ HIGH_RSI
     
 MAIN
     call INIT_PORTS
-    call INIT_OSC
+    ;call INIT_OSC	;valors default
     call INIT_EUSART
     call INIT_VARS
     ;call INIT_TIMER
@@ -103,14 +99,8 @@ MAIN
     
 LOOP
     ;codi
-    ;btfsc PIR1,RCIF,0
-    ;call LECTOR_EUSART
-    
-    movlw 'A'
-    movwf TXREG,0
-ESPERA_TX
-    BTFSS TXSTA,TRMT,0
-    GOTO ESPERA_TX
+    btfsc PIR1,RCIF,0
+    call LECTOR_EUSART
     
     ;call PWM
     
@@ -118,27 +108,55 @@ ESPERA_TX
 ;-------------------------------------------------------------------------------
     
 LECTOR_EUSART
-    movf RCREG
-    ;movwf eusart_input,0
-    subwf 'D',1,0
-    btfsc STATUS,2
-    call MODE_D
-    subwf 'I',1,0
-    btfsc STATUS,2
-    call MODE_I
-    subwf 'M',1,0
-    btfsc STATUS,2
-    call MODE_M
-    subwf 'R',1,0
-    btfsc STATUS,2
-    call MODE_R
-    setf LATD,0
-    return
+    movf RCREG,0,0
+    movwf eusart_input,0
+    movff eusart_input,TXREG
+ESPERA_TX
+    BTFSS TXSTA,TRMT,0
+    GOTO ESPERA_TX
+;    subwf 'D',1,0
+;    btfsc STATUS,2
+;    call MODE_D
+;    subwf 'I',1,0
+;    btfsc STATUS,2
+;    call MODE_I
+;    subwf 'M',1,0
+;    btfsc STATUS,2
+;    call MODE_M
+;    subwf 'R',1,0
+;    btfsc STATUS,2
+;    call MODE_R
     
+    
+    ;movf eusart_input,0
+    CPFSEQ A'D',0
+    goto NEXT_D
+    goto MODE_D
+NEXT_D
+    CPFSEQ A'I',0
+    goto NEXT_I
+    goto MODE_I
+NEXT_I
+    CPFSEQ A'M',0
+    goto NEXT_M
+    goto MODE_M
+NEXT_M
+    CPFSEQ A'R',0
+    goto NEXT_R
+    goto MODE_R
+NEXT_R
+    return
+    ;no s'ha clicat cap tecla si arriba aqui
+    
+    
+    
+    
+;-------------------------------
 MODE_D
-    movf display3,0,0
-    movwf LATD,0
+    movff display3,LATD
+    setf LATC,0
     ;pulsadors +5º -5º per pulsador
+    
     return
     
 MODE_I
