@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=P2_FA_pic_8b_general.asm
+SOURCEFILES_QUOTED_IF_SPACED=eusart-test.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/P2_FA_pic_8b_general.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/P2_FA_pic_8b_general.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/eusart-test.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/eusart-test.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/P2_FA_pic_8b_general.o
+OBJECTFILES=${OBJECTDIR}/eusart-test.o
 
 # Source Files
-SOURCEFILES=P2_FA_pic_8b_general.asm
+SOURCEFILES=eusart-test.asm
 
 
 
@@ -91,26 +91,26 @@ endif
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/SDM-P2-FaseA.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=18f4321
-MP_LINKER_DEBUG_OPTION= 
+MP_LINKER_DEBUG_OPTION=-r=ROM@0x1DC0:0x1FFF -r=RAM@GPR:0x1F4:0x1FF
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/eusart-test.o: eusart-test.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
-	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG  -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
-	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/eusart-test.o.d 
+	@${RM} ${OBJECTDIR}/eusart-test.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/eusart-test.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/eusart-test.lst\" -e\"${OBJECTDIR}/eusart-test.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/eusart-test.o\" \"eusart-test.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/eusart-test.o"
+	@${FIXDEPS} "${OBJECTDIR}/eusart-test.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
-${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/eusart-test.o: eusart-test.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
-	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
-	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/eusart-test.o.d 
+	@${RM} ${OBJECTDIR}/eusart-test.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/eusart-test.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/eusart-test.lst\" -e\"${OBJECTDIR}/eusart-test.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/eusart-test.o\" \"eusart-test.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/eusart-test.o"
+	@${FIXDEPS} "${OBJECTDIR}/eusart-test.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
@@ -119,7 +119,7 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/SDM-P2-FaseA.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/SDM-P2-FaseA.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_PK3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/SDM-P2-FaseA.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/SDM-P2-FaseA.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 

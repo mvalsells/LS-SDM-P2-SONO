@@ -100,10 +100,28 @@ LOOP
     
 LECTOR_EUSART
     movf RCREG
-    movwf eusart_input,0
-    
-    
+    ;movwf eusart_input,0
+    subwf 'D',1,0
+    btfsc STATUS,2
+    call MODE_D
+    subwf 'I',1,0
+    btfsc STATUS,2
+    call MODE_I
+    subwf 'M',1,0
+    btfsc STATUS,2
+    call MODE_M
+    subwf 'R',1,0
+    btfsc STATUS,2
+    call MODE_R
+    setf LATD,0
     return
+    
+MODE_D
+    movf display3,0,0
+    movwf LATD,0
+    ;pulsadors +5º -5º per pulsador
+    return
+    
 MODE_I
     ;fixar 7seg a 0
     movf display0,0,0
@@ -111,20 +129,18 @@ MODE_I
     ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
     
     return
+    
+MODE_M
+    movf display2,0,0
+    movwf LATD,0
+    ;mostrar ultima mesura si no estem a 0 de mesures
+    return
+    
 MODE_R
     movf display1,0,0
     movwf LATD,0
     ;mostrar nom
     ;mostrar últimes mesures màx 200 són.
     return
-MODE_M
-    movf display2,0,0
-    movwf LATD,0
-    ;mostrar ultima mesura si no estem a 0 de mesures
-    return
-MODE_D
-    movf display3,0,0
-    movwf LATD,0
-    ;pulsadors +5º -5º per pulsador
-    return
+
 END
