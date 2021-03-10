@@ -18,6 +18,7 @@
     display8 EQU 0x08
     display9 EQU 0x09
     eusart_input EQU 0x10
+    lletra EQU 0x11
     
     ORG 0x000
     GOTO MAIN
@@ -112,20 +113,23 @@ ESPERA_TX
     BTFSS TXSTA,TRMT,0
     GOTO ESPERA_TX
     
-    ;movf eusart_input,0
-    CPFSEQ A'D',0
+    movlw 'D'
+    CPFSEQ eusart_input,0
     goto NEXT_D
     goto MODE_D
 NEXT_D
-    CPFSEQ A'I',0
+    movlw 'I'
+    CPFSEQ eusart_input,0
     goto NEXT_I
     goto MODE_I
 NEXT_I
-    CPFSEQ A'M',0
+    movlw 'M'
+    CPFSEQ eusart_input,0
     goto NEXT_M
     goto MODE_M
 NEXT_M
-    CPFSEQ A'R',0
+    movlw 'R'
+    CPFSEQ eusart_input,0
     goto NEXT_R
     goto MODE_R
 NEXT_R
@@ -138,7 +142,6 @@ NEXT_R
 ;-------------------------------
 MODE_D
     movff display3,LATD
-    setf LATC,0
     ;pulsadors +5º -5º per pulsador
     
     ;acabat
@@ -148,29 +151,26 @@ MODE_D
     
 MODE_I
     ;fixar 7seg a 0
-    movf display0,0,0
-    movwf LATD,0
+    movff display0,LATD
     ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
     
     ;acabat
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_R
+    goto MODE_I
     
 MODE_M
-    movf display2,0,0
-    movwf LATD,0
+    movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
     
     
     ;acabat
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_R
+    goto MODE_M
     
 MODE_R
-    movf display1,0,0
-    movwf LATD,0
+    movff display1,LATD
     ;mostrar nom
     ;mostrar últimes mesures màx 200 són.
     
