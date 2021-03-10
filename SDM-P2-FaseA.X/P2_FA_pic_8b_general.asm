@@ -1,7 +1,7 @@
     LIST P=PIC18F4321	F=INHX32
     #include <p18f4321.inc>
 
-    CONFIG OSC=HSPLL	    ;Oscillador -> High Speed
+    CONFIG OSC=HSPLL	    ;Oscillador -> High Speed PLL
     CONFIG PBADEN=DIG	    ;PORTB com a Digital (el posem a 0)
     CONFIG WDT=OFF	    ;Desactivem el Watch Dog Timer
     CONFIG LVP=OFF	    ;Evitar resets eusart
@@ -100,10 +100,7 @@ MAIN
 LOOP
     ;codi
     btfsc PIR1,RCIF,0
-    call LECTOR_EUSART
-    
-    ;call PWM
-    
+    goto LECTOR_EUSART
     goto LOOP
 ;-------------------------------------------------------------------------------
     
@@ -114,19 +111,6 @@ LECTOR_EUSART
 ESPERA_TX
     BTFSS TXSTA,TRMT,0
     GOTO ESPERA_TX
-;    subwf 'D',1,0
-;    btfsc STATUS,2
-;    call MODE_D
-;    subwf 'I',1,0
-;    btfsc STATUS,2
-;    call MODE_I
-;    subwf 'M',1,0
-;    btfsc STATUS,2
-;    call MODE_M
-;    subwf 'R',1,0
-;    btfsc STATUS,2
-;    call MODE_R
-    
     
     ;movf eusart_input,0
     CPFSEQ A'D',0
@@ -145,7 +129,7 @@ NEXT_M
     goto NEXT_R
     goto MODE_R
 NEXT_R
-    return
+    goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
     
     
@@ -157,7 +141,10 @@ MODE_D
     setf LATC,0
     ;pulsadors +5º -5º per pulsador
     
-    return
+    ;acabat
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_D
     
 MODE_I
     ;fixar 7seg a 0
@@ -165,19 +152,32 @@ MODE_I
     movwf LATD,0
     ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
     
-    return
+    ;acabat
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_R
     
 MODE_M
     movf display2,0,0
     movwf LATD,0
     ;mostrar ultima mesura si no estem a 0 de mesures
-    return
+    
+    
+    ;acabat
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_R
     
 MODE_R
     movf display1,0,0
     movwf LATD,0
     ;mostrar nom
     ;mostrar últimes mesures màx 200 són.
-    return
+    
+    
+    ;acabat
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_R
 
 END
