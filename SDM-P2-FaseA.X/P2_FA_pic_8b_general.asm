@@ -36,8 +36,12 @@ INIT_PORTS
     ;C
     movlw b'11000000'
     movwf TRISC,0
+    bcf LATC,0,0;apagar 1r led
+    bcf LATC,1,0;apagar 2n led
     ;D
-    setf TRISD,0
+    clrf TRISD,0
+    movlw b'00000000';apagar 7seg
+    movwf LATD,0
     ;ADCON
     bsf ADCON0,0,0;activem ADC
     movlw b'00001110'
@@ -69,14 +73,21 @@ INIT_VARS
     movwf display9,0
     return
 INIT_OSC
-    ;valors per defecta ja funcionen
+
+    
     return
 INIT_EUSART
-    bsf TXSTA,5,0;TXEN
-    bsf TXSTA,2,0;BRGH (9600)
-    bsf RCSTA,7,0;SPEN
-    bsf RCSTA,4,0;CREN
-    bsf BAUDCON,1,0;WUE wake up, no para mai
+    movlw b'00100100'
+    movwf TXSTA,0
+    movlw b'10010000'
+    movwf RCSTA,0
+    movlw b'00001000'
+    movwf BAUDCON,0
+    movlw HIGH(.1040)
+    movwf SPBRGH,0
+    movlw LOW(.1040)
+    movwf SPBRG,0
+    
     return
 ;-------------------------------------------------------------------------------
 HIGH_RSI
@@ -87,11 +98,19 @@ MAIN
     call INIT_OSC
     call INIT_EUSART
     call INIT_VARS
+    ;call INIT_TIMER
+    ;call INIT_INTCONs
     
 LOOP
     ;codi
-    btfsc PIR1,5,0
-    call LECTOR_EUSART
+    ;btfsc PIR1,RCIF,0
+    ;call LECTOR_EUSART
+    
+    movlw 'A'
+    movwf TXREG,0
+ESPERA_TX
+    BTFSS TXSTA,TRMT,0
+    GOTO ESPERA_TX
     
     ;call PWM
     

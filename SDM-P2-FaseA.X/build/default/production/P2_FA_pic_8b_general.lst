@@ -1,12 +1,11 @@
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  1
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-Warning[205]: Found directive in column 1. (LIST)
 Warning[215]: Processor superseded by command line.  Verify processor symbol.
-                      00001 LIST P=PIC18F4321       F=INHX32
+                      00001     LIST P=PIC18F4321   F=INHX32
                       00002     #include <p18f4321.inc>
                       00001         LIST
                       00002 
@@ -24,59 +23,194 @@ Warning[215]: Processor superseded by command line.  Verify processor symbol.
                       00006     CONFIG WDT=OFF          ;Desactivem el Watch Dog Timer
                       00007     CONFIG LVP=OFF          ;Evitar resets eusart
                       00008     
-Warning[207]: Found label after column 1. (dada)
-  00000001            00009     dada EQU 0x001
-                      00010     
-                      00011     ORG 0x000
-000000 EF?? F???      00012     GOTO MAIN
-                      00013     ORG 0x008
-000008 0011           00014     RETFIE FAST
-                      00015     ORG 0x018
-000018 0011           00016     RETFIE FAST
-                      00017 
-00001A                00018 MAIN
-                      00019 ;    movlw HIGH(.64)
-                      00020 ;    movwf SPBRGH,0
-                      00021 ;    movlw LOW(.64)
-                      00022 ;    movwf SPBRG,0
-                      00023 ;    ;init ports
-                      00024 ;    movlw b'11000000'
-                      00025 ;    movwf TRISC,0
-                      00026 ;    ;init eusart
-                      00027 ;    movlw b'00100110'
-                      00028 ;    movwf TXSTA,0
-                      00029 ;    movlw b'10010000'
-                      00030 ;    movwf RCSTA,0
-00001A 6A95           00031     CLRF TRISD,0
-00001C 688C           00032     SETF LATD,0
-00001E 9492           00033     bcf TRISA,2,0
-                      00034     
-                      00035     
-                      00036     
-                      00037    
-000020                00038 LOOP
-                      00039    ; btfss PIR1,RCIF,0
-                      00040     ;GOTO LOOP
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  2
+                      00009     ;vars
+Warning[207]: Found label after column 1. (display0)
+  00000000            00010     display0 EQU 0x00   ; 7seg
+Warning[207]: Found label after column 1. (display1)
+  00000001            00011     display1 EQU 0x01
+Warning[207]: Found label after column 1. (display2)
+  00000002            00012     display2 EQU 0x02
+Warning[207]: Found label after column 1. (display3)
+  00000003            00013     display3 EQU 0x03
+Warning[207]: Found label after column 1. (display4)
+  00000004            00014     display4 EQU 0x04
+Warning[207]: Found label after column 1. (display5)
+  00000005            00015     display5 EQU 0x05
+Warning[207]: Found label after column 1. (display6)
+  00000006            00016     display6 EQU 0x06
+Warning[207]: Found label after column 1. (display7)
+  00000007            00017     display7 EQU 0x07
+Warning[207]: Found label after column 1. (display8)
+  00000008            00018     display8 EQU 0x08
+Warning[207]: Found label after column 1. (display9)
+  00000009            00019     display9 EQU 0x09
+Warning[207]: Found label after column 1. (eusart_input)
+  00000010            00020     eusart_input EQU 0x10
+                      00021     
+                      00022     ORG 0x000
+000000 EF?? F???      00023     GOTO MAIN
+                      00024     ORG 0x008
+000008 EF?? F???      00025     GOTO HIGH_RSI
+                      00026     ORG 0x018
+000018 0011           00027     retfie FAST
+                      00028 
+00001A                00029 INIT_PORTS
+                      00030     ;A
+00001A 0E21           00031     movlw b'00100001'
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00041     ;movff RCREG,TXREG
-                      00042 ;    movlw 'A'
-                      00043  ;   movwf TXREG,0
-                      00044   ;  bsf LATC,0,0
-                      00045 ;ESPERA_TX
-                      00046 ;    BTFSS TXSTA,TRMT,0
-                      00047 ;    GOTO ESPERA_TX
-                      00048 ;    BCF LATC,0,0
-000020 8489           00049   BSF LATA,2,0
-000022 0000           00050   NOP
-000024 9489           00051   BCF LATA,2,0
-000026 EF?? F???      00052     GOTO LOOP
-                      00053     END
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  3
+00001C 6E92           00032     movwf TRISA,0
+                      00033     ;B
+00001E 0EC3           00034     movlw b'11000011'
+000020 6E93           00035     movwf TRISB,0
+                      00036     ;C
+000022 0EC0           00037     movlw b'11000000'
+000024 6E94           00038     movwf TRISC,0
+000026 908B           00039     bcf LATC,0,0;apagar 1r led
+000028 928B           00040     bcf LATC,1,0;apagar 2n led
+                      00041     ;D
+00002A 6A95           00042     clrf TRISD,0
+00002C 0E00           00043     movlw b'00000000';apagar 7seg
+00002E 6E8C           00044     movwf LATD,0
+                      00045     ;ADCON
+000030 80C2           00046     bsf ADCON0,0,0;activem ADC
+000032 0E0E           00047     movlw b'00001110'
+000034 6EC1           00048     movwf ADCON1,0
+000036 0E08           00049     movlw b'00001000'
+000038 6EC0           00050     movwf ADCON2,0
+00003A 0012           00051     return
+                      00052     
+00003C                00053 INIT_VARS
+00003C 0E3F           00054     movlw b'00111111';7segments
+00003E 6E00           00055     movwf display0,0
+000040 0E06           00056     movlw b'00000110'
+000042 6E01           00057     movwf display1,0
+000044 0E5B           00058     movlw b'01011011'
+000046 6E02           00059     movwf display2,0
+000048 0E4F           00060     movlw b'01001111'
+00004A 6E03           00061     movwf display3,0
+00004C 0E66           00062     movlw b'01100110'
+00004E 6E04           00063     movwf display4,0
+000050 0E6D           00064     movlw b'1101101' 
+000052 6E05           00065     movwf display5,0
+000054 0E3D           00066     movlw b'0111101'
+000056 6E06           00067     movwf display6,0
+000058 0E07           00068     movlw b'00000111'
+00005A 6E07           00069     movwf display7,0
+00005C 0E3F           00070     movlw b'0111111'
+00005E 6E08           00071     movwf display8,0
+000060 0ECF           00072     movlw b'11001111'
+000062 6E09           00073     movwf display9,0
+000064 0012           00074     return
+000066                00075 INIT_OSC
+                      00076 
+                      00077     
+000066 0012           00078     return
+000068                00079 INIT_EUSART
+000068 0E24           00080     movlw b'00100100'
+00006A 6EAC           00081     movwf TXSTA,0
+00006C 0E90           00082     movlw b'10010000'
+00006E 6EAB           00083     movwf RCSTA,0
+000070 0E08           00084     movlw b'00001000'
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000072 6EB8           00085     movwf BAUDCON,0
+000074 0E04           00086     movlw HIGH(.1040)
+000076 6EB0           00087     movwf SPBRGH,0
+000078 0E10           00088     movlw LOW(.1040)
+00007A 6EAF           00089     movwf SPBRG,0
+                      00090     
+00007C 0012           00091     return
+                      00092 ;-------------------------------------------------------------------------------
+00007E                00093 HIGH_RSI
+00007E 0011           00094     retfie FAST
+                      00095     
+000080                00096 MAIN
+000080 EC?? F???      00097     call INIT_PORTS
+000084 EC?? F???      00098     call INIT_OSC
+000088 EC?? F???      00099     call INIT_EUSART
+00008C EC?? F???      00100     call INIT_VARS
+                      00101     ;call INIT_TIMER
+                      00102     ;call INIT_INTCONs
+                      00103     
+000090                00104 LOOP
+                      00105     ;codi
+                      00106     ;btfsc PIR1,RCIF,0
+                      00107     ;call LECTOR_EUSART
+                      00108     
+000090 0E41           00109     movlw 'A'
+000092 6EAD           00110     movwf TXREG,0
+000094                00111 ESPERA_TX
+000094 A2AC           00112     BTFSS TXSTA,TRMT,0
+000096 EF?? F???      00113     GOTO ESPERA_TX
+                      00114     
+                      00115     ;call PWM
+                      00116     
+00009A EF?? F???      00117     goto LOOP
+                      00118 ;-------------------------------------------------------------------------------
+                      00119     
+00009E                00120 LECTOR_EUSART
+00009E 52AE           00121     movf RCREG
+                      00122     ;movwf eusart_input,0
+0000A0 5E44           00123     subwf 'D',1,0
+0000A2 B4D8           00124     btfsc STATUS,2
+0000A4 EC?? F???      00125     call MODE_D
+0000A8 5E49           00126     subwf 'I',1,0
+0000AA B4D8           00127     btfsc STATUS,2
+0000AC EC?? F???      00128     call MODE_I
+0000B0 5E4D           00129     subwf 'M',1,0
+0000B2 B4D8           00130     btfsc STATUS,2
+0000B4 EC?? F???      00131     call MODE_M
+0000B8 5E52           00132     subwf 'R',1,0
+0000BA B4D8           00133     btfsc STATUS,2
+0000BC EC?? F???      00134     call MODE_R
+0000C0 688C           00135     setf LATD,0
+0000C2 0012           00136     return
+                      00137     
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000C4                00138 MODE_D
+0000C4 5003           00139     movf display3,0,0
+0000C6 6E8C           00140     movwf LATD,0
+                      00141     ;pulsadors +5º -5º per pulsador
+0000C8 0012           00142     return
+                      00143     
+0000CA                00144 MODE_I
+                      00145     ;fixar 7seg a 0
+0000CA 5000           00146     movf display0,0,0
+0000CC 6E8C           00147     movwf LATD,0
+                      00148     ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
+                      00149     
+0000CE 0012           00150     return
+                      00151     
+0000D0                00152 MODE_M
+0000D0 5002           00153     movf display2,0,0
+0000D2 6E8C           00154     movwf LATD,0
+                      00155     ;mostrar ultima mesura si no estem a 0 de mesures
+0000D4 0012           00156     return
+                      00157     
+0000D6                00158 MODE_R
+0000D6 5001           00159     movf display1,0,0
+0000D8 6E8C           00160     movwf LATD,0
+                      00161     ;mostrar nom
+                      00162     ;mostrar últimes mesures màx 200 són.
+0000DA 0012           00163     return
+                      00164 
+Warning[205]: Found directive in column 1. (END)
+                      00165 END
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  5
 
 
 SYMBOL TABLE
@@ -135,7 +269,7 @@ BCLIP                             00000003
 BF                                00000000
 BGST                              00000005
 BOR                               00000000
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  4
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  6
 
 
 SYMBOL TABLE
@@ -194,7 +328,7 @@ CK                                00000006
 CKE                               00000006
 CKP                               00000004
 CLKI                              00000007
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  5
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  7
 
 
 SYMBOL TABLE
@@ -250,15 +384,16 @@ EEIE                              00000004
 EEIF                              00000004
 EEIP                              00000004
 EEPGD                             00000007
+ESPERA_TX                         00000094
 FAST                              00000001
 FERR                              00000002
-FLT0                              00000000
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  6
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  8
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+FLT0                              00000000
 FLTS                              00000002
 FREE                              00000004
 FSR0                              00000000
@@ -278,6 +413,7 @@ GIE_GIEH                          00000007
 GO                                00000001
 GO_DONE                           00000001
 GO_NOT_DONE                       00000001
+HIGH_RSI                          0000007E
 HLVDCON                           00000FD2
 HLVDEN                            00000004
 HLVDIE                            00000002
@@ -294,6 +430,10 @@ IDLEN                             00000007
 INDF0                             00000FEF
 INDF1                             00000FE7
 INDF2                             00000FDF
+INIT_EUSART                       00000068
+INIT_OSC                          00000066
+INIT_PORTS                        0000001A
+INIT_VARS                         0000003C
 INT0                              00000000
 INT0E                             00000004
 INT0F                             00000001
@@ -306,18 +446,18 @@ INT1IE                            00000003
 INT1IF                            00000000
 INT1IP                            00000006
 INT1P                             00000006
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 INT2                              00000002
 INT2E                             00000004
 INT2F                             00000001
 INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  7
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 INT2P                             00000007
 INTCON                            00000FF2
 INTCON2                           00000FF1
@@ -365,18 +505,18 @@ LATC4                             00000004
 LATC5                             00000005
 LATC6                             00000006
 LATC7                             00000007
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LATD                              00000F8C
 LATD0                             00000000
 LATD1                             00000001
 LATD2                             00000002
 LATD3                             00000003
 LATD4                             00000004
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  8
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATD5                             00000005
 LATD6                             00000006
 LATD7                             00000007
@@ -384,7 +524,8 @@ LATE                              00000F8D
 LATE0                             00000000
 LATE1                             00000001
 LATE2                             00000002
-LOOP                              00000020
+LECTOR_EUSART                     0000009E
+LOOP                              00000090
 LVDCON                            00000FD2
 LVDEN                             00000004
 LVDIE                             00000002
@@ -398,8 +539,12 @@ LVV0                              00000000
 LVV1                              00000001
 LVV2                              00000002
 LVV3                              00000003
-MAIN                              0000001A
+MAIN                              00000080
 MCLR                              00000003
+MODE_D                            000000C4
+MODE_I                            000000CA
+MODE_M                            000000D0
+MODE_R                            000000D6
 N                                 00000004
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
@@ -419,6 +564,12 @@ NOT_TO                            00000003
 NOT_W                             00000002
 NOT_WR                            00000001
 NOT_WRITE                         00000002
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 OBF                               00000006
 OERR                              00000001
 OSC1                              00000007
@@ -430,12 +581,6 @@ OSCFIP                            00000007
 OSCTUNE                           00000F9B
 OSTS                              00000003
 OV                                00000003
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE  9
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 P                                 00000004
 P1A                               00000002
 P1B                               00000005
@@ -478,6 +623,12 @@ PORTA                             00000F80
 PORTB                             00000F81
 PORTC                             00000F82
 PORTD                             00000F83
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 PORTE                             00000F84
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
@@ -489,12 +640,6 @@ PR2                               00000FCB
 PREINC0                           00000FEC
 PREINC1                           00000FE4
 PREINC2                           00000FDC
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 10
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PROD                              00000FF3
 PRODH                             00000FF4
 PRODL                             00000FF3
@@ -537,6 +682,12 @@ RB7                               00000007
 RBIE                              00000003
 RBIF                              00000000
 RBIP                              00000000
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RBPU                              00000007
 RC0                               00000000
 RC1                               00000001
@@ -548,12 +699,6 @@ RC6                               00000006
 RC7                               00000007
 RCEN                              00000003
 RCIDL                             00000006
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 11
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RCIE                              00000005
 RCIF                              00000005
 RCIP                              00000005
@@ -596,6 +741,12 @@ SDO                               00000005
 SEN                               00000000
 SENDB                             00000003
 SMP                               00000007
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 14
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SP0                               00000000
 SP1                               00000001
 SP2                               00000002
@@ -607,12 +758,6 @@ SPEN                              00000007
 SREN                              00000005
 SSPADD                            00000FC8
 SSPBUF                            00000FC9
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 12
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSPCON1                           00000FC6
 SSPCON2                           00000FC5
 SSPEN                             00000005
@@ -655,6 +800,12 @@ T1OSO                             00000000
 T1RUN                             00000006
 T1SYNC                            00000002
 T2CKPS0                           00000000
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 15
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T2CKPS1                           00000001
 T2CON                             00000FCA
 T2OUTPS0                          00000003
@@ -666,12 +817,6 @@ T3CCP2                            00000006
 T3CKPS0                           00000004
 T3CKPS1                           00000005
 T3CON                             00000FB1
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 13
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T3SYNC                            00000002
 TABLAT                            00000FF5
 TBLPTR                            00000FF6
@@ -714,6 +859,12 @@ TOSU                              00000FFF
 TOUTPS0                           00000003
 TOUTPS1                           00000004
 TOUTPS2                           00000005
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 16
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TOUTPS3                           00000006
 TRISA                             00000F92
 TRISA0                            00000000
@@ -725,12 +876,6 @@ TRISA5                            00000005
 TRISA6                            00000006
 TRISA7                            00000007
 TRISB                             00000F93
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 14
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISB0                            00000000
 TRISB1                            00000001
 TRISB2                            00000002
@@ -773,6 +918,12 @@ TX9D                              00000000
 TXCKP                             00000004
 TXEN                              00000005
 TXIE                              00000004
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TXIF                              00000004
 TXIP                              00000004
 TXREG                             00000FAD
@@ -784,12 +935,6 @@ VDIRMAG                           00000007
 VPP                               00000003
 VREFM                             00000002
 VREFP                             00000003
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 15
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 W                                 00000000
 WCOL                              00000007
 WDTCON                            00000FD1
@@ -832,6 +977,12 @@ _CPB_ON_5H                        000000BF
 _CPD_OFF_5H                       000000FF
 _CPD_ON_5H                        0000007F
 _DEBUG_OFF_4L                     000000FF
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 18
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _DEBUG_ON_4L                      0000007F
 _DEVID1                           003FFFFE
 _DEVID2                           003FFFFF
@@ -843,12 +994,6 @@ _EBTRB_OFF_7H                     000000FF
 _EBTRB_ON_7H                      000000BF
 _FCMEN_OFF_1H                     000000BF
 _FCMEN_ON_1H                      000000FF
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 16
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _IDLOC0                           00200000
 _IDLOC1                           00200001
 _IDLOC2                           00200002
@@ -891,6 +1036,12 @@ _WDTPS_256_2H                     000000F1
 _WDTPS_2_2H                       000000E3
 _WDTPS_32768_2H                   000000FF
 _WDTPS_32_2H                      000000EB
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-10-2021  17:52:25         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDTPS_4096_2H                    000000F9
 _WDTPS_4_2H                       000000E5
 _WDTPS_512_2H                     000000F3
@@ -902,12 +1053,6 @@ _WDT_ON_2H                        000000FF
 _WRT0_OFF_6L                      000000FF
 _WRT0_ON_6L                       000000FE
 _WRT1_OFF_6L                      000000FF
-MPASM 5.86                   EUSART-TEST.ASM   3-10-2021  16:52:40         PAGE 17
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _WRT1_ON_6L                       000000FD
 _WRTB_OFF_6H                      000000FF
 _WRTB_ON_6H                       000000BF
@@ -918,10 +1063,20 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_4L                     000000BF
 _XINST_ON_4L                      000000FF
 __18F4321                         00000001
-dada                              00000001
+display0                          00000000
+display1                          00000001
+display2                          00000002
+display3                          00000003
+display4                          00000004
+display5                          00000005
+display6                          00000006
+display7                          00000007
+display8                          00000008
+display9                          00000009
+eusart_input                      00000010
 
 Errors   :     0
-Warnings :     3 reported,     0 suppressed
+Warnings :    13 reported,     0 suppressed
 Messages :     0 reported,     0 suppressed
 
 

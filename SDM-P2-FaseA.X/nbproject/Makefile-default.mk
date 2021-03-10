@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=eusart-test.asm
+SOURCEFILES_QUOTED_IF_SPACED=P2_FA_pic_8b_general.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/eusart-test.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/eusart-test.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/P2_FA_pic_8b_general.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/P2_FA_pic_8b_general.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/eusart-test.o
+OBJECTFILES=${OBJECTDIR}/P2_FA_pic_8b_general.o
 
 # Source Files
-SOURCEFILES=eusart-test.asm
+SOURCEFILES=P2_FA_pic_8b_general.asm
 
 
 
@@ -95,22 +95,22 @@ MP_LINKER_DEBUG_OPTION=-r=ROM@0x1DC0:0x1FFF -r=RAM@GPR:0x1F4:0x1FF
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/eusart-test.o: eusart-test.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/eusart-test.o.d 
-	@${RM} ${OBJECTDIR}/eusart-test.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/eusart-test.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/eusart-test.lst\" -e\"${OBJECTDIR}/eusart-test.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/eusart-test.o\" \"eusart-test.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/eusart-test.o"
-	@${FIXDEPS} "${OBJECTDIR}/eusart-test.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
+	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
+	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
-${OBJECTDIR}/eusart-test.o: eusart-test.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/eusart-test.o.d 
-	@${RM} ${OBJECTDIR}/eusart-test.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/eusart-test.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/eusart-test.lst\" -e\"${OBJECTDIR}/eusart-test.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/eusart-test.o\" \"eusart-test.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/eusart-test.o"
-	@${FIXDEPS} "${OBJECTDIR}/eusart-test.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
+	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
+	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
