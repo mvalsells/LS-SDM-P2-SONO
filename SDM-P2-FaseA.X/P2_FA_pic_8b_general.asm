@@ -103,6 +103,7 @@ INIT_TIMER
     MOVLW b'10010001'
     MOVWF T0CON,0
     return
+    
 INIT_EEPROM
     bcf EECON1, EEPGD
     bcf EECON1, CFGS
@@ -117,9 +118,7 @@ INIT_EEPROM
     movlw 0AAh
     movwf EECON2
     bsf EECON1,WR
-    ESPERA_EEPROM_ESCRIURE_INIT
-	btfsc EECON1,WR
-	goto ESPERA_EEPROM_ESCRIURE_INIT
+    call ESPERA_EEPROM_ESCRIURE
     bsf INTCON,GIE
     bcf EECON1,WREN
     return
@@ -153,16 +152,46 @@ CARREGA_TIMER
     MOVLW LOW(.15536)
     MOVWF TMR0L,0
     return
+    
+;Escriptura EEPROM
+ESPERA_EEPROM_ESCRIURE
+    btfsc EECON1,WR
+    goto ESPERA_EEPROM_ESCRIURE
+    return
 ;-------------------------------------------------------------------------------
 ;EUSART
+
+ESPERA_TX
+    BTFSS TXSTA,TRMT,0
+    GOTO ESPERA_TX
+    return
+    
+LLEGIR_RX
+    btfss PIR1,RCIF,0
+    goto LLEGIR_RX
+    movf RCREG,0,0
+    movwf eusart_input,0
+    movff eusart_input,TXREG
+    call ESPERA_TX
+    return
+    
 LECTOR_EUSART
     movf RCREG,0,0
     movwf eusart_input,0
     movff eusart_input,TXREG
-ESPERA_TX
-    BTFSS TXSTA,TRMT,0
-    GOTO ESPERA_TX
-    
+    call ESPERA_TX
+    MOVLW b'00001101';carrier
+    MOVWF TXREG,0
+    CALL ESPERA_TX
+    ;Canvi de mode, apaguem els LEDS i el 7 seg
+    CLRF LATD,0
+    BCF LATC,0,0
+    BCF LATC,1,0
+    movlw 'A'
+    CPFSEQ eusart_input,0
+    goto NEXT_A
+    goto MODE_A
+NEXT_A
     movlw 'D'
     CPFSEQ eusart_input,0
     goto NEXT_D
@@ -193,6 +222,11 @@ NEXT_S
     goto NEXT_T
     goto MODE_T
 NEXT_T
+    movlw 'U'
+    CPFSEQ eusart_input,0
+    goto NEXT_U
+    goto MODE_U
+NEXT_U
     
     goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
@@ -201,6 +235,11 @@ NEXT_T
     
     
 ;-------------------------------
+MODE_A
+    movff display7,LATD
+    
+    ;acabat
+    GOTO LOOP
 MODE_D
     movff display3,LATD
     ;pulsadors +5º -5º per pulsador
@@ -211,17 +250,14 @@ MODE_D
 MODE_I
     ;fixar 7seg a 0
     movff display0,LATD
-    ;llegir caracters  fins un /n (no ben bé \n). Guardar-lo cada cop que el reben.
+    ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
     movlw b'00000000';reinici adressa
     movwf nom_eeprom_adr
     
     ;llegir
     LLEGIR_I
     
-	btfss PIR1,RCIF,0;esperem la primera tecla
-	goto LLEGIR_I
-	movf RCREG,0,0
-	movwf eusart_input,0
+	call LLEGIR_RX
 	
 	movf nom_eeprom_adr,0
 	movwf EEADR,0
@@ -234,9 +270,7 @@ MODE_I
 	movlw 0AAh
 	movwf EECON2
 	bsf EECON1,WR
-	ESPERA_EEPROM_ESCRIURE
-	    btfsc EECON1,WR
-	    goto ESPERA_EEPROM_ESCRIURE
+	call ESPERA_EEPROM_ESCRIURE
 	bsf INTCON,GIE
 	bcf EECON1,WREN
 	
@@ -245,11 +279,6 @@ MODE_I
 	goto NO_ENTER
 	goto ACABAT_I
 	NO_ENTER
-	
-	movff eusart_input,TXREG
-	ESPERA_TX2
-	BTFSS TXSTA,TRMT,0
-	GOTO ESPERA_TX2
 	
 	incf nom_eeprom_adr;seguent adr
 	
@@ -268,9 +297,7 @@ MODE_I
 	movlw 0AAh
 	movwf EECON2
 	bsf EECON1,WR
-	ESPERA_EEPROM_ESCRIURE2
-	    btfsc EECON1,WR
-	    goto ESPERA_EEPROM_ESCRIURE2
+	call ESPERA_EEPROM_ESCRIURE
 	bsf INTCON,GIE
 	bcf EECON1,WREN
 	
@@ -294,34 +321,72 @@ MODE_M
 MODE_R;mostrar nom i 200 mesures
     movff display1,LATD
     ;MOSTRAR NOM (part 1/2)
+    movlw 'N'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'o'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'm'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw ':'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw ' '
+    movwf TXREG,0
+    call ESPERA_TX
     movlw b'00000000';reinici adressa
     movwf nom_eeprom_adr
     
     BUCLE_NOM
-
+    call ESPERA_TX
     movff nom_eeprom_adr, EEADR
     bcf EECON1, EEPGD
-    bcf EECON1, CFGS
-    
+    bcf EECON1, CFGS 
     bsf EECON1, RD
     movff EEDATA, eusart_output
-    movff eusart_output, RCREG
+    movff eusart_output, TXREG
     ;movwf,TXREG;envia el nom
-    ESPERA_TX3
-    BTFSS TXSTA,TRMT,0
-    GOTO ESPERA_TX3
-    movf eusart_output
-    cpfseq carrier,0
+    call ESPERA_TX
+    ;movf eusart_output
+    movlw b'00001101' ;carrier
+    cpfseq eusart_output,0
     goto CONTINUA_NOM
     goto MOSTRA_MESURES
     CONTINUA_NOM
-    incf nom_eeprom_adr
-    goto BUCLE_NOM
+	incf nom_eeprom_adr
+	goto BUCLE_NOM
     
     
     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
     MOSTRA_MESURES
-    
+    movlw 'M'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'e'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 's'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'u'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'r'
+    movwf TXREG,0
+    movlw 'e'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 's'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw ':'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw b'00001101' ;carrier
+    movwf TXREG,0
+    call ESPERA_TX
     ;acabat
     goto LOOP
 MODE_S
@@ -332,5 +397,10 @@ MODE_T
     movff display5,LATD
     ;codi T
     goto LOOP
+MODE_U
+    BSF LATC,1,0
+    
+    ;Acabat
+    GOTO LOOP
 
 END
