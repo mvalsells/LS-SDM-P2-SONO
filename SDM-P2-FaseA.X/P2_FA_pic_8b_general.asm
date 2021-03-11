@@ -44,7 +44,7 @@ INIT_PORTS
     movlw b'00000000';apagar 7seg
     movwf LATD,0
     ;ADCON
-    bsf ADCON0,0,0;activem ADC
+    bsf ADCON0,ADON,0
     movlw b'00001110'
     movwf ADCON1,0
     movlw b'00001000'
@@ -86,17 +86,28 @@ INIT_EUSART
     movwf SPBRG,0
     
     return
-;-------------------------------------------------------------------------------
-HIGH_RSI
-    retfie FAST
+INIT_INTCONS
+    BSF RCON,IPEN,0
+    MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
+    MOVWF INTCON,0
+    BSF INTCON2,TMR0IP,0 ; Timer -> High priority
+    ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
+    ;MOVWF INTCON2,0
+    return
+INIT_TIMER
+    MOVLW b'10011000'
+    MOVWF T0CON,0
+    return
     
+;-------------------------------------------------------------------------------
 MAIN
     call INIT_PORTS
     ;call INIT_OSC	;valors default
     call INIT_EUSART
     call INIT_VARS
-    ;call INIT_TIMER
-    ;call INIT_INTCONs
+    call INIT_INTCONS
+    call INIT_TIMER
+    call CARREGA_TIMER
     
 LOOP
     ;codi
@@ -104,7 +115,28 @@ LOOP
     goto LECTOR_EUSART
     goto LOOP
 ;-------------------------------------------------------------------------------
+HIGH_RSI
+    BCF INTCON,TMR0IF,0
+    call CARREGA_TIMER
+    BTG LATC,0,0
+    retfie FAST
     
+;TIMER
+CARREGA_TIMER
+    ;5º (55,2us) = 64994
+    ;1º (11,1us) = 65438
+    MOVLW HIGH(.65438)
+    MOVWF TMR0H,0
+    MOVLW LOW(.65438)
+    MOVWF TMR0L,0
+    return
+INTERRUPT_TIMER
+    BTG LATC,0,0
+    BCF INTCON,TMR0IF,0
+    call CARREGA_TIMER
+    return
+;-------------------------------------------------------------------------------
+;EUSART
 LECTOR_EUSART
     movf RCREG,0,0
     movwf eusart_input,0
