@@ -74,7 +74,7 @@ INIT_VARS
     movwf display8,0
     movlw b'11001111'
     movwf display9,0
-    movlw b'00001101';posem un carrier reurn a temp
+    movlw '\r' ;posem un carrier reurn a temp
     movwf carrier,0
     
     return
@@ -171,7 +171,24 @@ LLEGIR_RX
     goto LLEGIR_RX
     movf RCREG,0,0
     movwf eusart_input,0
-    movff eusart_input,TXREG
+    ;Mirar si és enter
+    MOVLW '\r'
+    CPFSEQ eusart_input,0
+    GOTO TX_NO_ENTER
+    call ENTER_TX
+    return
+    ;Fi enter
+    TX_NO_ENTER
+	movff eusart_input,TXREG
+	call ESPERA_TX
+	return
+
+ENTER_TX
+    MOVLW '\n'
+    MOVWF TXREG,0
+    call ESPERA_TX
+    MOVLW '\r'
+    MOVWF TXREG,0
     call ESPERA_TX
     return
     
@@ -180,9 +197,7 @@ LECTOR_EUSART
     movwf eusart_input,0
     movff eusart_input,TXREG
     call ESPERA_TX
-    MOVLW b'00001101';carrier
-    MOVWF TXREG,0
-    CALL ESPERA_TX
+    call ENTER_TX
     ;Canvi de mode, apaguem els LEDS i el 7 seg
     CLRF LATD,0
     BCF LATC,0,0
@@ -230,9 +245,7 @@ NEXT_U
     
     goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
-    
-    
-    
+
     
 ;-------------------------------
 MODE_A
@@ -274,7 +287,7 @@ MODE_I
 	bsf INTCON,GIE
 	bcf EECON1,WREN
 	
-	movlw b'00001101';esperem a un enter
+	movlw '\r';esperem a un enter
 	cpfseq eusart_input,0
 	goto NO_ENTER
 	goto ACABAT_I
@@ -288,7 +301,7 @@ MODE_I
 	;guardar un carrier return extra
 	movf nom_eeprom_adr,0
 	movwf EEADR,0
-	movlw b'00001101'
+	movlw '\r'
 	movwf EEDATA,0
 	bsf EECON1,WREN
 	bcf INTCON,GIE
@@ -336,6 +349,7 @@ MODE_R;mostrar nom i 200 mesures
     movlw ' '
     movwf TXREG,0
     call ESPERA_TX
+    
     movlw b'00000000';reinici adressa
     movwf nom_eeprom_adr
     
@@ -350,7 +364,7 @@ MODE_R;mostrar nom i 200 mesures
     ;movwf,TXREG;envia el nom
     call ESPERA_TX
     ;movf eusart_output
-    movlw b'00001101' ;carrier
+    movlw .10 ;carrier
     cpfseq eusart_output,0
     goto CONTINUA_NOM
     goto MOSTRA_MESURES
@@ -384,9 +398,7 @@ MODE_R;mostrar nom i 200 mesures
     movlw ':'
     movwf TXREG,0
     call ESPERA_TX
-    movlw b'00001101' ;carrier
-    movwf TXREG,0
-    call ESPERA_TX
+    call ENTER_TX
     ;acabat
     goto LOOP
 MODE_S
