@@ -21,6 +21,8 @@
     nom_eeprom_adr EQU 0x0B;adressa eeprom
     carrier EQU 0x0C;variable canvi de linia putty
     eusart_output EQU 0x0D
+    eeprom_addr EQU 0x0E
+    eeprom_data EQU 0x0F
     
     ORG 0x000
     GOTO MAIN
@@ -76,7 +78,8 @@ INIT_VARS
     movwf display9,0
     movlw b'00001101';posem un carrier reurn a temp
     movwf carrier,0
-    
+    ;nom db "Nom: "
+    ;mesures db "Mesures: "
     return
 INIT_EUSART
     movlw b'00100100'
@@ -152,8 +155,35 @@ CARREGA_TIMER
     MOVLW LOW(.15536)
     MOVWF TMR0L,0
     return
-    
+
+;Lectura EEPROM
+EEPROM_READ
+    movf eeprom_addr,0
+    movwf EEADR,0
+    BCF EECON1, EEPGD    ; Point to DATA memory
+    BCF EECON1, CFGS     ; Access EEPROM
+    BSF EECON1, RD        ; EEPROM Read
+    MOVFF EEDATA, eeprom_data
+    return
 ;Escriptura EEPROM
+EEPROM_WRITE
+    movf eeprom_addr,0
+    movwf EEADR,0
+    movf eeprom_data,0
+    movwf EEDATA,0
+    bsf EECON1,WREN
+    bcf INTCON,GIE
+    movlw 55h
+    movwf EECON2,0
+    movlw 0AAh
+    movwf EECON2
+    bsf EECON1,WR
+    call ESPERA_EEPROM_ESCRIURE
+    bsf INTCON,GIE
+    bcf EECON1,WREN
+    return
+	
+
 ESPERA_EEPROM_ESCRIURE
     btfsc EECON1,WR
     goto ESPERA_EEPROM_ESCRIURE
@@ -175,15 +205,25 @@ LLEGIR_RX
     call ESPERA_TX
     return
     
+TX_ENTER
+    MOVLW '\n';salt de linia
+    MOVWF TXREG,0
+    CALL ESPERA_TX
+    MOVLW '\r';inici de linia
+    MOVWF TXREG,0
+    CALL ESPERA_TX
+    return
+    
+;---- INICI MODE ----
 LECTOR_EUSART
     movf RCREG,0,0
     movwf eusart_input,0
     movff eusart_input,TXREG
+   ; movff eusart_input,LATD ;DEBUGGING
     call ESPERA_TX
-    MOVLW b'00001101';carrier
-    MOVWF TXREG,0
-    CALL ESPERA_TX
+    call TX_ENTER
     ;Canvi de mode, apaguem els LEDS i el 7 seg
+    ;REVISAR SI ES OK EN CAS DE QUE POSSIN UNA LLETRA INCORRECTE
     CLRF LATD,0
     BCF LATC,0,0
     BCF LATC,1,0
@@ -251,59 +291,32 @@ MODE_I
     ;fixar 7seg a 0
     movff display0,LATD
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
-    movlw b'00000000';reinici adressa
-    movwf nom_eeprom_adr
+    movlw .0 ;reinici adressa
+    movwf eeprom_addr
     
     ;llegir
     LLEGIR_I
     
 	call LLEGIR_RX
+	movff eusart_input,eeprom_data
+	call EEPROM_WRITE
 	
-	movf nom_eeprom_adr,0
-	movwf EEADR,0
-	movf eusart_input,0
-	movwf EEDATA,0
-	bsf EECON1,WREN
-	bcf INTCON,GIE
-	movlw 55h
-	movwf EECON2,0
-	movlw 0AAh
-	movwf EECON2
-	bsf EECON1,WR
-	call ESPERA_EEPROM_ESCRIURE
-	bsf INTCON,GIE
-	bcf EECON1,WREN
-	
-	movlw b'00001101';esperem a un enter
+	movlw '\r';esperem a un enter
 	cpfseq eusart_input,0
 	goto NO_ENTER
 	goto ACABAT_I
 	NO_ENTER
-	
-	incf nom_eeprom_adr;seguent adr
-	
-	movlw .120		;mirar si >120
-	cpfseq nom_eeprom_adr,0
-	goto LLEGIR_I
-	;guardar un carrier return extra
-	movf nom_eeprom_adr,0
-	movwf EEADR,0
-	movlw b'00001101'
-	movwf EEDATA,0
-	bsf EECON1,WREN
-	bcf INTCON,GIE
-	movlw 55h
-	movwf EECON2,0
-	movlw 0AAh
-	movwf EECON2
-	bsf EECON1,WR
-	call ESPERA_EEPROM_ESCRIURE
-	bsf INTCON,GIE
-	bcf EECON1,WREN
-	
-	
-    ACABAT_I
-    
+	    incf eeprom_addr;seguent adr
+	    movlw .120		;mirar si >120
+	    cpfseq eeprom_addr,0
+	    goto LLEGIR_I
+	   
+	ACABAT_I
+	    call TX_ENTER
+	     ;guardar un carrier return extra
+	    movlw b'00001101'
+	    movwf eeprom_data
+	    call EEPROM_WRITE
     
     ;acabat
     goto LOOP
@@ -336,28 +349,24 @@ MODE_R;mostrar nom i 200 mesures
     movlw ' '
     movwf TXREG,0
     call ESPERA_TX
-    movlw b'00000000';reinici adressa
-    movwf nom_eeprom_adr
+    movlw .0 ;reinici adressa
+    movwf eeprom_addr
     
     BUCLE_NOM
+    ;call ESPERA_TX
+    call EEPROM_READ
+    movff eeprom_data, TXREG
     call ESPERA_TX
-    movff nom_eeprom_adr, EEADR
-    bcf EECON1, EEPGD
-    bcf EECON1, CFGS 
-    bsf EECON1, RD
-    movff EEDATA, eusart_output
-    movff eusart_output, TXREG
-    ;movwf,TXREG;envia el nom
-    call ESPERA_TX
-    ;movf eusart_output
-    movlw b'00001101' ;carrier
-    cpfseq eusart_output,0
+    movlw '\r' ;carrier
+    cpfseq eeprom_data,0
     goto CONTINUA_NOM
+    movlw '\n'
+    movwf TXREG,0
+    call ESPERA_TX
     goto MOSTRA_MESURES
     CONTINUA_NOM
-	incf nom_eeprom_adr
-	goto BUCLE_NOM
-    
+	incf eeprom_addr
+	goto BUCLE_NOM  
     
     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
     MOSTRA_MESURES
@@ -384,9 +393,7 @@ MODE_R;mostrar nom i 200 mesures
     movlw ':'
     movwf TXREG,0
     call ESPERA_TX
-    movlw b'00001101' ;carrier
-    movwf TXREG,0
-    call ESPERA_TX
+    call TX_ENTER
     ;acabat
     goto LOOP
 MODE_S
