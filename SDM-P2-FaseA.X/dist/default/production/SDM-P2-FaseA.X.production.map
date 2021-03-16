@@ -1,5 +1,5 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Sat Mar 13 01:31:23 2021
+Linker Map File - Created Tue Mar 16 16:24:00 2021
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -33,13 +33,13 @@ Linker Map File - Created Sat Mar 13 01:31:23 2021
                 ---------  ---------  ---------  --------- ---------                
                  ACABAT_I   0x000208    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 BUCLE_NOM   0x000256    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            CARREGA_TIMER   0x0000e4    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+            CARREGA_TIMER   0x0000e8    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              CONTINUA_NOM   0x000276    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              EEPROM_READ   0x0000ee    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-             EEPROM_WRITE   0x0000fe    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-   ESPERA_EEPROM_ESCRIURE   0x00011e    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                ESPERA_TX   0x000126    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 HIGH_RSI   0x0000da    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              EEPROM_READ   0x0000f2    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+             EEPROM_WRITE   0x000102    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+   ESPERA_EEPROM_ESCRIURE   0x000122    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                ESPERA_TX   0x00012a    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 HIGH_RSI   0x0000de    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               INIT_EEPROM   0x000090    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               INIT_EUSART   0x00006a    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              INIT_INTCONS   0x000080    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -48,7 +48,7 @@ Linker Map File - Created Sat Mar 13 01:31:23 2021
                 INIT_VARS   0x00003c    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             LECTOR_EUSART   0x000154    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  LLEGIR_I   0x0001e6    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                LLEGIR_RX   0x00012e    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                LLEGIR_RX   0x000132    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      LOOP   0x0000d0    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      MAIN   0x0000b4    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_A   0x0001ce    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -84,13 +84,13 @@ Linker Map File - Created Sat Mar 13 01:31:23 2021
               INIT_EEPROM   0x000090    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      MAIN   0x0000b4    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      LOOP   0x0000d0    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 HIGH_RSI   0x0000da    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            CARREGA_TIMER   0x0000e4    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              EEPROM_READ   0x0000ee    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-             EEPROM_WRITE   0x0000fe    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-   ESPERA_EEPROM_ESCRIURE   0x00011e    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                ESPERA_TX   0x000126    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                LLEGIR_RX   0x00012e    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 HIGH_RSI   0x0000de    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+            CARREGA_TIMER   0x0000e8    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              EEPROM_READ   0x0000f2    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+             EEPROM_WRITE   0x000102    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+   ESPERA_EEPROM_ESCRIURE   0x000122    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                ESPERA_TX   0x00012a    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                LLEGIR_RX   0x000132    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  TX_ENTER   0x000142    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             LECTOR_EUSART   0x000154    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    NEXT_A   0x000176    program     static C:\Users\marc\Nextcloud2\SalleURL\SDM\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm

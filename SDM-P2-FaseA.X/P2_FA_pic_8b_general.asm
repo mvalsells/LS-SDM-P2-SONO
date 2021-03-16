@@ -140,6 +140,7 @@ LOOP
     ;codi
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
+    call LLEGIR_RX
     goto LOOP
 ;-------------------------------------------------------------------------------
 HIGH_RSI
@@ -199,9 +200,10 @@ ESPERA_TX
 LLEGIR_RX
     btfss PIR1,RCIF,0
     goto LLEGIR_RX
-    movf RCREG,0,0
-    movwf eusart_input,0
-    movff eusart_input,TXREG
+    ;movf RCREG,0,0
+    ;movwf eusart_input,0
+    ;movff eusart_input,TXREG
+    movff RCREG,TXREG
     call ESPERA_TX
     return
     
