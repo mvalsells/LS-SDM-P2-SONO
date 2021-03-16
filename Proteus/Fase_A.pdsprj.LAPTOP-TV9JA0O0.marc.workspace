@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffffb00a000000000000c30e000079030000</PLACEMENT>
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff48000000960000005b0400000f040000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
@@ -32,13 +32,13 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="450" x="2839" flags="00000022" y="409" h="372" pid="0" iid="18">
+   <POPUP w="450" x="1470" flags="00000022" y="409" h="372" pid="0" iid="18">
     <PROPERTIES>
      <ITEM name="AutoEcho">0</ITEM>
      <ITEM name="HexMode">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="434" x="2536" flags="00000009" y="381" h="203" pid="3" iid="1">
+   <POPUP w="52" x="1868" flags="00000009" y="381" h="12" pid="3" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="16" x="128" flags="0000000a" y="240" h="32" pid="7" iid="1">
@@ -71,7 +71,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="8" x="2997" flags="0000800b" y="430" h="32" pid="6" iid="1">
+   <POPUP w="8" x="1912" flags="0000800b" y="430" h="32" pid="6" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -101,7 +101,7 @@
      <ITEM name="TopLineAddress">00300000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="162" x="248" flags="00000008" y="360" h="463" pid="10" iid="1">
+   <POPUP w="18" x="248" flags="00000008" y="360" h="32" pid="10" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="8" x="268" flags="00000002" y="380" h="8" pid="13" iid="1">
@@ -114,7 +114,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="600" x="2448" flags="0000002b" y="160" h="400" pid="1" iid="1">
+   <POPUP w="600" x="1320" flags="0000002b" y="160" h="400" pid="1" iid="1">
     <PROPERTIES>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
@@ -125,7 +125,7 @@
      <ITEM name="nBreakpoints">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="300" x="2468" flags="0000000b" y="180" h="300" pid="2" iid="1">
+   <POPUP w="300" x="1620" flags="0000000b" y="180" h="300" pid="2" iid="1">
     <PROPERTIES>
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>

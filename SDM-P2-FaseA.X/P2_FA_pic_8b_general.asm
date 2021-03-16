@@ -18,11 +18,12 @@
     display8 EQU 0x08
     display9 EQU 0x09
     eusart_input EQU 0x0A   ;entrada per eusart
-    nom_eeprom_adr EQU 0x0B;adressa eeprom
+    pos_servo EQU 0x0B
     carrier EQU 0x0C;variable canvi de linia putty
     eusart_output EQU 0x0D
     eeprom_addr EQU 0x0E
     eeprom_data EQU 0x0F
+    compt_10us EQU 0x10
     
     ORG 0x000
     GOTO MAIN
@@ -33,11 +34,14 @@
 
 INIT_PORTS
     ;A
-    movlw b'00100001'
+    movlw b'00100011'
     movwf TRISA,0
+    bcf LATA,2,0
+    bcf LATA,4,0
     ;B
-    movlw b'11100011'
+    movlw b'11100110'
     movwf TRISB,0
+    bcf INTCON2,RBPU,0
     ;C
     movlw b'11000000'
     movwf TRISC,0
@@ -92,7 +96,6 @@ INIT_EUSART
     movwf SPBRGH,0
     movlw LOW(.1040)
     movwf SPBRG,0
-    
     return
 INIT_INTCONS
     BSF RCON,IPEN,0
@@ -188,6 +191,21 @@ ESPERA_EEPROM_ESCRIURE
     btfsc EECON1,WR
     goto ESPERA_EEPROM_ESCRIURE
     return
+    
+; Ultrasons
+MEDIR
+    MOVLW .232
+    MOVWF compt_10us
+    BSF LATA,4,0 ; Activem trigger
+INCR_10us
+    INCF compt_10us,1,0
+    BTFSS STATUS,C
+    GOTO INCR_10us
+    NOP
+    NOP
+    NOP
+    BCF LATA,4,0  
+    return
 ;-------------------------------------------------------------------------------
 ;EUSART
 
@@ -267,7 +285,7 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
-    
+    call MEDIR
     goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
     
@@ -283,10 +301,20 @@ MODE_A
 MODE_D
     movff display3,LATD
     ;pulsadors +5º -5º per pulsador
+    btfsc PORTB,2,0
+    GOTO MirarRB1
+    MOVLW .180
+    CPFSEQ pos_servo,0 
+;    call moure_5graus_mes
+MirarRB1    
+    btfss PORTB,1,0
+    btg LATC,1,0
     
+   ; GOTO MODE_D
     ;acabat
     goto LOOP
     
+
 MODE_I
     ;fixar 7seg a 0
     movff display0,LATD
@@ -405,7 +433,7 @@ MODE_T
     ;codi T
     goto LOOP
 MODE_U
-    BSF LATC,1,0
+    call MEDIR
     
     ;Acabat
     GOTO LOOP
