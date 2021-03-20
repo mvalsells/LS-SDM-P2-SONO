@@ -24,6 +24,10 @@
     eeprom_addr EQU 0x0E
     eeprom_data EQU 0x0F
     compt_10us EQU 0x10
+    us_echo_low EQU 0x11
+    us_echo_high EQU 0x12
+    us_echo_58 EQU 0x13
+    us_echo_cm EQU 0x14
     
     ORG 0x000
     GOTO MAIN
@@ -196,7 +200,7 @@ ESPERA_EEPROM_ESCRIURE
 MEDIR
     MOVLW .232
     MOVWF compt_10us
-    BSF LATA,4,0 ; Activem trigger
+    BSF LATA,4,0 ; Trigger a high
 INCR_10us
     INCF compt_10us,1,0
     BTFSS STATUS,C
@@ -204,8 +208,35 @@ INCR_10us
     NOP
     NOP
     NOP
-    BCF LATA,4,0  
-    return
+    BCF LATA,4,0 ;Trigger a low
+    CLRF us_echo_low,0
+    CLRF us_echo_high,0
+    CLRF us_echo_58,0
+ESPERA_ECHO
+    BTFSS PORTA,4,0 ; esperem el echo a high
+    GOTO ESPERA_ECHO
+;COMPTAR_ECHO
+;    INFSNZ us_echo_low,1,0 ; Incrementem el LOW
+;    INCF us_echo_high ; si el LOW passa a 0 incrementem el high
+;    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
+;    GOTO COMPTAR_ECHO
+;        
+;    RETURN
+    
+COMPTAR_58
+    INCF us_echo_58,0
+    MOVLW .1
+    CPFSLT us_echo_58
+    CALL SUMAR_1CM
+    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
+    GOTO COMPTAR_ECHO
+    RETURN
+
+SUMAR_1CM
+    INCF us_echo_cm
+    CLRF us_echo_58,0
+    BTG LATC,0,0
+    RETURN
 ;-------------------------------------------------------------------------------
 ;EUSART
 
