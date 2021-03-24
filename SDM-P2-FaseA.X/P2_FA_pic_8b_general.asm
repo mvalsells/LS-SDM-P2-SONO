@@ -117,20 +117,6 @@ INIT_TIMER
 INIT_EEPROM
     bcf EECON1, EEPGD
     bcf EECON1, CFGS
-    
-    movlw .0		;establir la 1ra adressa a carrier return
-    movwf EEADR,0
-    movff carrier,EEDATA
-    bsf EECON1,WREN
-    bcf INTCON,GIE
-    movlw 55h
-    movwf EECON2,0
-    movlw 0AAh
-    movwf EECON2
-    bsf EECON1,WR
-    call ESPERA_EEPROM_ESCRIURE
-    bsf INTCON,GIE
-    bcf EECON1,WREN
     return
     
 ;-------------------------------------------------------------------------------
@@ -229,7 +215,7 @@ COMPTAR_58
     CPFSLT us_echo_58
     CALL SUMAR_1CM
     BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
-    GOTO COMPTAR_ECHO
+;    GOTO COMPTAR_ECHO
     RETURN
 
 SUMAR_1CM
