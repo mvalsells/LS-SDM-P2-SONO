@@ -135,7 +135,7 @@ MAIN
     call INIT_EEPROM
     call INIT_TIMER
     call CARREGA_TIMER
-    call INIT_ADCON
+    ;call INIT_ADCON
 LOOP
     ;codi
     btfsc PIR1,RCIF,0
@@ -187,7 +187,6 @@ EEPROM_WRITE
 ESPERA_EEPROM_ESCRIURE
     btfsc EECON1,WR
     goto ESPERA_EEPROM_ESCRIURE
-    return
     
 ; Ultrasons
 MEDIR
@@ -202,47 +201,24 @@ INCR_10us
     NOP
     NOP
     BCF LATA,4,0 ;Trigger a low
-    CLRF us_echo_low,0
-    CLRF us_echo_high,0
-    CLRF us_echo_58,0
+        
 ESPERA_ECHO
-    BTFSS PORTA,4,0 ; esperem el echo a high
+    BTFSS PORTA,5,0 ; esperem el echo a high
     GOTO ESPERA_ECHO
-;COMPTAR_ECHO
-;    INFSNZ us_echo_low,1,0 ; Incrementem el LOW
-;    INCF us_echo_high ; si el LOW passa a 0 incrementem el high
-;    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
-;    GOTO COMPTAR_ECHO
-;        
-;    RETURN
-    
-;COMPTAR_58
-;    INCF us_echo_58,0
-;    MOVLW .1
-;    CPFSLT us_echo_58
-;    CALL SUMAR_1CM
-;    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
-;    GOTO COMPTAR_ECHO
-;    RETURN
-;
-;SUMAR_1CM
-;    INCF us_echo_cm
-;    CLRF us_echo_58,0
-;    BTG LATC,0,0
-;    RETURN
-INICI_ECHO    
-    MOVLW .99
-    MOVWF us_echo_58,0
-DECREMENT_58u
-    DCFSNZ us_echo_58,1,0
-    CALL SUMAR_1CM_v2
-    GOTO DECREMENT_58u
-    
-SUMAR_1CM_v2
-   INCF us_echo_cm
-   CLRF us_echo_58
-   BTFSC PORTA,4,0
-   GOTO INICI_ECHO
+    ;BSF LATD,3,0
+    CLRF us_echo_cm,0
+INICI_ECHO
+    MOVLW .64		;1
+    MOVWF us_echo_58,0	;1
+COMPTAR_58
+    INCFSZ us_echo_58,1,0	;1
+    GOTO COMPTAR_58	;2
+    INCF us_echo_cm	;2=1+1
+    BTG LATD,2,0
+    BTFSC PORTA,5,0	;1 Mentre el echo no estigui a low anem comptant
+    GOTO INICI_ECHO	;2
+    MOVFF us_echo_cm,LATD
+    RETURN
 
 ;JOYSTICK-ADCON
 LLEGIR_JOY
@@ -250,16 +226,16 @@ LLEGIR_JOY
 ESPERA_CONVERSIO
    BTFSC ADCON0,1,0
    GOTO ESPERA_CONVERSIO
-   MOVFF ADRESH,LATD
-   RETURN
+   MOVFF ADRESH,LATD ; Ho copiem al 7seg x veure el valor
+   GOTO ESPERA_TX
+   return
 ;-------------------------------------------------------------------------------
 ;EUSART
 
 ESPERA_TX
     BTFSS TXSTA,TRMT,0
     GOTO ESPERA_TX
-    return
-    
+    return    
 LLEGIR_RX
     btfss PIR1,RCIF,0
     goto LLEGIR_RX
