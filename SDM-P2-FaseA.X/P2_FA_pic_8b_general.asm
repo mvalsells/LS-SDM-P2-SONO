@@ -118,7 +118,13 @@ INIT_EEPROM
     bcf EECON1, EEPGD
     bcf EECON1, CFGS
     return
-    
+INIT_ADCON
+    MOVLW b'0001110'
+    MOVWF ADCON2,0
+    MOVLW b'00001110'
+    MOVWF ADCON1,0
+    CLRF ADCON0,0
+    RETURN
 ;-------------------------------------------------------------------------------
 MAIN
     call INIT_VARS
@@ -129,6 +135,7 @@ MAIN
     call INIT_EEPROM
     call INIT_TIMER
     call CARREGA_TIMER
+    call INIT_ADCON
 LOOP
     ;codi
     btfsc PIR1,RCIF,0
@@ -209,20 +216,42 @@ ESPERA_ECHO
 ;        
 ;    RETURN
     
-COMPTAR_58
-    INCF us_echo_58,0
-    MOVLW .1
-    CPFSLT us_echo_58
-    CALL SUMAR_1CM
-    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
+;COMPTAR_58
+;    INCF us_echo_58,0
+;    MOVLW .1
+;    CPFSLT us_echo_58
+;    CALL SUMAR_1CM
+;    BTFSC PORTA,4,0 ; Mentre el echo no estigui a low anem comptant
 ;    GOTO COMPTAR_ECHO
-    RETURN
+;    RETURN
+;
+;SUMAR_1CM
+;    INCF us_echo_cm
+;    CLRF us_echo_58,0
+;    BTG LATC,0,0
+;    RETURN
+INICI_ECHO    
+    MOVLW .99
+    MOVWF us_echo_58,0
+DECREMENT_58u
+    DCFSNZ us_echo_58,1,0
+    CALL SUMAR_1CM_v2
+    GOTO DECREMENT_58u
+    
+SUMAR_1CM_v2
+   INCF us_echo_cm
+   CLRF us_echo_58
+   BTFSC PORTA,4,0
+   GOTO INICI_ECHO
 
-SUMAR_1CM
-    INCF us_echo_cm
-    CLRF us_echo_58,0
-    BTG LATC,0,0
-    RETURN
+;JOYSTICK-ADCON
+LLEGIR_JOY
+   BSF ADCON0,1,0 ; Comencem la conversió
+ESPERA_CONVERSIO
+   BTFSC ADCON0,1,0
+   GOTO ESPERA_CONVERSIO
+   MOVFF ADRESH,LATD
+   RETURN
 ;-------------------------------------------------------------------------------
 ;EUSART
 
@@ -444,6 +473,7 @@ MODE_R;mostrar nom i 200 mesures
 MODE_S
     movff display4,LATD
     ;codi S
+    CALL LLEGIR_JOY
     goto LOOP
 MODE_T
     movff display5,LATD
