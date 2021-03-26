@@ -7,27 +7,29 @@
     CONFIG LVP=OFF	    ;Evitar resets eusart
     
     ;vars
-    display0 EQU 0x00   ; 7seg
-    display1 EQU 0x01
-    display2 EQU 0x02
-    display3 EQU 0x03
-    display4 EQU 0x04
-    display5 EQU 0x05
-    display6 EQU 0x06
-    display7 EQU 0x07
-    display8 EQU 0x08
-    display9 EQU 0x09
-    eusart_input EQU 0x0A   ;entrada per eusart
-    pos_servo EQU 0x0B
-    carrier EQU 0x0C;variable canvi de linia putty
-    eusart_output EQU 0x0D
-    eeprom_addr EQU 0x0E
-    eeprom_data EQU 0x0F
-    compt_10us EQU 0x10
-    us_echo_low EQU 0x11
-    us_echo_high EQU 0x12
-    us_echo_58 EQU 0x13
-    us_echo_cm EQU 0x14
+display0 EQU 0x00   ; 7seg
+display1 EQU 0x01
+display2 EQU 0x02
+display3 EQU 0x03
+display4 EQU 0x04
+display5 EQU 0x05
+display6 EQU 0x06
+display7 EQU 0x07
+display8 EQU 0x08
+display9 EQU 0x09
+eusart_input EQU 0x0A   ;entrada per eusart
+pos_servo EQU 0x0B
+carrier EQU 0x0C;variable canvi de linia putty
+eusart_output EQU 0x0D
+eeprom_addr EQU 0x0E
+eeprom_data EQU 0x0F
+compt_10us EQU 0x10
+us_echo_58 EQU 0x11
+us_echo_cm EQU 0x12
+bn_ascii EQU 0x13
+ascii_u EQU 0x14
+ascii_d EQU 0x15
+ascii_c EQU 0x16
     
     ORG 0x000
     GOTO MAIN
@@ -219,7 +221,50 @@ COMPTAR_58
     GOTO INICI_ECHO	;2
     MOVFF us_echo_cm,LATD
     RETURN
+    
+;Binary -> ASCII
+BN_2_ASCII ;Input: bn_ascii; Output: ascii_c, ascii_d, ascii_u
+    CLRF ascii_u,0
+    CLRF ascii_d,0
+    CLRF ascii_c,0
+BN_2_ASCII_LOOP
+    MOVLW .0
+    CPFSGT bn_ascii,0; Si bn_ascii <=0 -> Fi ASCII
+    GOTO FI_ASCII
+    
+    INCF ascii_u,f,0
+    MOVLW .10
+    CPFSLT ascii_u,0 ; Si >=10 anem a desenes
+    GOTO DESENES_ASCII
+    GOTO BN_2_ASCII_LOOP_FI
 
+DESENES_ASCII
+    CLRF ascii_u,0
+    INCF ascii_d,f,0
+    MOVLW .10
+    CPFSLT ascii_d,0 ; Si >=10 anem a centenes
+    GOTO CENTENES_ASCII
+    GOTO BN_2_ASCII_LOOP_FI
+    
+CENTENES_ASCII
+    CLRF ascii_d,0
+    INCF ascii_c,f,0
+    
+BN_2_ASCII_LOOP_FI
+    DCFSNZ bn_ascii,f,0 ; Decrementem, bn_ascii=0 -> Fi, !=0 -> Loop
+    GOTO FI_ASCII
+    GOTO BN_2_ASCII_LOOP
+    
+    
+FI_ASCII
+    MOVLW .48
+    ADDWF ascii_u,f,0
+    MOVLW .48
+    ADDWF ascii_d,f,0
+    MOVLW .48
+    ADDWF ascii_c,f,0
+    RETURN
+    
 ;JOYSTICK-ADCON
 LLEGIR_JOY
    BSF ADCON0,1,0 ; Comencem la conversió
@@ -317,7 +362,16 @@ NEXT_U
 ;-------------------------------
 MODE_A
     movff display7,LATD
-    
+    MOVLW .104
+    MOVWF bn_ascii,0
+    CALL BN_2_ASCII
+    MOVFF ascii_c,TXREG
+    CALL ESPERA_TX
+    MOVFF ascii_d,TXREG
+    CALL ESPERA_TX
+    MOVFF ascii_u,TXREG
+    CALL ESPERA_TX
+    CALL TX_ENTER
     ;acabat
     GOTO LOOP
 MODE_D
@@ -345,29 +399,29 @@ MODE_I
     movwf eeprom_addr
     
     ;llegir
-    LLEGIR_I
-    
-	call LLEGIR_RX
-	movff eusart_input,eeprom_data
-	call EEPROM_WRITE
-	
-	movlw '\r';esperem a un enter
-	cpfseq eusart_input,0
-	goto NO_ENTER
-	goto ACABAT_I
-	NO_ENTER
-	    incf eeprom_addr;seguent adr
-	    movlw .120		;mirar si >120
-	    cpfseq eeprom_addr,0
-	    goto LLEGIR_I
-	   
-	ACABAT_I
-	    call TX_ENTER
-	     ;guardar un carrier return extra
-	    movlw b'00001101'
-	    movwf eeprom_data
-	    call EEPROM_WRITE
-    
+LLEGIR_I
+
+    call LLEGIR_RX
+    movff eusart_input,eeprom_data
+    call EEPROM_WRITE
+
+    movlw '\r';esperem a un enter
+    cpfseq eusart_input,0
+    goto NO_ENTER
+    goto ACABAT_I
+NO_ENTER
+    incf eeprom_addr;seguent adr
+    movlw .120		;mirar si >120
+    cpfseq eeprom_addr,0
+    goto LLEGIR_I
+
+ACABAT_I
+    call TX_ENTER
+     ;guardar un carrier return extra
+    movlw b'00001101'
+    movwf eeprom_data
+    call EEPROM_WRITE
+
     ;acabat
     goto LOOP
     
@@ -402,7 +456,7 @@ MODE_R;mostrar nom i 200 mesures
     movlw .0 ;reinici adressa
     movwf eeprom_addr
     
-    BUCLE_NOM
+BUCLE_NOM
     ;call ESPERA_TX
     call EEPROM_READ
     movff eeprom_data, TXREG
@@ -414,12 +468,12 @@ MODE_R;mostrar nom i 200 mesures
     movwf TXREG,0
     call ESPERA_TX
     goto MOSTRA_MESURES
-    CONTINUA_NOM
-	incf eeprom_addr
-	goto BUCLE_NOM  
+CONTINUA_NOM
+    incf eeprom_addr
+    goto BUCLE_NOM  
     
     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
-    MOSTRA_MESURES
+MOSTRA_MESURES
     movlw 'M'
     movwf TXREG,0
     call ESPERA_TX
@@ -461,4 +515,4 @@ MODE_U
     ;Acabat
     GOTO LOOP
 
-END
+    END
