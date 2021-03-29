@@ -36,6 +36,8 @@ ram_200 EQU 0x19
 fsr_h EQU 0x1A
 fsr_l EQU 0x1B
 tmp EQU 0x1C
+tmp2 EQU 0x1D
+count_pwm EQU 0x1E
 
    
     ORG 0x000
@@ -96,6 +98,9 @@ INIT_VARS
     MOVLW .200
     MOVWF ram_addr_count,0
     CLRF ram_200,0
+    
+    clrf count_pwm,0
+    
     return
 INIT_EUSART
     movlw b'00100100'
@@ -147,7 +152,6 @@ MAIN
     call INIT_ADCON
 LOOP
     ;codi
-    bsf LATC,0,0
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
     goto LOOP
@@ -156,6 +160,38 @@ HIGH_RSI
     BCF INTCON,TMR0IF,0;quan salti una interrupcio qualsevol, nomes tenim timer0 de moment
     call CARREGA_TIMER;reiniciem el timer
     bsf LATA,2,0;reactivem el pin del servo
+    
+    movlw .250
+    movwf tmp,0
+BUCLE_PWM_05
+    movlw .5
+    movwf tmp2,0
+BUCLE2_PWM_05
+    decfsz tmp2,f,0
+    goto BUCLE2_PWM_05
+    decfsz tmp
+    goto BUCLE_PWM_05
+    
+    ;pwm 2
+    movlw .0
+    cpfsgt count_pwm,0
+    goto END_PWM
+   
+    movff count_pwm, tmp2
+BUCLE_PWM_COPS
+    movlw .21
+    movwf tmp,0
+BUCLE_PWM_GRAUS
+    NOP
+    NOP
+    decfsz tmp,f,0
+    goto BUCLE_PWM_GRAUS
+    decfsz tmp2,0
+    goto BUCLE_PWM_COPS
+    
+    
+END_PWM
+    bcf LATA,2,0;apaga servo
     retfie FAST
     
 ;TIMER
@@ -312,6 +348,7 @@ ESPERA_CONVERSIO
    CALL TX_BN_2_ASCII
    CALL TX_ENTER
    RETURN
+   
 ;-------------------------------------------------------------------------------
 ;EUSART
 
@@ -342,8 +379,6 @@ LECTOR_EUSART
     movf RCREG,0,0
     movwf eusart_input,0
     movff eusart_input,TXREG
-    bcf LATC,0,0
-   ; movff eusart_input,LATD ;DEBUGGING
     call ESPERA_TX
     call TX_ENTER
     ;Canvi de mode, apaguem els LEDS i el 7 seg
@@ -401,33 +436,57 @@ NEXT_U
 ;-------------------------------
 MODE_A
     movff display7,LATD
-    MOVLW .104
-    MOVWF bn_ascii,0
-    CALL BN_2_ASCII
-    MOVFF ascii_c,TXREG
-    CALL ESPERA_TX
-    MOVFF ascii_d,TXREG
-    CALL ESPERA_TX
-    MOVFF ascii_u,TXREG
-    CALL ESPERA_TX
-    CALL TX_ENTER
+    BSF LATC,0,0
+    BSF LATC,1,0
     ;acabat
+    BCF LATC,0,0
+    BCF LATC,1,0
     GOTO LOOP
 MODE_D
-    movff display3,LATD
-    ;pulsadors +5º -5º per pulsador
-    btfsc PORTB,2,0
-    GOTO MirarRB1
-    MOVLW .180
-    CPFSEQ pos_servo,0 
-;    call moure_5graus_mes
-MirarRB1    
-    btfss PORTB,1,0
-    btg LATC,1,0
+    ;movff display3,LATD
+    ;pulsadors +5º -5º per pulsados
     
-   ; GOTO MODE_D
+    
+    incf count_pwm,1
+    movff count_pwm, LATD
+    
+    ;boto incrementa
+;    movlw .180 ;valor maxim
+;    cpfseq count_pwm
+;    goto SI_INCR
+;    goto NEXT_BTN
+;SI_INCR
+;    incf count_pwm,f,0
+;    incf count_pwm,f,0
+;    incf count_pwm,f,0
+;    incf count_pwm,f,0
+;    incf count_pwm,f,0
+;    
+;    
+;NEXT_BTN
+;    btfss LATB,2,0
+;    goto FI_D
+;    
+;    ;boto decrementa
+;    movlw .0 ;valor minim
+;    cpfseq count_pwm
+;    goto SI_DEC
+;    goto FI_D
+;SI_DEC
+;    decf count_pwm,f,0
+;    decf count_pwm,f,0
+;    decf count_pwm,f,0
+;    decf count_pwm,f,0
+;    decf count_pwm,f,0
+;    
+;    
+;    
     ;acabat
     goto LOOP
+FI_D
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_D
     
 
 MODE_I
@@ -567,6 +626,7 @@ MODE_T
     ;codi T
     goto LOOP
 MODE_U
+    BSF LATC,0,0
     call MEDIR
     MOVFF us_echo_cm,bn_ascii
     CALL BN_2_ASCII
@@ -578,7 +638,9 @@ MODE_U
     MOVWF TXREG
     CALL ESPERA_TX
     CALL TX_ENTER
+    
     ;Acabat
+    BCF LATC,0,0
     GOTO LOOP
 
     END

@@ -1,0 +1,158 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Mon Mar 29 10:07:34 2021
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000004    program   0x000002
+                   .org_1       code   0x000008    program   0x000004
+                   .org_2       code   0x000018    program   0x00040c
+                    dbgP0       code   0x001dc0    program   0x000240
+.config_300001_BUILD/DEFAULT/DEBUG/P2_FA_PIC_8B    romdata   0x300001    program   0x000001
+.config_300003_BUILD/DEFAULT/DEBUG/P2_FA_PIC_8B    romdata   0x300003    program   0x000001
+.config_300005_BUILD/DEFAULT/DEBUG/P2_FA_PIC_8B    romdata   0x300005    program   0x000001
+.config_300006_BUILD/DEFAULT/DEBUG/P2_FA_PIC_8B    romdata   0x300006    program   0x000001
+                    dbgD0      udata   0x0001f4       data   0x00000c
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000005      
+                            0x000008    0x00000b      
+                            0x000018    0x000423      
+                            0x001dc0    0x001fff      
+                            0x300001    0x300001      
+                            0x300003    0x300003      
+                            0x300005    0x300006      
+            1626 out of 8472 program addresses used, program memory utilization is 19%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 ACABAT_I   0x0002fe    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               BN_2_ASCII   0x000172    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+          BN_2_ASCII_LOOP   0x000178    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+       BN_2_ASCII_LOOP_FI   0x0001a2    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+         BUCLE_LLEGIR_RAM   0x0003c6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                BUCLE_NOM   0x00034c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            CARREGA_TIMER   0x0000e0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+           CENTENES_ASCII   0x00019e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               COMPTAR_58   0x00014e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             CONTINUA_NOM   0x00036c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            DESENES_ASCII   0x00018e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              EEPROM_READ   0x0000ea    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             EEPROM_WRITE   0x0000fa    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+         ESPERA_CONVERSIO   0x0001d6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              ESPERA_ECHO   0x000142    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+   ESPERA_EEPROM_ESCRIURE   0x000124    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                ESPERA_TX   0x000202    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 FI_ASCII   0x0001ac    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 HIGH_RSI   0x0000d6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                INCR_10us   0x000132    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INICI_ECHO   0x00014a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INIT_ADCON   0x0000a0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              INIT_EEPROM   0x00009a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              INIT_EUSART   0x000074    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             INIT_INTCONS   0x00008a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INIT_PORTS   0x00001a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INIT_TIMER   0x000094    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                INIT_VARS   0x000038    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            LECTOR_EUSART   0x000230    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 LLEGIR_I   0x0002dc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               LLEGIR_JOY   0x0001d4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                LLEGIR_RX   0x00020a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                     LOOP   0x0000cc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                     MAIN   0x0000ac    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                    MEDIR   0x00012c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_A   0x0002ae    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_D   0x0002be    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_I   0x0002d4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_M   0x00030e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_R   0x00031c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_S   0x0003e4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_T   0x0003f0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_U   0x0003f8    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+           MOSTRA_MESURES   0x000372    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 MirarRB1   0x0002cc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_A   0x000252    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_D   0x00025e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_I   0x00026a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_M   0x000276    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_R   0x000282    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_S   0x00028e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_T   0x00029a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_U   0x0002a6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 NO_ENTER   0x0002f4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                RAM_WRITE   0x00011a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            TX_BN_2_ASCII   0x0001ba    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 TX_ENTER   0x00021e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+               INIT_PORTS   0x00001a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                INIT_VARS   0x000038    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              INIT_EUSART   0x000074    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             INIT_INTCONS   0x00008a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INIT_TIMER   0x000094    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              INIT_EEPROM   0x00009a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INIT_ADCON   0x0000a0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                     MAIN   0x0000ac    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                     LOOP   0x0000cc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 HIGH_RSI   0x0000d6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            CARREGA_TIMER   0x0000e0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              EEPROM_READ   0x0000ea    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             EEPROM_WRITE   0x0000fa    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                RAM_WRITE   0x00011a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+   ESPERA_EEPROM_ESCRIURE   0x000124    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                    MEDIR   0x00012c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                INCR_10us   0x000132    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+              ESPERA_ECHO   0x000142    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               INICI_ECHO   0x00014a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               COMPTAR_58   0x00014e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               BN_2_ASCII   0x000172    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+          BN_2_ASCII_LOOP   0x000178    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            DESENES_ASCII   0x00018e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+           CENTENES_ASCII   0x00019e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+       BN_2_ASCII_LOOP_FI   0x0001a2    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 FI_ASCII   0x0001ac    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            TX_BN_2_ASCII   0x0001ba    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+               LLEGIR_JOY   0x0001d4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+         ESPERA_CONVERSIO   0x0001d6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                ESPERA_TX   0x000202    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                LLEGIR_RX   0x00020a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 TX_ENTER   0x00021e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+            LECTOR_EUSART   0x000230    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_A   0x000252    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_D   0x00025e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_I   0x00026a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_M   0x000276    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_R   0x000282    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_S   0x00028e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_T   0x00029a    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   NEXT_U   0x0002a6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_A   0x0002ae    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_D   0x0002be    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 MirarRB1   0x0002cc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_I   0x0002d4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 LLEGIR_I   0x0002dc    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 NO_ENTER   0x0002f4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                 ACABAT_I   0x0002fe    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_M   0x00030e    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_R   0x00031c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                BUCLE_NOM   0x00034c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+             CONTINUA_NOM   0x00036c    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+           MOSTRA_MESURES   0x000372    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+         BUCLE_LLEGIR_RAM   0x0003c6    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_S   0x0003e4    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_T   0x0003f0    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+                   MODE_U   0x0003f8    program     static /home/mvalsells/LS-SDM-P2-SONO/SDM-P2-FaseA.X/P2_FA_pic_8b_general.asm
+
+
