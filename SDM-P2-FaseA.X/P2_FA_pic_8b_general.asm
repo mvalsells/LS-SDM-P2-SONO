@@ -30,17 +30,11 @@ bn_ascii EQU 0x13
 ascii_u EQU 0x14
 ascii_d EQU 0x15
 ascii_c EQU 0x16
-ram_data EQU 0x17
-ram_addr_count EQU 0x18
-ram_200 EQU 0x19
-fsr_h EQU 0x1A
-fsr_l EQU 0x1B
-tmp EQU 0x1C
-tmp2 EQU 0x1D
-count_pwm EQU 0x1E
-tmp3 EQU 0x1F
-tmp4 EQU 0x20
-
+tmp EQU 0x17
+tmp2 EQU 0x18
+count_pwm EQU 0x19
+tmp3 EQU 0x1A
+tmp4 EQU 0x1B
    
     ORG 0x000
     GOTO MAIN
@@ -93,13 +87,6 @@ INIT_VARS
     movwf display9,0
     movlw b'00001101';posem un carrier reurn a temp
     movwf carrier,0
-    MOVLW HIGH(0x100)
-    MOVWF FSR1H,0
-    MOVLW LOW(0x100)
-    MOVWF FSR1L,0
-    MOVLW .200
-    MOVWF ram_addr_count,0
-    CLRF ram_200,0
     
     clrf count_pwm,0
     
@@ -231,12 +218,6 @@ EEPROM_WRITE
     bsf INTCON,GIE
     bcf EECON1,WREN
     return
-    
-;RAM WRITE
-RAM_WRITE
-    LFSR 1,POSTINC1
-    MOVFF ram_data,INDF1
-    RETURN
 
 ESPERA_EEPROM_ESCRIURE
     BTFSC EECON1,WR
@@ -273,13 +254,8 @@ COMPTAR_58
     GOTO INICI_ECHO	;2
     DECF us_echo_cm,f,0
     
-    MOVFF us_echo_cm,ram_data
-    CALL RAM_WRITE
-    DECFSZ ram_addr_count,f,0
-    RETURN
-    MOVLW .200
-    MOVWF ram_addr_count,0
-    SETF ram_200,0
+    ;guardar a ram
+    ;guardar a ram
     RETURN
     
 ;Binary -> ASCII
@@ -384,11 +360,6 @@ LECTOR_EUSART
     movff eusart_input,TXREG
     call ESPERA_TX
     call TX_ENTER
-    ;Canvi de mode, apaguem els LEDS i el 7 seg
-    ;REVISAR SI ES OK EN CAS DE QUE POSSIN UNA LLETRA INCORRECTE
-    CLRF LATD,0
-    BCF LATC,0,0
-    BCF LATC,1,0
     movlw 'A'
     CPFSEQ eusart_input,0
     goto NEXT_A
@@ -429,8 +400,12 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
-    goto LOOP
-    ;no s'ha clicat cap tecla si arriba aqui
+    btfsc PORTB,0,0;mode u per boto, fer mesura
+    goto LOOP;no s'ha clicat cap tecla si arriba aqui
+    goto MODE_U
+    ;boto clicat
+    
+    
     
     
     
@@ -617,22 +592,7 @@ MOSTRA_MESURES
     call ESPERA_TX
     call TX_ENTER
     ;LLEGIR RAM
-    MOVFF FSR1H,fsr_h
-    MOVFF FSR1L,fsr_l
-    MOVLW LOW(0x100)
-    MOVWF FSR1L,0
-    MOVLW HIGH(0x100)
-    MOVWF FSR1H,0
-    MOVLW .200
-    MOVWF tmp,0
-BUCLE_LLEGIR_RAM
-    LFSR 1,FSR1
-    MOVFF POSTINC1,bn_ascii
-    CALL BN_2_ASCII
-    CALL TX_BN_2_ASCII
-    CALL TX_ENTER
-    DECFSZ tmp,f,0
-    GOTO BUCLE_LLEGIR_RAM
+    
         
     ;acabat
     goto LOOP
