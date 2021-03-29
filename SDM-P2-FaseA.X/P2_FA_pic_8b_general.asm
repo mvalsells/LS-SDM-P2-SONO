@@ -30,7 +30,9 @@ bn_ascii EQU 0x13
 ascii_u EQU 0x14
 ascii_d EQU 0x15
 ascii_c EQU 0x16
-    
+TMP EQU 0x17
+TMP_2 EQU 0x18
+   
     ORG 0x000
     GOTO MAIN
     ORG 0x008
@@ -57,12 +59,6 @@ INIT_PORTS
     clrf TRISD,0
     movlw b'00000000';apagar 7seg
     movwf LATD,0
-    ;ADCON
-    bsf ADCON0,ADON,0
-    movlw b'00001110'
-    movwf ADCON1,0
-    movlw b'00001000'
-    movwf ADCON2,0
     return
     
 INIT_VARS
@@ -114,18 +110,19 @@ INIT_INTCONS
 INIT_TIMER
     MOVLW b'10010001'
     MOVWF T0CON,0
-    return
+    RETURN
     
 INIT_EEPROM
-    bcf EECON1, EEPGD
-    bcf EECON1, CFGS
-    return
+    BCF EECON1, EEPGD
+    BCF EECON1, CFGS
+    RETURN
+    
 INIT_ADCON
-    MOVLW b'0001110'
+    MOVLW b'00001110'
     MOVWF ADCON2,0
     MOVLW b'00001110'
     MOVWF ADCON1,0
-    CLRF ADCON0,0
+    BSF ADCON0,ADON,0
     RETURN
 ;-------------------------------------------------------------------------------
 MAIN
@@ -137,7 +134,7 @@ MAIN
     call INIT_EEPROM
     call INIT_TIMER
     call CARREGA_TIMER
-    ;call INIT_ADCON
+    call INIT_ADCON
 LOOP
     ;codi
     btfsc PIR1,RCIF,0
@@ -187,8 +184,9 @@ EEPROM_WRITE
 	
 
 ESPERA_EEPROM_ESCRIURE
-    btfsc EECON1,WR
-    goto ESPERA_EEPROM_ESCRIURE
+    BTFSC EECON1,WR
+    GOTO ESPERA_EEPROM_ESCRIURE
+    RETURN
     
 ; Ultrasons
 MEDIR
@@ -254,8 +252,7 @@ BN_2_ASCII_LOOP_FI
     DCFSNZ bn_ascii,f,0 ; Decrementem, bn_ascii=0 -> Fi, !=0 -> Loop
     GOTO FI_ASCII
     GOTO BN_2_ASCII_LOOP
-    
-    
+        
 FI_ASCII
     MOVLW .48
     ADDWF ascii_u,f,0
@@ -265,15 +262,30 @@ FI_ASCII
     ADDWF ascii_c,f,0
     RETURN
     
+; ASCII -> EUSART    
+TX_BN_2_ASCII
+    MOVFF ascii_c,TXREG
+    CALL ESPERA_TX
+    MOVFF ascii_d,TXREG
+    CALL ESPERA_TX
+    MOVFF ascii_u,TXREG
+    CALL ESPERA_TX
+    CALL TX_ENTER
+    RETURN
+    
 ;JOYSTICK-ADCON
 LLEGIR_JOY
    BSF ADCON0,1,0 ; Comencem la conversió
 ESPERA_CONVERSIO
    BTFSC ADCON0,1,0
    GOTO ESPERA_CONVERSIO
-   MOVFF ADRESH,LATD ; Ho copiem al 7seg x veure el valor
-   GOTO ESPERA_TX
-   return
+   MOVFF ADRESH,bn_ascii
+   CALL BN_2_ASCII
+   CALL TX_BN_2_ASCII
+   MOVFF ADRESL,bn_ascii
+   CALL BN_2_ASCII
+   CALL TX_BN_2_ASCII
+   RETURN
 ;-------------------------------------------------------------------------------
 ;EUSART
 
@@ -504,7 +516,7 @@ MODE_S
     movff display4,LATD
     ;codi S
     CALL LLEGIR_JOY
-    goto LOOP
+    GOTO LOOP
 MODE_T
     movff display5,LATD
     ;codi T
