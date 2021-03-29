@@ -30,8 +30,13 @@ bn_ascii EQU 0x13
 ascii_u EQU 0x14
 ascii_d EQU 0x15
 ascii_c EQU 0x16
-TMP EQU 0x17
-TMP_2 EQU 0x18
+ram_data EQU 0x17
+ram_addr_count EQU 0x18
+ram_200 EQU 0x19
+fsr_h EQU 0x1A
+fsr_l EQU 0x1B
+tmp EQU 0x1C
+
    
     ORG 0x000
     GOTO MAIN
@@ -84,8 +89,13 @@ INIT_VARS
     movwf display9,0
     movlw b'00001101';posem un carrier reurn a temp
     movwf carrier,0
-    ;nom db "Nom: "
-    ;mesures db "Mesures: "
+    MOVLW HIGH(0x100)
+    MOVWF FSR1H,0
+    MOVLW LOW(0x100)
+    MOVWF FSR1L,0
+    MOVLW .200
+    MOVWF ram_addr_count,0
+    CLRF ram_200,0
     return
 INIT_EUSART
     movlw b'00100100'
@@ -137,6 +147,7 @@ MAIN
     call INIT_ADCON
 LOOP
     ;codi
+    bsf LATC,0,0
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
     goto LOOP
@@ -181,7 +192,12 @@ EEPROM_WRITE
     bsf INTCON,GIE
     bcf EECON1,WREN
     return
-	
+    
+;RAM WRITE
+RAM_WRITE
+    LFSR 1,POSTINC1
+    MOVFF ram_data,INDF1
+    RETURN
 
 ESPERA_EEPROM_ESCRIURE
     BTFSC EECON1,WR
@@ -208,16 +224,23 @@ ESPERA_ECHO
     ;BSF LATD,3,0
     CLRF us_echo_cm,0
 INICI_ECHO
-    MOVLW .64		;1
+    MOVLW .60 ;64		;1
     MOVWF us_echo_58,0	;1
 COMPTAR_58
-    INCFSZ us_echo_58,1,0	;1
+    INCFSZ us_echo_58,f,0	;1
     GOTO COMPTAR_58	;2
-    INCF us_echo_cm	;2=1+1
-    BTG LATD,2,0
+    INCF us_echo_cm,f,0	;2=1+1
     BTFSC PORTA,5,0	;1 Mentre el echo no estigui a low anem comptant
     GOTO INICI_ECHO	;2
-    MOVFF us_echo_cm,LATD
+    DECF us_echo_cm,f,0
+    
+    MOVFF us_echo_cm,ram_data
+    CALL RAM_WRITE
+    DECFSZ ram_addr_count,f,0
+    RETURN
+    MOVLW .200
+    MOVWF ram_addr_count,0
+    SETF ram_200,0
     RETURN
     
 ;Binary -> ASCII
@@ -270,7 +293,6 @@ TX_BN_2_ASCII
     CALL ESPERA_TX
     MOVFF ascii_u,TXREG
     CALL ESPERA_TX
-    CALL TX_ENTER
     RETURN
     
 ;JOYSTICK-ADCON
@@ -282,9 +304,13 @@ ESPERA_CONVERSIO
    MOVFF ADRESH,bn_ascii
    CALL BN_2_ASCII
    CALL TX_BN_2_ASCII
+   MOVLW '-'
+   MOVWF TXREG,0
+   CALL ESPERA_TX
    MOVFF ADRESL,bn_ascii
    CALL BN_2_ASCII
    CALL TX_BN_2_ASCII
+   CALL TX_ENTER
    RETURN
 ;-------------------------------------------------------------------------------
 ;EUSART
@@ -316,6 +342,7 @@ LECTOR_EUSART
     movf RCREG,0,0
     movwf eusart_input,0
     movff eusart_input,TXREG
+    bcf LATC,0,0
    ; movff eusart_input,LATD ;DEBUGGING
     call ESPERA_TX
     call TX_ENTER
@@ -510,6 +537,24 @@ MOSTRA_MESURES
     movwf TXREG,0
     call ESPERA_TX
     call TX_ENTER
+    ;LLEGIR RAM
+    MOVFF FSR1H,fsr_h
+    MOVFF FSR1L,fsr_l
+    MOVLW LOW(0x100)
+    MOVWF FSR1L,0
+    MOVLW HIGH(0x100)
+    MOVWF FSR1H,0
+    MOVLW .200
+    MOVWF tmp,0
+BUCLE_LLEGIR_RAM
+    LFSR 1,FSR1
+    MOVFF POSTINC1,bn_ascii
+    CALL BN_2_ASCII
+    CALL TX_BN_2_ASCII
+    CALL TX_ENTER
+    DECFSZ tmp,f,0
+    GOTO BUCLE_LLEGIR_RAM
+        
     ;acabat
     goto LOOP
 MODE_S
@@ -523,7 +568,16 @@ MODE_T
     goto LOOP
 MODE_U
     call MEDIR
-    
+    MOVFF us_echo_cm,bn_ascii
+    CALL BN_2_ASCII
+    CALL TX_BN_2_ASCII
+    MOVLW 'c'
+    MOVWF TXREG
+    CALL ESPERA_TX
+    MOVLW 'm'
+    MOVWF TXREG
+    CALL ESPERA_TX
+    CALL TX_ENTER
     ;Acabat
     GOTO LOOP
 
