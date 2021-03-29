@@ -442,7 +442,7 @@ MODE_A
     BCF LATC,1,0
     GOTO LOOP
 MODE_D
-    ;movff display3,LATD
+    movff display3,LATD
     ;pulsadors +5º -5º per pulsados
     
     BTFSC PORTB,1,0
@@ -451,7 +451,6 @@ MODE_D
     movlw .176 ;valor maxim
     cpfslt count_pwm
     goto NEXT_BTN
-    btg LATC,1,0
     incf count_pwm,f,0
     incf count_pwm,f,0
     incf count_pwm,f,0
@@ -468,7 +467,6 @@ NEXT_BTN
     movlw .4 ;valor minim
     cpfsgt count_pwm
     goto FI_D
-    btg LATC,0,0
     decf count_pwm,f,0
     decf count_pwm,f,0
     decf count_pwm,f,0
@@ -482,7 +480,6 @@ ESPERA_BTN2
     
     
 FI_D
-    movff count_pwm, LATD
     
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
