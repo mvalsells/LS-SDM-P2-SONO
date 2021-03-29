@@ -426,7 +426,6 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
-    call MEDIR
     goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
     
