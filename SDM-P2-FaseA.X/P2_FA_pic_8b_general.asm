@@ -54,7 +54,7 @@ INIT_PORTS
     bcf LATA,2,0
     bcf LATA,4,0
     ;B
-    movlw b'11100110'
+    movlw b'11100111'
     movwf TRISB,0
     bcf INTCON2,RBPU,0
     ;C
@@ -119,8 +119,6 @@ INIT_INTCONS
     MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
     MOVWF INTCON,0
     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
-    ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
-    ;MOVWF INTCON2,0
     return
 INIT_TIMER
     MOVLW b'10010001'
@@ -426,7 +424,6 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
-    call MEDIR
     goto LOOP
     ;no s'ha clicat cap tecla si arriba aqui
     
@@ -446,44 +443,37 @@ MODE_D
     ;movff display3,LATD
     ;pulsadors +5º -5º per pulsados
     
-    INCF count_pwm,f,0
-    movff count_pwm, LATD
     
     ;boto incrementa
-;    movlw .180 ;valor maxim
-;    cpfseq count_pwm
-;    goto SI_INCR
-;    goto NEXT_BTN
-;SI_INCR
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    
-;    
-;NEXT_BTN
-;    btfss LATB,2,0
-;    goto FI_D
-;    
-;    
-;    
+    BTFSC LATB,1,0
+    goto NEXT_BTN
+    
+    movlw .176 ;valor maxim
+    cpfslt count_pwm
+    goto NEXT_BTN
+    
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    
+NEXT_BTN
+    btfsc LATB,2,0
+    goto FI_D
+
     ;boto decrementa
-;    movlw .0 ;valor minim
-;    cpfseq count_pwm
-;    goto SI_DEC
-;    goto FI_D
-;SI_DEC
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    
-;    
-;    
+    movlw .4 ;valor minim
+    cpfsgt count_pwm
+    goto FI_D
+    
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    
     ;acabat
-    goto LOOP
 FI_D
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
