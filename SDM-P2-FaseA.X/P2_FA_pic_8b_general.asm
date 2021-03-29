@@ -54,7 +54,7 @@ INIT_PORTS
     bcf LATA,2,0
     bcf LATA,4,0
     ;B
-    movlw b'11100110'
+    movlw b'11100111'
     movwf TRISB,0
     bcf INTCON2,RBPU,0
     ;C
@@ -445,45 +445,45 @@ MODE_D
     ;movff display3,LATD
     ;pulsadors +5º -5º per pulsados
     
-    INCF count_pwm,f,0
+    BTFSC PORTB,1,0
+    goto NEXT_BTN
+    
+    movlw .176 ;valor maxim
+    cpfslt count_pwm
+    goto NEXT_BTN
+    btg LATC,1,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+ESPERA_BTN1
+    btfss PORTB,1,0
+    goto ESPERA_BTN1
+    
+NEXT_BTN
+    btfsc PORTB,2,0
+    goto FI_D
+
+    movlw .4 ;valor minim
+    cpfsgt count_pwm
+    goto FI_D
+    btg LATC,0,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+ESPERA_BTN2
+    btfss PORTB,2,0
+    goto ESPERA_BTN2
+
+    
+    
+    
+FI_D
     movff count_pwm, LATD
     
-    ;boto incrementa
-;    movlw .180 ;valor maxim
-;    cpfseq count_pwm
-;    goto SI_INCR
-;    goto NEXT_BTN
-;SI_INCR
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    incf count_pwm,f,0
-;    
-;    
-;NEXT_BTN
-;    btfss LATB,2,0
-;    goto FI_D
-;    
-;    
-;    
-    ;boto decrementa
-;    movlw .0 ;valor minim
-;    cpfseq count_pwm
-;    goto SI_DEC
-;    goto FI_D
-;SI_DEC
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    decf count_pwm,f,0
-;    
-;    
-;    
-    ;acabat
-    goto LOOP
-FI_D
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
     goto MODE_D
