@@ -179,14 +179,14 @@ BUCLE2_PWM_05
    
     movff count_pwm, tmp2
 BUCLE_PWM_COPS
-    movlw .21
+    movlw .20
     movwf tmp,0
 BUCLE_PWM_GRAUS
     NOP
     NOP
     decfsz tmp,f,0
     goto BUCLE_PWM_GRAUS
-    decfsz tmp2,0
+    decfsz tmp2,f,0
     goto BUCLE_PWM_COPS
     
     
@@ -446,8 +446,7 @@ MODE_D
     ;movff display3,LATD
     ;pulsadors +5º -5º per pulsados
     
-    
-    incf count_pwm,1
+    INCF count_pwm,f,0
     movff count_pwm, LATD
     
     ;boto incrementa
@@ -467,7 +466,9 @@ MODE_D
 ;    btfss LATB,2,0
 ;    goto FI_D
 ;    
-;    ;boto decrementa
+;    
+;    
+    ;boto decrementa
 ;    movlw .0 ;valor minim
 ;    cpfseq count_pwm
 ;    goto SI_DEC
