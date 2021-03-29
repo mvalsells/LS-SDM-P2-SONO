@@ -38,6 +38,8 @@ fsr_l EQU 0x1B
 tmp EQU 0x1C
 tmp2 EQU 0x1D
 count_pwm EQU 0x1E
+tmp3 EQU 0x1F
+tmp4 EQU 0x20
 
    
     ORG 0x000
@@ -161,10 +163,11 @@ HIGH_RSI
     call CARREGA_TIMER;reiniciem el timer
     bsf LATA,2,0;reactivem el pin del servo
     
-    movlw .250
+    ;pwm 20ms + extra del nostre motor
+    movlw .250;250
     movwf tmp,0
 BUCLE_PWM_05
-    movlw .5
+    movlw .6;5
     movwf tmp2,0
 BUCLE2_PWM_05
     decfsz tmp2,f,0
@@ -172,7 +175,7 @@ BUCLE2_PWM_05
     decfsz tmp
     goto BUCLE_PWM_05
     
-    ;pwm 2
+    ;pwm angle precis
     movlw .0
     cpfsgt count_pwm,0
     goto END_PWM
@@ -444,11 +447,18 @@ MODE_A
 MODE_D
     movff display3,LATD
     ;pulsadors +5º -5º per pulsados
+
     
     BTFSC PORTB,1,0
     goto NEXT_BTN
+    ;control rebots
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSC PORTB,1,0
+    goto NEXT_BTN
     
-    movlw .176 ;valor maxim
+    
+    movlw .175 ;valor maxim
     cpfslt count_pwm
     goto NEXT_BTN
     incf count_pwm,f,0
@@ -461,9 +471,15 @@ ESPERA_BTN1
     goto ESPERA_BTN1
     
 NEXT_BTN
+    
     btfsc PORTB,2,0
     goto FI_D
-
+    ;control rebots
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSC PORTB,2,0
+    goto FI_D
+    
     movlw .4 ;valor minim
     cpfsgt count_pwm
     goto FI_D
@@ -475,17 +491,24 @@ NEXT_BTN
 ESPERA_BTN2
     btfss PORTB,2,0
     goto ESPERA_BTN2
-
-    
-    
-    
+ 
 FI_D
     
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
     goto MODE_D
     
-
+CONTROL_REBOTS
+    setf tmp3,0
+BUCLE_D_1
+    setf tmp4,0
+BUCLE2_D_1
+    decfsz tmp4,f,0
+    goto BUCLE2_D_1
+    decfsz tmp3,f,0
+    goto BUCLE_D_1
+    return
+    
 MODE_I
     ;fixar 7seg a 0
     movff display0,LATD

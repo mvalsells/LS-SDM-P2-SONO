@@ -1,4 +1,4 @@
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  1
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -55,682 +55,705 @@ Warning[215]: Processor superseded by command line.  Verify processor symbol.
   0000001C            00038 tmp EQU 0x1C
   0000001D            00039 tmp2 EQU 0x1D
   0000001E            00040 count_pwm EQU 0x1E
-                      00041 
-                      00042    
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  2
+  0000001F            00041 tmp3 EQU 0x1F
+  00000020            00042 tmp4 EQU 0x20
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00043     ORG 0x000
-000000 EF?? F???      00044     GOTO MAIN
-                      00045     ORG 0x008
-000008 EF?? F???      00046     GOTO HIGH_RSI
-                      00047     ORG 0x018
-000018 0011           00048     retfie FAST
-                      00049 
-00001A                00050 INIT_PORTS
-                      00051     ;A
-00001A 0E23           00052     movlw b'00100011'
-00001C 6E92           00053     movwf TRISA,0
-00001E 9489           00054     bcf LATA,2,0
-000020 9889           00055     bcf LATA,4,0
-                      00056     ;B
-000022 0EE7           00057     movlw b'11100111'
-000024 6E93           00058     movwf TRISB,0
-000026 9EF1           00059     bcf INTCON2,RBPU,0
-                      00060     ;C
-000028 0EC0           00061     movlw b'11000000'
-00002A 6E94           00062     movwf TRISC,0
-00002C 908B           00063     bcf LATC,0,0;apagar 1r led
-00002E 928B           00064     bcf LATC,1,0;apagar 2n led
-                      00065     ;D
-000030 6A95           00066     clrf TRISD,0
-000032 0E00           00067     movlw b'00000000';apagar 7seg
-000034 6E8C           00068     movwf LATD,0
-000036 0012           00069     return
-                      00070     
-000038                00071 INIT_VARS
-000038 0E3F           00072     movlw b'00111111';7segments
-00003A 6E00           00073     movwf display0,0
-00003C 0E06           00074     movlw b'00000110'
-00003E 6E01           00075     movwf display1,0
-000040 0E5B           00076     movlw b'01011011'
-000042 6E02           00077     movwf display2,0
-000044 0E4F           00078     movlw b'01001111'
-000046 6E03           00079     movwf display3,0
-000048 0E66           00080     movlw b'01100110'
-00004A 6E04           00081     movwf display4,0
-00004C 0E6D           00082     movlw b'1101101' 
-00004E 6E05           00083     movwf display5,0
-000050 0E3D           00084     movlw b'0111101'
-000052 6E06           00085     movwf display6,0
-000054 0E07           00086     movlw b'00000111'
-000056 6E07           00087     movwf display7,0
-000058 0E3F           00088     movlw b'0111111'
-00005A 6E08           00089     movwf display8,0
-00005C 0ECF           00090     movlw b'11001111'
-00005E 6E09           00091     movwf display9,0
-000060 0E0D           00092     movlw b'00001101';posem un carrier reurn a temp
-000062 6E0C           00093     movwf carrier,0
-000064 0E01           00094     MOVLW HIGH(0x100)
-000066 6EE2           00095     MOVWF FSR1H,0
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  3
+                      00043 
+                      00044    
+                      00045     ORG 0x000
+000000 EF?? F???      00046     GOTO MAIN
+                      00047     ORG 0x008
+000008 EF?? F???      00048     GOTO HIGH_RSI
+                      00049     ORG 0x018
+000018 0011           00050     retfie FAST
+                      00051 
+00001A                00052 INIT_PORTS
+                      00053     ;A
+00001A 0E23           00054     movlw b'00100011'
+00001C 6E92           00055     movwf TRISA,0
+00001E 9489           00056     bcf LATA,2,0
+000020 9889           00057     bcf LATA,4,0
+                      00058     ;B
+000022 0EE7           00059     movlw b'11100111'
+000024 6E93           00060     movwf TRISB,0
+000026 9EF1           00061     bcf INTCON2,RBPU,0
+                      00062     ;C
+000028 0EC0           00063     movlw b'11000000'
+00002A 6E94           00064     movwf TRISC,0
+00002C 908B           00065     bcf LATC,0,0;apagar 1r led
+00002E 928B           00066     bcf LATC,1,0;apagar 2n led
+                      00067     ;D
+000030 6A95           00068     clrf TRISD,0
+000032 0E00           00069     movlw b'00000000';apagar 7seg
+000034 6E8C           00070     movwf LATD,0
+000036 0012           00071     return
+                      00072     
+000038                00073 INIT_VARS
+000038 0E3F           00074     movlw b'00111111';7segments
+00003A 6E00           00075     movwf display0,0
+00003C 0E06           00076     movlw b'00000110'
+00003E 6E01           00077     movwf display1,0
+000040 0E5B           00078     movlw b'01011011'
+000042 6E02           00079     movwf display2,0
+000044 0E4F           00080     movlw b'01001111'
+000046 6E03           00081     movwf display3,0
+000048 0E66           00082     movlw b'01100110'
+00004A 6E04           00083     movwf display4,0
+00004C 0E6D           00084     movlw b'1101101' 
+00004E 6E05           00085     movwf display5,0
+000050 0E3D           00086     movlw b'0111101'
+000052 6E06           00087     movwf display6,0
+000054 0E07           00088     movlw b'00000111'
+000056 6E07           00089     movwf display7,0
+000058 0E3F           00090     movlw b'0111111'
+00005A 6E08           00091     movwf display8,0
+00005C 0ECF           00092     movlw b'11001111'
+00005E 6E09           00093     movwf display9,0
+000060 0E0D           00094     movlw b'00001101';posem un carrier reurn a temp
+000062 6E0C           00095     movwf carrier,0
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000068 0E00           00096     MOVLW LOW(0x100)
-00006A 6EE1           00097     MOVWF FSR1L,0
-00006C 0EC8           00098     MOVLW .200
-00006E 6E18           00099     MOVWF ram_addr_count,0
-000070 6A19           00100     CLRF ram_200,0
-                      00101     
-000072 6A1E           00102     clrf count_pwm,0
+000064 0E01           00096     MOVLW HIGH(0x100)
+000066 6EE2           00097     MOVWF FSR1H,0
+000068 0E00           00098     MOVLW LOW(0x100)
+00006A 6EE1           00099     MOVWF FSR1L,0
+00006C 0EC8           00100     MOVLW .200
+00006E 6E18           00101     MOVWF ram_addr_count,0
+000070 6A19           00102     CLRF ram_200,0
                       00103     
-000074 0012           00104     return
-000076                00105 INIT_EUSART
-000076 0E24           00106     movlw b'00100100'
-000078 6EAC           00107     movwf TXSTA,0
-00007A 0E90           00108     movlw b'10010000'
-00007C 6EAB           00109     movwf RCSTA,0
-00007E 0E08           00110     movlw b'00001000'
-000080 6EB8           00111     movwf BAUDCON,0
-000082 0E04           00112     movlw HIGH(.1040)
-000084 6EB0           00113     movwf SPBRGH,0
-000086 0E10           00114     movlw LOW(.1040)
-000088 6EAF           00115     movwf SPBRG,0
-00008A 0012           00116     return
-00008C                00117 INIT_INTCONS
-00008C 8ED0           00118     BSF RCON,IPEN,0
-00008E 0EE0           00119     MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
-000090 6EF2           00120     MOVWF INTCON,0
-000092 84F1           00121     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
-                      00122     ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
-                      00123     ;MOVWF INTCON2,0
-000094 0012           00124     return
-000096                00125 INIT_TIMER
-000096 0E91           00126     MOVLW b'10010001'
-000098 6ED5           00127     MOVWF T0CON,0
-00009A 0012           00128     RETURN
-                      00129     
-00009C                00130 INIT_EEPROM
-00009C 9EA6           00131     BCF EECON1, EEPGD
-00009E 9CA6           00132     BCF EECON1, CFGS
-0000A0 0012           00133     RETURN
-                      00134     
-0000A2                00135 INIT_ADCON
-0000A2 0E0E           00136     MOVLW b'00001110'
-0000A4 6EC0           00137     MOVWF ADCON2,0
-0000A6 0E0E           00138     MOVLW b'00001110'
-0000A8 6EC1           00139     MOVWF ADCON1,0
-0000AA 80C2           00140     BSF ADCON0,ADON,0
-0000AC 0012           00141     RETURN
-                      00142 ;-------------------------------------------------------------------------------
-0000AE                00143 MAIN
-0000AE EC?? F???      00144     call INIT_VARS
-0000B2 EC?? F???      00145     call INIT_PORTS
-                      00146     ;call INIT_OSC      ;valors default
-0000B6 EC?? F???      00147     call INIT_EUSART
-0000BA EC?? F???      00148     call INIT_INTCONS
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  4
+000072 6A1E           00104     clrf count_pwm,0
+                      00105     
+000074 0012           00106     return
+000076                00107 INIT_EUSART
+000076 0E24           00108     movlw b'00100100'
+000078 6EAC           00109     movwf TXSTA,0
+00007A 0E90           00110     movlw b'10010000'
+00007C 6EAB           00111     movwf RCSTA,0
+00007E 0E08           00112     movlw b'00001000'
+000080 6EB8           00113     movwf BAUDCON,0
+000082 0E04           00114     movlw HIGH(.1040)
+000084 6EB0           00115     movwf SPBRGH,0
+000086 0E10           00116     movlw LOW(.1040)
+000088 6EAF           00117     movwf SPBRG,0
+00008A 0012           00118     return
+00008C                00119 INIT_INTCONS
+00008C 8ED0           00120     BSF RCON,IPEN,0
+00008E 0EE0           00121     MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
+000090 6EF2           00122     MOVWF INTCON,0
+000092 84F1           00123     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
+                      00124     ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
+                      00125     ;MOVWF INTCON2,0
+000094 0012           00126     return
+000096                00127 INIT_TIMER
+000096 0E91           00128     MOVLW b'10010001'
+000098 6ED5           00129     MOVWF T0CON,0
+00009A 0012           00130     RETURN
+                      00131     
+00009C                00132 INIT_EEPROM
+00009C 9EA6           00133     BCF EECON1, EEPGD
+00009E 9CA6           00134     BCF EECON1, CFGS
+0000A0 0012           00135     RETURN
+                      00136     
+0000A2                00137 INIT_ADCON
+0000A2 0E0E           00138     MOVLW b'00001110'
+0000A4 6EC0           00139     MOVWF ADCON2,0
+0000A6 0E0E           00140     MOVLW b'00001110'
+0000A8 6EC1           00141     MOVWF ADCON1,0
+0000AA 80C2           00142     BSF ADCON0,ADON,0
+0000AC 0012           00143     RETURN
+                      00144 ;-------------------------------------------------------------------------------
+0000AE                00145 MAIN
+0000AE EC?? F???      00146     call INIT_VARS
+0000B2 EC?? F???      00147     call INIT_PORTS
+                      00148     ;call INIT_OSC      ;valors default
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000BE EC?? F???      00149     call INIT_EEPROM
-0000C2 EC?? F???      00150     call INIT_TIMER
-0000C6 EC?? F???      00151     call CARREGA_TIMER
-0000CA EC?? F???      00152     call INIT_ADCON
-0000CE                00153 LOOP
-                      00154     ;codi
-0000CE BA9E           00155     btfsc PIR1,RCIF,0
-0000D0 EF?? F???      00156     goto LECTOR_EUSART
-0000D4 EF?? F???      00157     goto LOOP
-                      00158 ;-------------------------------------------------------------------------------
-0000D8                00159 HIGH_RSI
-0000D8 94F2           00160     BCF INTCON,TMR0IF,0;quan salti una interrupcio qualsevol, nomes tenim timer0 de moment
-0000DA EC?? F???      00161     call CARREGA_TIMER;reiniciem el timer
-0000DE 8489           00162     bsf LATA,2,0;reactivem el pin del servo
-                      00163     
-0000E0 0EFA           00164     movlw .250
-0000E2 6E1C           00165     movwf tmp,0
-0000E4                00166 BUCLE_PWM_05
-0000E4 0E05           00167     movlw .5
-0000E6 6E1D           00168     movwf tmp2,0
-0000E8                00169 BUCLE2_PWM_05
-0000E8 2E1D           00170     decfsz tmp2,f,0
-0000EA EF?? F???      00171     goto BUCLE2_PWM_05
-0000EE 2E1C           00172     decfsz tmp
-0000F0 EF?? F???      00173     goto BUCLE_PWM_05
-                      00174     
-                      00175     ;pwm 2
-0000F4 0E00           00176     movlw .0
-0000F6 641E           00177     cpfsgt count_pwm,0
-0000F8 EF?? F???      00178     goto END_PWM
-                      00179    
-0000FC C01E F01D      00180     movff count_pwm, tmp2
-000100                00181 BUCLE_PWM_COPS
-000100 0E14           00182     movlw .20
-000102 6E1C           00183     movwf tmp,0
-000104                00184 BUCLE_PWM_GRAUS
-000104 0000           00185     NOP
-000106 0000           00186     NOP
-000108 2E1C           00187     decfsz tmp,f,0
-00010A EF?? F???      00188     goto BUCLE_PWM_GRAUS
-00010E 2E1D           00189     decfsz tmp2,f,0
-000110 EF?? F???      00190     goto BUCLE_PWM_COPS
-                      00191     
-                      00192     
-000114                00193 END_PWM
-000114 9489           00194     bcf LATA,2,0;apaga servo
-000116 0011           00195     retfie FAST
-                      00196     
-                      00197 ;TIMER
-000118                00198 CARREGA_TIMER
-000118 0E3C           00199     MOVLW HIGH(.15536);;cada 20ms
-00011A 6ED7           00200     MOVWF TMR0H,0
-00011C 0EB0           00201     MOVLW LOW(.15536)
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  5
+0000B6 EC?? F???      00149     call INIT_EUSART
+0000BA EC?? F???      00150     call INIT_INTCONS
+0000BE EC?? F???      00151     call INIT_EEPROM
+0000C2 EC?? F???      00152     call INIT_TIMER
+0000C6 EC?? F???      00153     call CARREGA_TIMER
+0000CA EC?? F???      00154     call INIT_ADCON
+0000CE                00155 LOOP
+                      00156     ;codi
+0000CE BA9E           00157     btfsc PIR1,RCIF,0
+0000D0 EF?? F???      00158     goto LECTOR_EUSART
+0000D4 EF?? F???      00159     goto LOOP
+                      00160 ;-------------------------------------------------------------------------------
+0000D8                00161 HIGH_RSI
+0000D8 94F2           00162     BCF INTCON,TMR0IF,0;quan salti una interrupcio qualsevol, nomes tenim timer0 de moment
+0000DA EC?? F???      00163     call CARREGA_TIMER;reiniciem el timer
+0000DE 8489           00164     bsf LATA,2,0;reactivem el pin del servo
+                      00165     
+                      00166     ;pwm 20ms + extra del nostre motor
+0000E0 0EFA           00167     movlw .250;250
+0000E2 6E1C           00168     movwf tmp,0
+0000E4                00169 BUCLE_PWM_05
+0000E4 0E06           00170     movlw .6;5
+0000E6 6E1D           00171     movwf tmp2,0
+0000E8                00172 BUCLE2_PWM_05
+0000E8 2E1D           00173     decfsz tmp2,f,0
+0000EA EF?? F???      00174     goto BUCLE2_PWM_05
+0000EE 2E1C           00175     decfsz tmp
+0000F0 EF?? F???      00176     goto BUCLE_PWM_05
+                      00177     
+                      00178     ;pwm angle precis
+0000F4 0E00           00179     movlw .0
+0000F6 641E           00180     cpfsgt count_pwm,0
+0000F8 EF?? F???      00181     goto END_PWM
+                      00182    
+0000FC C01E F01D      00183     movff count_pwm, tmp2
+000100                00184 BUCLE_PWM_COPS
+000100 0E14           00185     movlw .20
+000102 6E1C           00186     movwf tmp,0
+000104                00187 BUCLE_PWM_GRAUS
+000104 0000           00188     NOP
+000106 0000           00189     NOP
+000108 2E1C           00190     decfsz tmp,f,0
+00010A EF?? F???      00191     goto BUCLE_PWM_GRAUS
+00010E 2E1D           00192     decfsz tmp2,f,0
+000110 EF?? F???      00193     goto BUCLE_PWM_COPS
+                      00194     
+                      00195     
+000114                00196 END_PWM
+000114 9489           00197     bcf LATA,2,0;apaga servo
+000116 0011           00198     retfie FAST
+                      00199     
+                      00200 ;TIMER
+000118                00201 CARREGA_TIMER
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00011E 6ED6           00202     MOVWF TMR0L,0
-000120 0012           00203     return
-                      00204 
-                      00205 ;Lectura EEPROM
-000122                00206 EEPROM_READ
-000122 500E           00207     movf eeprom_addr,0
-000124 6EA9           00208     movwf EEADR,0
-000126 9EA6           00209     BCF EECON1, EEPGD    ; Point to DATA memory
-000128 9CA6           00210     BCF EECON1, CFGS     ; Access EEPROM
-00012A 80A6           00211     BSF EECON1, RD        ; EEPROM Read
-00012C CFA8 F00F      00212     MOVFF EEDATA, eeprom_data
-000130 0012           00213     return
-                      00214 ;Escriptura EEPROM
-000132                00215 EEPROM_WRITE
-000132 500E           00216     movf eeprom_addr,0
-000134 6EA9           00217     movwf EEADR,0
-000136 500F           00218     movf eeprom_data,0
-000138 6EA8           00219     movwf EEDATA,0
-00013A 84A6           00220     bsf EECON1,WREN
-00013C 9EF2           00221     bcf INTCON,GIE
-00013E 0E55           00222     movlw 55h
-000140 6EA7           00223     movwf EECON2,0
-000142 0EAA           00224     movlw 0AAh
-000144 6EA7           00225     movwf EECON2
-000146 82A6           00226     bsf EECON1,WR
-000148 EC?? F???      00227     call ESPERA_EEPROM_ESCRIURE
-00014C 8EF2           00228     bsf INTCON,GIE
-00014E 94A6           00229     bcf EECON1,WREN
-000150 0012           00230     return
-                      00231     
-                      00232 ;RAM WRITE
-000152                00233 RAM_WRITE
-000152 EE1F F0E6      00234     LFSR 1,POSTINC1
-000156 C017 FFE7      00235     MOVFF ram_data,INDF1
-00015A 0012           00236     RETURN
-                      00237 
-00015C                00238 ESPERA_EEPROM_ESCRIURE
-00015C B2A6           00239     BTFSC EECON1,WR
-00015E EF?? F???      00240     GOTO ESPERA_EEPROM_ESCRIURE
-000162 0012           00241     RETURN
-                      00242     
-                      00243 ; Ultrasons
-000164                00244 MEDIR
-000164 0EE8           00245     MOVLW .232
-000166 6E10           00246     MOVWF compt_10us
-000168 8889           00247     BSF LATA,4,0 ; Trigger a high
-00016A                00248 INCR_10us
-00016A 2A10           00249     INCF compt_10us,1,0
-00016C A0D8           00250     BTFSS STATUS,C
-00016E EF?? F???      00251     GOTO INCR_10us
-000172 0000           00252     NOP
-000174 0000           00253     NOP
-000176 0000           00254     NOP
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  6
+000118 0E3C           00202     MOVLW HIGH(.15536);;cada 20ms
+00011A 6ED7           00203     MOVWF TMR0H,0
+00011C 0EB0           00204     MOVLW LOW(.15536)
+00011E 6ED6           00205     MOVWF TMR0L,0
+000120 0012           00206     return
+                      00207 
+                      00208 ;Lectura EEPROM
+000122                00209 EEPROM_READ
+000122 500E           00210     movf eeprom_addr,0
+000124 6EA9           00211     movwf EEADR,0
+000126 9EA6           00212     BCF EECON1, EEPGD    ; Point to DATA memory
+000128 9CA6           00213     BCF EECON1, CFGS     ; Access EEPROM
+00012A 80A6           00214     BSF EECON1, RD        ; EEPROM Read
+00012C CFA8 F00F      00215     MOVFF EEDATA, eeprom_data
+000130 0012           00216     return
+                      00217 ;Escriptura EEPROM
+000132                00218 EEPROM_WRITE
+000132 500E           00219     movf eeprom_addr,0
+000134 6EA9           00220     movwf EEADR,0
+000136 500F           00221     movf eeprom_data,0
+000138 6EA8           00222     movwf EEDATA,0
+00013A 84A6           00223     bsf EECON1,WREN
+00013C 9EF2           00224     bcf INTCON,GIE
+00013E 0E55           00225     movlw 55h
+000140 6EA7           00226     movwf EECON2,0
+000142 0EAA           00227     movlw 0AAh
+000144 6EA7           00228     movwf EECON2
+000146 82A6           00229     bsf EECON1,WR
+000148 EC?? F???      00230     call ESPERA_EEPROM_ESCRIURE
+00014C 8EF2           00231     bsf INTCON,GIE
+00014E 94A6           00232     bcf EECON1,WREN
+000150 0012           00233     return
+                      00234     
+                      00235 ;RAM WRITE
+000152                00236 RAM_WRITE
+000152 EE1F F0E6      00237     LFSR 1,POSTINC1
+000156 C017 FFE7      00238     MOVFF ram_data,INDF1
+00015A 0012           00239     RETURN
+                      00240 
+00015C                00241 ESPERA_EEPROM_ESCRIURE
+00015C B2A6           00242     BTFSC EECON1,WR
+00015E EF?? F???      00243     GOTO ESPERA_EEPROM_ESCRIURE
+000162 0012           00244     RETURN
+                      00245     
+                      00246 ; Ultrasons
+000164                00247 MEDIR
+000164 0EE8           00248     MOVLW .232
+000166 6E10           00249     MOVWF compt_10us
+000168 8889           00250     BSF LATA,4,0 ; Trigger a high
+00016A                00251 INCR_10us
+00016A 2A10           00252     INCF compt_10us,1,0
+00016C A0D8           00253     BTFSS STATUS,C
+00016E EF?? F???      00254     GOTO INCR_10us
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000178 9889           00255     BCF LATA,4,0 ;Trigger a low
-                      00256         
-00017A                00257 ESPERA_ECHO
-00017A AA80           00258     BTFSS PORTA,5,0 ; esperem el echo a high
-00017C EF?? F???      00259     GOTO ESPERA_ECHO
-                      00260     ;BSF LATD,3,0
-000180 6A12           00261     CLRF us_echo_cm,0
-000182                00262 INICI_ECHO
-000182 0E3C           00263     MOVLW .60 ;64               ;1
-000184 6E11           00264     MOVWF us_echo_58,0  ;1
-000186                00265 COMPTAR_58
-000186 3E11           00266     INCFSZ us_echo_58,f,0       ;1
-000188 EF?? F???      00267     GOTO COMPTAR_58     ;2
-00018C 2A12           00268     INCF us_echo_cm,f,0 ;2=1+1
-00018E BA80           00269     BTFSC PORTA,5,0     ;1 Mentre el echo no estigui a low anem comptant
-000190 EF?? F???      00270     GOTO INICI_ECHO     ;2
-000194 0612           00271     DECF us_echo_cm,f,0
-                      00272     
-000196 C012 F017      00273     MOVFF us_echo_cm,ram_data
-00019A EC?? F???      00274     CALL RAM_WRITE
-00019E 2E18           00275     DECFSZ ram_addr_count,f,0
-0001A0 0012           00276     RETURN
-0001A2 0EC8           00277     MOVLW .200
-0001A4 6E18           00278     MOVWF ram_addr_count,0
-0001A6 6819           00279     SETF ram_200,0
-0001A8 0012           00280     RETURN
-                      00281     
-                      00282 ;Binary -> ASCII
-0001AA                00283 BN_2_ASCII ;Input: bn_ascii; Output: ascii_c, ascii_d, ascii_u
-0001AA 6A14           00284     CLRF ascii_u,0
-0001AC 6A15           00285     CLRF ascii_d,0
-0001AE 6A16           00286     CLRF ascii_c,0
-0001B0                00287 BN_2_ASCII_LOOP
-0001B0 0E00           00288     MOVLW .0
-0001B2 6413           00289     CPFSGT bn_ascii,0; Si bn_ascii <=0 -> Fi ASCII
-0001B4 EF?? F???      00290     GOTO FI_ASCII
-                      00291     
-0001B8 2A14           00292     INCF ascii_u,f,0
-0001BA 0E0A           00293     MOVLW .10
-0001BC 6014           00294     CPFSLT ascii_u,0 ; Si >=10 anem a desenes
-0001BE EF?? F???      00295     GOTO DESENES_ASCII
-0001C2 EF?? F???      00296     GOTO BN_2_ASCII_LOOP_FI
-                      00297 
-0001C6                00298 DESENES_ASCII
-0001C6 6A14           00299     CLRF ascii_u,0
-0001C8 2A15           00300     INCF ascii_d,f,0
-0001CA 0E0A           00301     MOVLW .10
-0001CC 6015           00302     CPFSLT ascii_d,0 ; Si >=10 anem a centenes
-0001CE EF?? F???      00303     GOTO CENTENES_ASCII
-0001D2 EF?? F???      00304     GOTO BN_2_ASCII_LOOP_FI
-                      00305     
-0001D6                00306 CENTENES_ASCII
-0001D6 6A15           00307     CLRF ascii_d,0
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  7
+000172 0000           00255     NOP
+000174 0000           00256     NOP
+000176 0000           00257     NOP
+000178 9889           00258     BCF LATA,4,0 ;Trigger a low
+                      00259         
+00017A                00260 ESPERA_ECHO
+00017A AA80           00261     BTFSS PORTA,5,0 ; esperem el echo a high
+00017C EF?? F???      00262     GOTO ESPERA_ECHO
+                      00263     ;BSF LATD,3,0
+000180 6A12           00264     CLRF us_echo_cm,0
+000182                00265 INICI_ECHO
+000182 0E3C           00266     MOVLW .60 ;64               ;1
+000184 6E11           00267     MOVWF us_echo_58,0  ;1
+000186                00268 COMPTAR_58
+000186 3E11           00269     INCFSZ us_echo_58,f,0       ;1
+000188 EF?? F???      00270     GOTO COMPTAR_58     ;2
+00018C 2A12           00271     INCF us_echo_cm,f,0 ;2=1+1
+00018E BA80           00272     BTFSC PORTA,5,0     ;1 Mentre el echo no estigui a low anem comptant
+000190 EF?? F???      00273     GOTO INICI_ECHO     ;2
+000194 0612           00274     DECF us_echo_cm,f,0
+                      00275     
+000196 C012 F017      00276     MOVFF us_echo_cm,ram_data
+00019A EC?? F???      00277     CALL RAM_WRITE
+00019E 2E18           00278     DECFSZ ram_addr_count,f,0
+0001A0 0012           00279     RETURN
+0001A2 0EC8           00280     MOVLW .200
+0001A4 6E18           00281     MOVWF ram_addr_count,0
+0001A6 6819           00282     SETF ram_200,0
+0001A8 0012           00283     RETURN
+                      00284     
+                      00285 ;Binary -> ASCII
+0001AA                00286 BN_2_ASCII ;Input: bn_ascii; Output: ascii_c, ascii_d, ascii_u
+0001AA 6A14           00287     CLRF ascii_u,0
+0001AC 6A15           00288     CLRF ascii_d,0
+0001AE 6A16           00289     CLRF ascii_c,0
+0001B0                00290 BN_2_ASCII_LOOP
+0001B0 0E00           00291     MOVLW .0
+0001B2 6413           00292     CPFSGT bn_ascii,0; Si bn_ascii <=0 -> Fi ASCII
+0001B4 EF?? F???      00293     GOTO FI_ASCII
+                      00294     
+0001B8 2A14           00295     INCF ascii_u,f,0
+0001BA 0E0A           00296     MOVLW .10
+0001BC 6014           00297     CPFSLT ascii_u,0 ; Si >=10 anem a desenes
+0001BE EF?? F???      00298     GOTO DESENES_ASCII
+0001C2 EF?? F???      00299     GOTO BN_2_ASCII_LOOP_FI
+                      00300 
+0001C6                00301 DESENES_ASCII
+0001C6 6A14           00302     CLRF ascii_u,0
+0001C8 2A15           00303     INCF ascii_d,f,0
+0001CA 0E0A           00304     MOVLW .10
+0001CC 6015           00305     CPFSLT ascii_d,0 ; Si >=10 anem a centenes
+0001CE EF?? F???      00306     GOTO CENTENES_ASCII
+0001D2 EF?? F???      00307     GOTO BN_2_ASCII_LOOP_FI
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0001D8 2A16           00308     INCF ascii_c,f,0
-                      00309     
-0001DA                00310 BN_2_ASCII_LOOP_FI
-0001DA 4E13           00311     DCFSNZ bn_ascii,f,0 ; Decrementem, bn_ascii=0 -> Fi, !=0 -> Loop
-0001DC EF?? F???      00312     GOTO FI_ASCII
-0001E0 EF?? F???      00313     GOTO BN_2_ASCII_LOOP
-                      00314         
-0001E4                00315 FI_ASCII
-0001E4 0E30           00316     MOVLW .48
-0001E6 2614           00317     ADDWF ascii_u,f,0
-0001E8 0E30           00318     MOVLW .48
-0001EA 2615           00319     ADDWF ascii_d,f,0
-0001EC 0E30           00320     MOVLW .48
-0001EE 2616           00321     ADDWF ascii_c,f,0
-0001F0 0012           00322     RETURN
-                      00323     
-                      00324 ; ASCII -> EUSART    
-0001F2                00325 TX_BN_2_ASCII
-0001F2 C016 FFAD      00326     MOVFF ascii_c,TXREG
-0001F6 EC?? F???      00327     CALL ESPERA_TX
-0001FA C015 FFAD      00328     MOVFF ascii_d,TXREG
-0001FE EC?? F???      00329     CALL ESPERA_TX
-000202 C014 FFAD      00330     MOVFF ascii_u,TXREG
-000206 EC?? F???      00331     CALL ESPERA_TX
-00020A 0012           00332     RETURN
-                      00333     
-                      00334 ;JOYSTICK-ADCON
-00020C                00335 LLEGIR_JOY
-00020C 82C2           00336    BSF ADCON0,1,0 ; Comencem la conversió
-00020E                00337 ESPERA_CONVERSIO
-00020E B2C2           00338    BTFSC ADCON0,1,0
-000210 EF?? F???      00339    GOTO ESPERA_CONVERSIO
-000214 CFC4 F013      00340    MOVFF ADRESH,bn_ascii
-000218 EC?? F???      00341    CALL BN_2_ASCII
-00021C EC?? F???      00342    CALL TX_BN_2_ASCII
-000220 0E2D           00343    MOVLW '-'
-000222 6EAD           00344    MOVWF TXREG,0
-000224 EC?? F???      00345    CALL ESPERA_TX
-000228 CFC3 F013      00346    MOVFF ADRESL,bn_ascii
-00022C EC?? F???      00347    CALL BN_2_ASCII
-000230 EC?? F???      00348    CALL TX_BN_2_ASCII
-000234 EC?? F???      00349    CALL TX_ENTER
-000238 0012           00350    RETURN
-                      00351    
-                      00352 ;-------------------------------------------------------------------------------
-                      00353 ;EUSART
-                      00354 
-00023A                00355 ESPERA_TX
-00023A A2AC           00356     BTFSS TXSTA,TRMT,0
-00023C EF?? F???      00357     GOTO ESPERA_TX
-000240 0012           00358     return    
-000242                00359 LLEGIR_RX
-000242 AA9E           00360     btfss PIR1,RCIF,0
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  8
+                      00308     
+0001D6                00309 CENTENES_ASCII
+0001D6 6A15           00310     CLRF ascii_d,0
+0001D8 2A16           00311     INCF ascii_c,f,0
+                      00312     
+0001DA                00313 BN_2_ASCII_LOOP_FI
+0001DA 4E13           00314     DCFSNZ bn_ascii,f,0 ; Decrementem, bn_ascii=0 -> Fi, !=0 -> Loop
+0001DC EF?? F???      00315     GOTO FI_ASCII
+0001E0 EF?? F???      00316     GOTO BN_2_ASCII_LOOP
+                      00317         
+0001E4                00318 FI_ASCII
+0001E4 0E30           00319     MOVLW .48
+0001E6 2614           00320     ADDWF ascii_u,f,0
+0001E8 0E30           00321     MOVLW .48
+0001EA 2615           00322     ADDWF ascii_d,f,0
+0001EC 0E30           00323     MOVLW .48
+0001EE 2616           00324     ADDWF ascii_c,f,0
+0001F0 0012           00325     RETURN
+                      00326     
+                      00327 ; ASCII -> EUSART    
+0001F2                00328 TX_BN_2_ASCII
+0001F2 C016 FFAD      00329     MOVFF ascii_c,TXREG
+0001F6 EC?? F???      00330     CALL ESPERA_TX
+0001FA C015 FFAD      00331     MOVFF ascii_d,TXREG
+0001FE EC?? F???      00332     CALL ESPERA_TX
+000202 C014 FFAD      00333     MOVFF ascii_u,TXREG
+000206 EC?? F???      00334     CALL ESPERA_TX
+00020A 0012           00335     RETURN
+                      00336     
+                      00337 ;JOYSTICK-ADCON
+00020C                00338 LLEGIR_JOY
+00020C 82C2           00339    BSF ADCON0,1,0 ; Comencem la conversió
+00020E                00340 ESPERA_CONVERSIO
+00020E B2C2           00341    BTFSC ADCON0,1,0
+000210 EF?? F???      00342    GOTO ESPERA_CONVERSIO
+000214 CFC4 F013      00343    MOVFF ADRESH,bn_ascii
+000218 EC?? F???      00344    CALL BN_2_ASCII
+00021C EC?? F???      00345    CALL TX_BN_2_ASCII
+000220 0E2D           00346    MOVLW '-'
+000222 6EAD           00347    MOVWF TXREG,0
+000224 EC?? F???      00348    CALL ESPERA_TX
+000228 CFC3 F013      00349    MOVFF ADRESL,bn_ascii
+00022C EC?? F???      00350    CALL BN_2_ASCII
+000230 EC?? F???      00351    CALL TX_BN_2_ASCII
+000234 EC?? F???      00352    CALL TX_ENTER
+000238 0012           00353    RETURN
+                      00354    
+                      00355 ;-------------------------------------------------------------------------------
+                      00356 ;EUSART
+                      00357 
+00023A                00358 ESPERA_TX
+00023A A2AC           00359     BTFSS TXSTA,TRMT,0
+00023C EF?? F???      00360     GOTO ESPERA_TX
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000244 EF?? F???      00361     goto LLEGIR_RX
-000248 50AE           00362     movf RCREG,0,0
-00024A 6E0A           00363     movwf eusart_input,0
-00024C C00A FFAD      00364     movff eusart_input,TXREG
-000250 EC?? F???      00365     call ESPERA_TX
-000254 0012           00366     return
-                      00367     
-000256                00368 TX_ENTER
-000256 0E0A           00369     MOVLW '\n';salt de linia
-000258 6EAD           00370     MOVWF TXREG,0
-00025A EC?? F???      00371     CALL ESPERA_TX
-00025E 0E0D           00372     MOVLW '\r';inici de linia
-000260 6EAD           00373     MOVWF TXREG,0
-000262 EC?? F???      00374     CALL ESPERA_TX
-000266 0012           00375     return
-                      00376     
-                      00377 ;---- INICI MODE ----
-000268                00378 LECTOR_EUSART
-000268 50AE           00379     movf RCREG,0,0
-00026A 6E0A           00380     movwf eusart_input,0
-00026C C00A FFAD      00381     movff eusart_input,TXREG
-000270 EC?? F???      00382     call ESPERA_TX
-000274 EC?? F???      00383     call TX_ENTER
-                      00384     ;Canvi de mode, apaguem els LEDS i el 7 seg
-                      00385     ;REVISAR SI ES OK EN CAS DE QUE POSSIN UNA LLETRA INCORRECTE
-000278 6A8C           00386     CLRF LATD,0
-00027A 908B           00387     BCF LATC,0,0
-00027C 928B           00388     BCF LATC,1,0
-00027E 0E41           00389     movlw 'A'
-000280 620A           00390     CPFSEQ eusart_input,0
-000282 EF?? F???      00391     goto NEXT_A
-000286 EF?? F???      00392     goto MODE_A
-00028A                00393 NEXT_A
-00028A 0E44           00394     movlw 'D'
-00028C 620A           00395     CPFSEQ eusart_input,0
-00028E EF?? F???      00396     goto NEXT_D
-000292 EF?? F???      00397     goto MODE_D
-000296                00398 NEXT_D
-000296 0E49           00399     movlw 'I'
-000298 620A           00400     CPFSEQ eusart_input,0
-00029A EF?? F???      00401     goto NEXT_I
-00029E EF?? F???      00402     goto MODE_I
-0002A2                00403 NEXT_I
-0002A2 0E4D           00404     movlw 'M'
-0002A4 620A           00405     CPFSEQ eusart_input,0
-0002A6 EF?? F???      00406     goto NEXT_M
-0002AA EF?? F???      00407     goto MODE_M
-0002AE                00408 NEXT_M
-0002AE 0E52           00409     movlw 'R'
-0002B0 620A           00410     CPFSEQ eusart_input,0
-0002B2 EF?? F???      00411     goto NEXT_R
-0002B6 EF?? F???      00412     goto MODE_R
-0002BA                00413 NEXT_R
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE  9
+000240 0012           00361     return    
+000242                00362 LLEGIR_RX
+000242 AA9E           00363     btfss PIR1,RCIF,0
+000244 EF?? F???      00364     goto LLEGIR_RX
+000248 50AE           00365     movf RCREG,0,0
+00024A 6E0A           00366     movwf eusart_input,0
+00024C C00A FFAD      00367     movff eusart_input,TXREG
+000250 EC?? F???      00368     call ESPERA_TX
+000254 0012           00369     return
+                      00370     
+000256                00371 TX_ENTER
+000256 0E0A           00372     MOVLW '\n';salt de linia
+000258 6EAD           00373     MOVWF TXREG,0
+00025A EC?? F???      00374     CALL ESPERA_TX
+00025E 0E0D           00375     MOVLW '\r';inici de linia
+000260 6EAD           00376     MOVWF TXREG,0
+000262 EC?? F???      00377     CALL ESPERA_TX
+000266 0012           00378     return
+                      00379     
+                      00380 ;---- INICI MODE ----
+000268                00381 LECTOR_EUSART
+000268 50AE           00382     movf RCREG,0,0
+00026A 6E0A           00383     movwf eusart_input,0
+00026C C00A FFAD      00384     movff eusart_input,TXREG
+000270 EC?? F???      00385     call ESPERA_TX
+000274 EC?? F???      00386     call TX_ENTER
+                      00387     ;Canvi de mode, apaguem els LEDS i el 7 seg
+                      00388     ;REVISAR SI ES OK EN CAS DE QUE POSSIN UNA LLETRA INCORRECTE
+000278 6A8C           00389     CLRF LATD,0
+00027A 908B           00390     BCF LATC,0,0
+00027C 928B           00391     BCF LATC,1,0
+00027E 0E41           00392     movlw 'A'
+000280 620A           00393     CPFSEQ eusart_input,0
+000282 EF?? F???      00394     goto NEXT_A
+000286 EF?? F???      00395     goto MODE_A
+00028A                00396 NEXT_A
+00028A 0E44           00397     movlw 'D'
+00028C 620A           00398     CPFSEQ eusart_input,0
+00028E EF?? F???      00399     goto NEXT_D
+000292 EF?? F???      00400     goto MODE_D
+000296                00401 NEXT_D
+000296 0E49           00402     movlw 'I'
+000298 620A           00403     CPFSEQ eusart_input,0
+00029A EF?? F???      00404     goto NEXT_I
+00029E EF?? F???      00405     goto MODE_I
+0002A2                00406 NEXT_I
+0002A2 0E4D           00407     movlw 'M'
+0002A4 620A           00408     CPFSEQ eusart_input,0
+0002A6 EF?? F???      00409     goto NEXT_M
+0002AA EF?? F???      00410     goto MODE_M
+0002AE                00411 NEXT_M
+0002AE 0E52           00412     movlw 'R'
+0002B0 620A           00413     CPFSEQ eusart_input,0
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002BA 0E53           00414     movlw 'S'
-0002BC 620A           00415     CPFSEQ eusart_input,0
-0002BE EF?? F???      00416     goto NEXT_S
-0002C2 EF?? F???      00417     goto MODE_S
-0002C6                00418 NEXT_S
-0002C6 0E54           00419     movlw 'T'
-0002C8 620A           00420     CPFSEQ eusart_input,0
-0002CA EF?? F???      00421     goto NEXT_T
-0002CE EF?? F???      00422     goto MODE_T
-0002D2                00423 NEXT_T
-0002D2 0E55           00424     movlw 'U'
-0002D4 620A           00425     CPFSEQ eusart_input,0
-0002D6 EF?? F???      00426     goto NEXT_U
-0002DA EF?? F???      00427     goto MODE_U
-0002DE                00428 NEXT_U
-0002DE EF?? F???      00429     goto LOOP
-                      00430     ;no s'ha clicat cap tecla si arriba aqui
-                      00431     
-                      00432     
-                      00433     
+0002B2 EF?? F???      00414     goto NEXT_R
+0002B6 EF?? F???      00415     goto MODE_R
+0002BA                00416 NEXT_R
+0002BA 0E53           00417     movlw 'S'
+0002BC 620A           00418     CPFSEQ eusart_input,0
+0002BE EF?? F???      00419     goto NEXT_S
+0002C2 EF?? F???      00420     goto MODE_S
+0002C6                00421 NEXT_S
+0002C6 0E54           00422     movlw 'T'
+0002C8 620A           00423     CPFSEQ eusart_input,0
+0002CA EF?? F???      00424     goto NEXT_T
+0002CE EF?? F???      00425     goto MODE_T
+0002D2                00426 NEXT_T
+0002D2 0E55           00427     movlw 'U'
+0002D4 620A           00428     CPFSEQ eusart_input,0
+0002D6 EF?? F???      00429     goto NEXT_U
+0002DA EF?? F???      00430     goto MODE_U
+0002DE                00431 NEXT_U
+0002DE EF?? F???      00432     goto LOOP
+                      00433     ;no s'ha clicat cap tecla si arriba aqui
                       00434     
-                      00435 ;-------------------------------
-0002E2                00436 MODE_A
-0002E2 C007 FF8C      00437     movff display7,LATD
-0002E6 808B           00438     BSF LATC,0,0
-0002E8 828B           00439     BSF LATC,1,0
-                      00440     ;acabat
-0002EA 908B           00441     BCF LATC,0,0
-0002EC 928B           00442     BCF LATC,1,0
-0002EE EF?? F???      00443     GOTO LOOP
-0002F2                00444 MODE_D
-0002F2 C003 FF8C      00445     movff display3,LATD
-                      00446     ;pulsadors +5º -5º per pulsados
-                      00447     
-0002F6 B281           00448     BTFSC PORTB,1,0
-0002F8 EF?? F???      00449     goto NEXT_BTN
-                      00450     
-0002FC 0EB0           00451     movlw .176 ;valor maxim
-0002FE 601E           00452     cpfslt count_pwm
-000300 EF?? F???      00453     goto NEXT_BTN
-000304 2A1E           00454     incf count_pwm,f,0
-000306 2A1E           00455     incf count_pwm,f,0
-000308 2A1E           00456     incf count_pwm,f,0
-00030A 2A1E           00457     incf count_pwm,f,0
-00030C 2A1E           00458     incf count_pwm,f,0
-00030E                00459 ESPERA_BTN1
-00030E A281           00460     btfss PORTB,1,0
-000310 EF?? F???      00461     goto ESPERA_BTN1
-                      00462     
-000314                00463 NEXT_BTN
-000314 B481           00464     btfsc PORTB,2,0
-000316 EF?? F???      00465     goto FI_D
-                      00466 
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 10
+                      00435     
+                      00436     
+                      00437     
+                      00438 ;-------------------------------
+0002E2                00439 MODE_A
+0002E2 C007 FF8C      00440     movff display7,LATD
+0002E6 808B           00441     BSF LATC,0,0
+0002E8 828B           00442     BSF LATC,1,0
+                      00443     ;acabat
+0002EA 908B           00444     BCF LATC,0,0
+0002EC 928B           00445     BCF LATC,1,0
+0002EE EF?? F???      00446     GOTO LOOP
+0002F2                00447 MODE_D
+0002F2 C003 FF8C      00448     movff display3,LATD
+                      00449     ;pulsadors +5º -5º per pulsados
+                      00450 
+                      00451     
+0002F6 B281           00452     BTFSC PORTB,1,0
+0002F8 EF?? F???      00453     goto NEXT_BTN
+                      00454     ;control rebots
+0002FC EC?? F???      00455     call CONTROL_REBOTS
+                      00456     ;control rebots
+000300 B281           00457     BTFSC PORTB,1,0
+000302 EF?? F???      00458     goto NEXT_BTN
+                      00459     
+                      00460     
+000306 0EAF           00461     movlw .175 ;valor maxim
+000308 601E           00462     cpfslt count_pwm
+00030A EF?? F???      00463     goto NEXT_BTN
+00030E 2A1E           00464     incf count_pwm,f,0
+000310 2A1E           00465     incf count_pwm,f,0
+000312 2A1E           00466     incf count_pwm,f,0
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00031A 0E04           00467     movlw .4 ;valor minim
-00031C 641E           00468     cpfsgt count_pwm
-00031E EF?? F???      00469     goto FI_D
-000322 061E           00470     decf count_pwm,f,0
-000324 061E           00471     decf count_pwm,f,0
-000326 061E           00472     decf count_pwm,f,0
-000328 061E           00473     decf count_pwm,f,0
-00032A 061E           00474     decf count_pwm,f,0
-00032C                00475 ESPERA_BTN2
-00032C A481           00476     btfss PORTB,2,0
-00032E EF?? F???      00477     goto ESPERA_BTN2
-                      00478 
-                      00479     
-                      00480     
-                      00481     
-000332                00482 FI_D
-                      00483     
-000332 BA9E           00484     btfsc PIR1,RCIF,0
-000334 EF?? F???      00485     goto LECTOR_EUSART
-000338 EF?? F???      00486     goto MODE_D
-                      00487     
-                      00488 
-00033C                00489 MODE_I
-                      00490     ;fixar 7seg a 0
-00033C C000 FF8C      00491     movff display0,LATD
-                      00492     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
-000340 0E00           00493     movlw .0 ;reinici adressa
-000342 6E0E           00494     movwf eeprom_addr
-                      00495     
-                      00496     ;llegir
-000344                00497 LLEGIR_I
-                      00498 
-000344 EC?? F???      00499     call LLEGIR_RX
-000348 C00A F00F      00500     movff eusart_input,eeprom_data
-00034C EC?? F???      00501     call EEPROM_WRITE
-                      00502 
-000350 0E0D           00503     movlw '\r';esperem a un enter
-000352 620A           00504     cpfseq eusart_input,0
-000354 EF?? F???      00505     goto NO_ENTER
-000358 EF?? F???      00506     goto ACABAT_I
-00035C                00507 NO_ENTER
-00035C 2A0E           00508     incf eeprom_addr;seguent adr
-00035E 0E78           00509     movlw .120          ;mirar si >120
-000360 620E           00510     cpfseq eeprom_addr,0
-000362 EF?? F???      00511     goto LLEGIR_I
-                      00512 
-000366                00513 ACABAT_I
-000366 EC?? F???      00514     call TX_ENTER
-                      00515      ;guardar un carrier return extra
-00036A 0E0D           00516     movlw b'00001101'
-00036C 6E0F           00517     movwf eeprom_data
-00036E EC?? F???      00518     call EEPROM_WRITE
-                      00519 
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 11
+000314 2A1E           00467     incf count_pwm,f,0
+000316 2A1E           00468     incf count_pwm,f,0
+000318                00469 ESPERA_BTN1
+000318 A281           00470     btfss PORTB,1,0
+00031A EF?? F???      00471     goto ESPERA_BTN1
+                      00472     
+00031E                00473 NEXT_BTN
+                      00474     
+00031E B481           00475     btfsc PORTB,2,0
+000320 EF?? F???      00476     goto FI_D
+                      00477     ;control rebots
+000324 EC?? F???      00478     call CONTROL_REBOTS
+                      00479     ;control rebots
+000328 B481           00480     BTFSC PORTB,2,0
+00032A EF?? F???      00481     goto FI_D
+                      00482     
+00032E 0E04           00483     movlw .4 ;valor minim
+000330 641E           00484     cpfsgt count_pwm
+000332 EF?? F???      00485     goto FI_D
+000336 061E           00486     decf count_pwm,f,0
+000338 061E           00487     decf count_pwm,f,0
+00033A 061E           00488     decf count_pwm,f,0
+00033C 061E           00489     decf count_pwm,f,0
+00033E 061E           00490     decf count_pwm,f,0
+000340                00491 ESPERA_BTN2
+000340 A481           00492     btfss PORTB,2,0
+000342 EF?? F???      00493     goto ESPERA_BTN2
+                      00494  
+000346                00495 FI_D
+                      00496     
+000346 BA9E           00497     btfsc PIR1,RCIF,0
+000348 EF?? F???      00498     goto LECTOR_EUSART
+00034C EF?? F???      00499     goto MODE_D
+                      00500     
+000350                00501 CONTROL_REBOTS
+000350 681F           00502     setf tmp3,0
+000352                00503 BUCLE_D_1
+000352 6820           00504     setf tmp4,0
+000354                00505 BUCLE2_D_1
+000354 2E20           00506     decfsz tmp4,f,0
+000356 EF?? F???      00507     goto BUCLE2_D_1
+00035A 2E1F           00508     decfsz tmp3,f,0
+00035C EF?? F???      00509     goto BUCLE_D_1
+000360 0012           00510     return
+                      00511     
+000362                00512 MODE_I
+                      00513     ;fixar 7seg a 0
+000362 C000 FF8C      00514     movff display0,LATD
+                      00515     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
+000366 0E00           00516     movlw .0 ;reinici adressa
+000368 6E0E           00517     movwf eeprom_addr
+                      00518     
+                      00519     ;llegir
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00520     ;acabat
-000372 EF?? F???      00521     goto LOOP
-                      00522     
-000376                00523 MODE_M
-000376 C002 FF8C      00524     movff display2,LATD
-                      00525     ;mostrar ultima mesura si no estem a 0 de mesures
-                      00526     
-                      00527     
-                      00528     ;acabat
-00037A BA9E           00529     btfsc PIR1,RCIF,0
-00037C EF?? F???      00530     goto LECTOR_EUSART
-000380 EF?? F???      00531     goto MODE_M
-                      00532     
-000384                00533 MODE_R;mostrar nom i 200 mesures
-000384 C001 FF8C      00534     movff display1,LATD
-                      00535     ;MOSTRAR NOM (part 1/2)
-000388 0E4E           00536     movlw 'N'
-00038A 6EAD           00537     movwf TXREG,0
-00038C EC?? F???      00538     call ESPERA_TX
-000390 0E6F           00539     movlw 'o'
-000392 6EAD           00540     movwf TXREG,0
-000394 EC?? F???      00541     call ESPERA_TX
-000398 0E6D           00542     movlw 'm'
-00039A 6EAD           00543     movwf TXREG,0
-00039C EC?? F???      00544     call ESPERA_TX
-0003A0 0E3A           00545     movlw ':'
-0003A2 6EAD           00546     movwf TXREG,0
-0003A4 EC?? F???      00547     call ESPERA_TX
-0003A8 0E20           00548     movlw ' '
-0003AA 6EAD           00549     movwf TXREG,0
-0003AC EC?? F???      00550     call ESPERA_TX
-0003B0 0E00           00551     movlw .0 ;reinici adressa
-0003B2 6E0E           00552     movwf eeprom_addr
-                      00553     
-0003B4                00554 BUCLE_NOM
-                      00555     ;call ESPERA_TX
-0003B4 EC?? F???      00556     call EEPROM_READ
-0003B8 C00F FFAD      00557     movff eeprom_data, TXREG
-0003BC EC?? F???      00558     call ESPERA_TX
-0003C0 0E0D           00559     movlw '\r' ;carrier
-0003C2 620F           00560     cpfseq eeprom_data,0
-0003C4 EF?? F???      00561     goto CONTINUA_NOM
-0003C8 0E0A           00562     movlw '\n'
-0003CA 6EAD           00563     movwf TXREG,0
-0003CC EC?? F???      00564     call ESPERA_TX
-0003D0 EF?? F???      00565     goto MOSTRA_MESURES
-0003D4                00566 CONTINUA_NOM
-0003D4 2A0E           00567     incf eeprom_addr
-0003D6 EF?? F???      00568     goto BUCLE_NOM  
-                      00569     
-                      00570     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
-0003DA                00571 MOSTRA_MESURES
-0003DA 0E4D           00572     movlw 'M'
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 12
+00036A                00520 LLEGIR_I
+                      00521 
+00036A EC?? F???      00522     call LLEGIR_RX
+00036E C00A F00F      00523     movff eusart_input,eeprom_data
+000372 EC?? F???      00524     call EEPROM_WRITE
+                      00525 
+000376 0E0D           00526     movlw '\r';esperem a un enter
+000378 620A           00527     cpfseq eusart_input,0
+00037A EF?? F???      00528     goto NO_ENTER
+00037E EF?? F???      00529     goto ACABAT_I
+000382                00530 NO_ENTER
+000382 2A0E           00531     incf eeprom_addr;seguent adr
+000384 0E78           00532     movlw .120          ;mirar si >120
+000386 620E           00533     cpfseq eeprom_addr,0
+000388 EF?? F???      00534     goto LLEGIR_I
+                      00535 
+00038C                00536 ACABAT_I
+00038C EC?? F???      00537     call TX_ENTER
+                      00538      ;guardar un carrier return extra
+000390 0E0D           00539     movlw b'00001101'
+000392 6E0F           00540     movwf eeprom_data
+000394 EC?? F???      00541     call EEPROM_WRITE
+                      00542 
+                      00543     ;acabat
+000398 EF?? F???      00544     goto LOOP
+                      00545     
+00039C                00546 MODE_M
+00039C C002 FF8C      00547     movff display2,LATD
+                      00548     ;mostrar ultima mesura si no estem a 0 de mesures
+                      00549     
+                      00550     
+                      00551     ;acabat
+0003A0 BA9E           00552     btfsc PIR1,RCIF,0
+0003A2 EF?? F???      00553     goto LECTOR_EUSART
+0003A6 EF?? F???      00554     goto MODE_M
+                      00555     
+0003AA                00556 MODE_R;mostrar nom i 200 mesures
+0003AA C001 FF8C      00557     movff display1,LATD
+                      00558     ;MOSTRAR NOM (part 1/2)
+0003AE 0E4E           00559     movlw 'N'
+0003B0 6EAD           00560     movwf TXREG,0
+0003B2 EC?? F???      00561     call ESPERA_TX
+0003B6 0E6F           00562     movlw 'o'
+0003B8 6EAD           00563     movwf TXREG,0
+0003BA EC?? F???      00564     call ESPERA_TX
+0003BE 0E6D           00565     movlw 'm'
+0003C0 6EAD           00566     movwf TXREG,0
+0003C2 EC?? F???      00567     call ESPERA_TX
+0003C6 0E3A           00568     movlw ':'
+0003C8 6EAD           00569     movwf TXREG,0
+0003CA EC?? F???      00570     call ESPERA_TX
+0003CE 0E20           00571     movlw ' '
+0003D0 6EAD           00572     movwf TXREG,0
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0003DC 6EAD           00573     movwf TXREG,0
-0003DE EC?? F???      00574     call ESPERA_TX
-0003E2 0E65           00575     movlw 'e'
-0003E4 6EAD           00576     movwf TXREG,0
-0003E6 EC?? F???      00577     call ESPERA_TX
-0003EA 0E73           00578     movlw 's'
-0003EC 6EAD           00579     movwf TXREG,0
-0003EE EC?? F???      00580     call ESPERA_TX
-0003F2 0E75           00581     movlw 'u'
-0003F4 6EAD           00582     movwf TXREG,0
-0003F6 EC?? F???      00583     call ESPERA_TX
-0003FA 0E72           00584     movlw 'r'
-0003FC 6EAD           00585     movwf TXREG,0
-0003FE 0E65           00586     movlw 'e'
-000400 6EAD           00587     movwf TXREG,0
-000402 EC?? F???      00588     call ESPERA_TX
-000406 0E73           00589     movlw 's'
-000408 6EAD           00590     movwf TXREG,0
-00040A EC?? F???      00591     call ESPERA_TX
-00040E 0E3A           00592     movlw ':'
-000410 6EAD           00593     movwf TXREG,0
-000412 EC?? F???      00594     call ESPERA_TX
-000416 EC?? F???      00595     call TX_ENTER
-                      00596     ;LLEGIR RAM
-00041A CFE2 F01A      00597     MOVFF FSR1H,fsr_h
-00041E CFE1 F01B      00598     MOVFF FSR1L,fsr_l
-000422 0E00           00599     MOVLW LOW(0x100)
-000424 6EE1           00600     MOVWF FSR1L,0
-000426 0E01           00601     MOVLW HIGH(0x100)
-000428 6EE2           00602     MOVWF FSR1H,0
-00042A 0EC8           00603     MOVLW .200
-00042C 6E1C           00604     MOVWF tmp,0
-00042E                00605 BUCLE_LLEGIR_RAM
-00042E EE10 F001      00606     LFSR 1,FSR1
-000432 CFE6 F013      00607     MOVFF POSTINC1,bn_ascii
-000436 EC?? F???      00608     CALL BN_2_ASCII
-00043A EC?? F???      00609     CALL TX_BN_2_ASCII
-00043E EC?? F???      00610     CALL TX_ENTER
-000442 2E1C           00611     DECFSZ tmp,f,0
-000444 EF?? F???      00612     GOTO BUCLE_LLEGIR_RAM
-                      00613         
-                      00614     ;acabat
-000448 EF?? F???      00615     goto LOOP
-00044C                00616 MODE_S
-00044C C004 FF8C      00617     movff display4,LATD
-                      00618     ;codi S
-000450 EC?? F???      00619     CALL LLEGIR_JOY
-000454 EF?? F???      00620     GOTO LOOP
-000458                00621 MODE_T
-000458 C005 FF8C      00622     movff display5,LATD
-                      00623     ;codi T
-00045C EF?? F???      00624     goto LOOP
-000460                00625 MODE_U
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 13
+0003D2 EC?? F???      00573     call ESPERA_TX
+0003D6 0E00           00574     movlw .0 ;reinici adressa
+0003D8 6E0E           00575     movwf eeprom_addr
+                      00576     
+0003DA                00577 BUCLE_NOM
+                      00578     ;call ESPERA_TX
+0003DA EC?? F???      00579     call EEPROM_READ
+0003DE C00F FFAD      00580     movff eeprom_data, TXREG
+0003E2 EC?? F???      00581     call ESPERA_TX
+0003E6 0E0D           00582     movlw '\r' ;carrier
+0003E8 620F           00583     cpfseq eeprom_data,0
+0003EA EF?? F???      00584     goto CONTINUA_NOM
+0003EE 0E0A           00585     movlw '\n'
+0003F0 6EAD           00586     movwf TXREG,0
+0003F2 EC?? F???      00587     call ESPERA_TX
+0003F6 EF?? F???      00588     goto MOSTRA_MESURES
+0003FA                00589 CONTINUA_NOM
+0003FA 2A0E           00590     incf eeprom_addr
+0003FC EF?? F???      00591     goto BUCLE_NOM  
+                      00592     
+                      00593     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
+000400                00594 MOSTRA_MESURES
+000400 0E4D           00595     movlw 'M'
+000402 6EAD           00596     movwf TXREG,0
+000404 EC?? F???      00597     call ESPERA_TX
+000408 0E65           00598     movlw 'e'
+00040A 6EAD           00599     movwf TXREG,0
+00040C EC?? F???      00600     call ESPERA_TX
+000410 0E73           00601     movlw 's'
+000412 6EAD           00602     movwf TXREG,0
+000414 EC?? F???      00603     call ESPERA_TX
+000418 0E75           00604     movlw 'u'
+00041A 6EAD           00605     movwf TXREG,0
+00041C EC?? F???      00606     call ESPERA_TX
+000420 0E72           00607     movlw 'r'
+000422 6EAD           00608     movwf TXREG,0
+000424 0E65           00609     movlw 'e'
+000426 6EAD           00610     movwf TXREG,0
+000428 EC?? F???      00611     call ESPERA_TX
+00042C 0E73           00612     movlw 's'
+00042E 6EAD           00613     movwf TXREG,0
+000430 EC?? F???      00614     call ESPERA_TX
+000434 0E3A           00615     movlw ':'
+000436 6EAD           00616     movwf TXREG,0
+000438 EC?? F???      00617     call ESPERA_TX
+00043C EC?? F???      00618     call TX_ENTER
+                      00619     ;LLEGIR RAM
+000440 CFE2 F01A      00620     MOVFF FSR1H,fsr_h
+000444 CFE1 F01B      00621     MOVFF FSR1L,fsr_l
+000448 0E00           00622     MOVLW LOW(0x100)
+00044A 6EE1           00623     MOVWF FSR1L,0
+00044C 0E01           00624     MOVLW HIGH(0x100)
+00044E 6EE2           00625     MOVWF FSR1H,0
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000460 808B           00626     BSF LATC,0,0
-000462 EC?? F???      00627     call MEDIR
-000466 C012 F013      00628     MOVFF us_echo_cm,bn_ascii
-00046A EC?? F???      00629     CALL BN_2_ASCII
-00046E EC?? F???      00630     CALL TX_BN_2_ASCII
-000472 0E63           00631     MOVLW 'c'
-000474 6EAD           00632     MOVWF TXREG
-000476 EC?? F???      00633     CALL ESPERA_TX
-00047A 0E6D           00634     MOVLW 'm'
-00047C 6EAD           00635     MOVWF TXREG
-00047E EC?? F???      00636     CALL ESPERA_TX
-000482 EC?? F???      00637     CALL TX_ENTER
-                      00638     
-                      00639     ;Acabat
-000486 908B           00640     BCF LATC,0,0
-000488 EF?? F???      00641     GOTO LOOP
-                      00642 
-                      00643     END
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 14
+000450 0EC8           00626     MOVLW .200
+000452 6E1C           00627     MOVWF tmp,0
+000454                00628 BUCLE_LLEGIR_RAM
+000454 EE10 F001      00629     LFSR 1,FSR1
+000458 CFE6 F013      00630     MOVFF POSTINC1,bn_ascii
+00045C EC?? F???      00631     CALL BN_2_ASCII
+000460 EC?? F???      00632     CALL TX_BN_2_ASCII
+000464 EC?? F???      00633     CALL TX_ENTER
+000468 2E1C           00634     DECFSZ tmp,f,0
+00046A EF?? F???      00635     GOTO BUCLE_LLEGIR_RAM
+                      00636         
+                      00637     ;acabat
+00046E EF?? F???      00638     goto LOOP
+000472                00639 MODE_S
+000472 C004 FF8C      00640     movff display4,LATD
+                      00641     ;codi S
+000476 EC?? F???      00642     CALL LLEGIR_JOY
+00047A EF?? F???      00643     GOTO LOOP
+00047E                00644 MODE_T
+00047E C005 FF8C      00645     movff display5,LATD
+                      00646     ;codi T
+000482 EF?? F???      00647     goto LOOP
+000486                00648 MODE_U
+000486 808B           00649     BSF LATC,0,0
+000488 EC?? F???      00650     call MEDIR
+00048C C012 F013      00651     MOVFF us_echo_cm,bn_ascii
+000490 EC?? F???      00652     CALL BN_2_ASCII
+000494 EC?? F???      00653     CALL TX_BN_2_ASCII
+000498 0E63           00654     MOVLW 'c'
+00049A 6EAD           00655     MOVWF TXREG
+00049C EC?? F???      00656     CALL ESPERA_TX
+0004A0 0E6D           00657     MOVLW 'm'
+0004A2 6EAD           00658     MOVWF TXREG
+0004A4 EC?? F???      00659     CALL ESPERA_TX
+0004A8 EC?? F???      00660     CALL TX_ENTER
+                      00661     
+                      00662     ;Acabat
+0004AC 908B           00663     BCF LATC,0,0
+0004AE EF?? F???      00664     GOTO LOOP
+                      00665 
+                      00666     END
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 14
 
 
 SYMBOL TABLE
@@ -739,7 +762,7 @@ SYMBOL TABLE
 A                                 00000000
 ABDEN                             00000000
 ABDOVF                            00000007
-ACABAT_I                          00000366
+ACABAT_I                          0000038C
 ACCESS                            00000000
 ACKDT                             00000005
 ACKEN                             00000004
@@ -789,7 +812,7 @@ BCLIF                             00000003
 BCLIP                             00000003
 BF                                00000000
 BGST                              00000005
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 15
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 15
 
 
 SYMBOL TABLE
@@ -802,9 +825,11 @@ BOR                               00000000
 BRG16                             00000003
 BRGH                              00000002
 BSR                               00000FE0
+BUCLE2_D_1                        00000354
 BUCLE2_PWM_05                     000000E8
-BUCLE_LLEGIR_RAM                  0000042E
-BUCLE_NOM                         000003B4
+BUCLE_D_1                         00000352
+BUCLE_LLEGIR_RAM                  00000454
+BUCLE_NOM                         000003DA
 BUCLE_PWM_05                      000000E4
 BUCLE_PWM_COPS                    00000100
 BUCLE_PWM_GRAUS                   00000104
@@ -846,14 +871,14 @@ CCP2_PORTC                        00000001
 CCPR1                             00000FBE
 CCPR1H                            00000FBF
 CCPR1L                            00000FBE
-CCPR2                             00000FBB
-CCPR2H                            00000FBC
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 16
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCPR2                             00000FBB
+CCPR2H                            00000FBC
 CCPR2L                            00000FBB
 CENTENES_ASCII                    000001D6
 CFGS                              00000006
@@ -875,7 +900,8 @@ CMIE                              00000006
 CMIF                              00000006
 CMIP                              00000006
 COMPTAR_58                        00000186
-CONTINUA_NOM                      000003D4
+CONTINUA_NOM                      000003FA
+CONTROL_REBOTS                    00000350
 CREN                              00000004
 CS                                00000002
 CSRC                              00000007
@@ -904,15 +930,15 @@ DESENES_ASCII                     000001C6
 DONE                              00000001
 D_A                               00000005
 D_NOT_A                           00000005
-ECCP1AS                           00000FB6
-ECCP1CON                          00000FBD
-ECCP1DEL                          00000FB7
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 17
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ECCP1AS                           00000FB6
+ECCP1CON                          00000FBD
+ECCP1DEL                          00000FB7
 ECCPAS0                           00000004
 ECCPAS1                           00000005
 ECCPAS2                           00000006
@@ -928,8 +954,8 @@ EEPGD                             00000007
 EEPROM_READ                       00000122
 EEPROM_WRITE                      00000132
 END_PWM                           00000114
-ESPERA_BTN1                       0000030E
-ESPERA_BTN2                       0000032C
+ESPERA_BTN1                       00000318
+ESPERA_BTN2                       00000340
 ESPERA_CONVERSIO                  0000020E
 ESPERA_ECHO                       0000017A
 ESPERA_EEPROM_ESCRIURE            0000015C
@@ -937,7 +963,7 @@ ESPERA_TX                         0000023A
 FAST                              00000001
 FERR                              00000002
 FI_ASCII                          000001E4
-FI_D                              00000332
+FI_D                              00000346
 FLT0                              00000000
 FLTS                              00000002
 FREE                              00000004
@@ -963,15 +989,15 @@ HLVDCON                           00000FD2
 HLVDEN                            00000004
 HLVDIE                            00000002
 HLVDIF                            00000002
-HLVDIN                            00000005
-HLVDIP                            00000002
-HLVDL0                            00000000
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 18
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+HLVDIN                            00000005
+HLVDIP                            00000002
+HLVDL0                            00000000
 HLVDL1                            00000001
 HLVDL2                            00000002
 HLVDL3                            00000003
@@ -1022,15 +1048,15 @@ IPR1                              00000F9F
 IPR2                              00000FA2
 IRCF0                             00000004
 IRCF1                             00000005
-IRCF2                             00000006
-IRVST                             00000005
-KBI0                              00000004
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 19
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+IRCF2                             00000006
+IRVST                             00000005
+KBI0                              00000004
 KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
@@ -1075,21 +1101,21 @@ LATE0                             00000000
 LATE1                             00000001
 LATE2                             00000002
 LECTOR_EUSART                     00000268
-LLEGIR_I                          00000344
+LLEGIR_I                          0000036A
 LLEGIR_JOY                        0000020C
 LLEGIR_RX                         00000242
 LOOP                              000000CE
 LVDCON                            00000FD2
 LVDEN                             00000004
-LVDIE                             00000002
-LVDIF                             00000002
-LVDIP                             00000002
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 20
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LVDIE                             00000002
+LVDIF                             00000002
+LVDIP                             00000002
 LVDL0                             00000000
 LVDL1                             00000001
 LVDL2                             00000002
@@ -1103,16 +1129,16 @@ MCLR                              00000003
 MEDIR                             00000164
 MODE_A                            000002E2
 MODE_D                            000002F2
-MODE_I                            0000033C
-MODE_M                            00000376
-MODE_R                            00000384
-MODE_S                            0000044C
-MODE_T                            00000458
-MODE_U                            00000460
-MOSTRA_MESURES                    000003DA
+MODE_I                            00000362
+MODE_M                            0000039C
+MODE_R                            000003AA
+MODE_S                            00000472
+MODE_T                            0000047E
+MODE_U                            00000486
+MOSTRA_MESURES                    00000400
 N                                 00000004
 NEXT_A                            0000028A
-NEXT_BTN                          00000314
+NEXT_BTN                          0000031E
 NEXT_D                            00000296
 NEXT_I                            000002A2
 NEXT_M                            000002AE
@@ -1138,17 +1164,17 @@ NOT_TO                            00000003
 NOT_W                             00000002
 NOT_WR                            00000001
 NOT_WRITE                         00000002
-NO_ENTER                          0000035C
+NO_ENTER                          00000382
 OBF                               00000006
-OERR                              00000001
-OSC1                              00000007
-OSC2                              00000006
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 21
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+OERR                              00000001
+OSC1                              00000007
+OSC2                              00000006
 OSCCON                            00000FD3
 OSCFIE                            00000007
 OSCFIF                            00000007
@@ -1199,15 +1225,15 @@ PORTB                             00000F81
 PORTC                             00000F82
 PORTD                             00000F83
 PORTE                             00000F84
-POSTDEC0                          00000FED
-POSTDEC1                          00000FE5
-POSTDEC2                          00000FDD
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 22
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+POSTDEC0                          00000FED
+POSTDEC1                          00000FE5
+POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
 POSTINC2                          00000FDE
@@ -1258,15 +1284,15 @@ RB7                               00000007
 RBIE                              00000003
 RBIF                              00000000
 RBIP                              00000000
-RBPU                              00000007
-RC0                               00000000
-RC1                               00000001
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 23
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RBPU                              00000007
+RC0                               00000000
+RC1                               00000001
 RC2                               00000002
 RC3                               00000003
 RC4                               00000004
@@ -1317,15 +1343,15 @@ SDO                               00000005
 SEN                               00000000
 SENDB                             00000003
 SMP                               00000007
-SP0                               00000000
-SP1                               00000001
-SP2                               00000002
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 24
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SP0                               00000000
+SP1                               00000001
+SP2                               00000002
 SP3                               00000003
 SP4                               00000004
 SPBRG                             00000FAF
@@ -1376,15 +1402,15 @@ T1OSO                             00000000
 T1RUN                             00000006
 T1SYNC                            00000002
 T2CKPS0                           00000000
-T2CKPS1                           00000001
-T2CON                             00000FCA
-T2OUTPS0                          00000003
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 25
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T2CKPS1                           00000001
+T2CON                             00000FCA
+T2OUTPS0                          00000003
 T2OUTPS1                          00000004
 T2OUTPS2                          00000005
 T2OUTPS3                          00000006
@@ -1435,15 +1461,15 @@ TOSU                              00000FFF
 TOUTPS0                           00000003
 TOUTPS1                           00000004
 TOUTPS2                           00000005
-TOUTPS3                           00000006
-TRISA                             00000F92
-TRISA0                            00000000
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 26
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TOUTPS3                           00000006
+TRISA                             00000F92
+TRISA0                            00000000
 TRISA1                            00000001
 TRISA2                            00000002
 TRISA3                            00000003
@@ -1494,15 +1520,15 @@ TX9D                              00000000
 TXCKP                             00000004
 TXEN                              00000005
 TXIE                              00000004
-TXIF                              00000004
-TXIP                              00000004
-TXREG                             00000FAD
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 27
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TXIF                              00000004
+TXIP                              00000004
+TXREG                             00000FAD
 TXSTA                             00000FAC
 TX_BN_2_ASCII                     000001F2
 TX_ENTER                          00000256
@@ -1553,15 +1579,15 @@ _CP1_ON_5L                        000000FD
 _CPB_OFF_5H                       000000FF
 _CPB_ON_5H                        000000BF
 _CPD_OFF_5H                       000000FF
-_CPD_ON_5H                        0000007F
-_DEBUG_OFF_4L                     000000FF
-_DEBUG_ON_4L                      0000007F
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 28
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_CPD_ON_5H                        0000007F
+_DEBUG_OFF_4L                     000000FF
+_DEBUG_ON_4L                      0000007F
 _DEVID1                           003FFFFE
 _DEVID2                           003FFFFF
 _EBTR0_OFF_7L                     000000FF
@@ -1612,15 +1638,15 @@ _WDTPS_1_2H                       000000E1
 _WDTPS_2048_2H                    000000F7
 _WDTPS_256_2H                     000000F1
 _WDTPS_2_2H                       000000E3
-_WDTPS_32768_2H                   000000FF
-_WDTPS_32_2H                      000000EB
-_WDTPS_4096_2H                    000000F9
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 29
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_WDTPS_32768_2H                   000000FF
+_WDTPS_32_2H                      000000EB
+_WDTPS_4096_2H                    000000F9
 _WDTPS_4_2H                       000000E5
 _WDTPS_512_2H                     000000F3
 _WDTPS_64_2H                      000000ED
@@ -1670,14 +1696,16 @@ ram_addr_count                    00000018
 ram_data                          00000017
 tmp                               0000001C
 tmp2                              0000001D
+tmp3                              0000001F
+MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  17:13:01         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+tmp4                              00000020
 us_echo_58                        00000011
 us_echo_cm                        00000012
-
-MPASM 5.86          P2_FA_PIC_8B_GENERAL.ASM   3-29-2021  16:40:42         PAGE 30
-
-
-
-
 
 Errors   :     0
 Warnings :     1 reported,     0 suppressed
