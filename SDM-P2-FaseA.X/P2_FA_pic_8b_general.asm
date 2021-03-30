@@ -207,9 +207,10 @@ BUCLE_PWM_GRAUS
 END_PWM
     bcf LATA,2,0;apaga servo
     
-;PWM ACABAT; MESURES AUTO
+;PWM ACABAT MESURES AUTO
     btfsc estat_A,0
     call MEDIR;si auto
+    
     retfie FAST
     
 ;TIMER
@@ -284,6 +285,11 @@ COMPTAR_58
     ;guardar a ram
     movff us_echo_cm, PREINC1
     decfsz ram_count,f,0
+    
+    MOVFF us_echo_cm,bn_ascii
+    CALL BN_2_ASCII
+    CALL TX_BN_2_ASCII
+    call TX_CM
     RETURN
     
     ;reiniciar el punter d ela ram
@@ -444,6 +450,11 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
+    movlw 'N'
+    CPFSEQ eusart_input,0
+    goto NEXT_N
+    goto MODE_N
+NEXT_N
     goto LOOP
     ;boto clicat
     
@@ -451,26 +462,28 @@ NEXT_U
 MODE_A
     movff display7,LATD
     
-    btfss estat_mesures,0,0
-    goto ACTIVA_A
+    movlw .0
+    cpfsgt estat_mesures,0
+    goto ACTIVAR_A;estava a 0, activa A
+    movlw .1
+    cpfsgt estat_mesures,0
+    goto ACTIVAR_A;estava a U, activa a A
     
-    btfss estat_A,0
-    goto ACTIVAR_AUTO;activar mesures
-    ;desactivar mesures
-DESACTIVAR_AUTO
-    bcf LATC,0,0
-    bcf LATC,1,0
+    btfss estat_A,0;2, ja estavem a A, toggle mesures
+    goto ACTIVAR_AUTO;activar mesures, estava a 0
+    ;desactivar mesures, estava a 1
+DESACTIVAR_AUTO;mesures
     clrf estat_A,0
     goto LOOP
-ACTIVA_A
-    setf estat_mesures,0
-    goto LOOP
 ACTIVAR_AUTO
-    bsf LATC,0,0
-    bsf LATC,1,0
     setf estat_A,0
     goto LOOP
-
+ACTIVAR_A;mode A
+    bsf LATC,0,0
+    bsf LATC,1,0
+    movlw .2
+    movwf estat_mesures,0
+    goto LOOP
 MODE_D
     movff display3,LATD
     ;pulsadors +5º -5º per pulsados
@@ -753,27 +766,34 @@ MODE_T
     goto LOOP
 MODE_U
     
-    btfsc estat_mesures,0,0
+    movlw .2
+    cpfslt estat_mesures,0
     goto ACTIVAR_U
-    
-    BSF LATC,0,0
+    movlw .1
+    cpfseq estat_mesures,0
+    goto ACTIVAR_U
     call MEDIR
-    MOVFF us_echo_cm,bn_ascii
-    CALL BN_2_ASCII
-    CALL TX_BN_2_ASCII
-    call TX_CM
-    ;Acabat
-    BCF LATC,0,0
-    BCF LATC,1,0
-    GOTO LOOP
+    goto LOOP
     
 ACTIVAR_U
-    clrf estat_mesures,0
-    goto DESACTIVAR_AUTO
+    BSF LATC,0,0
+    bcf LATC,1,0
+    movlw .1
+    movwf estat_mesures,0
+    clrf estat_A,0
+    goto LOOP
 MODE_BOTO
     btfss PORTB,0,0
     goto MODE_BOTO
-    btfss estat_mesures,0
-    goto MODE_U
+    
+    movlw .2
+    cpfslt estat_mesures,0
     goto MODE_A
+    movlw .0
+    cpfsgt estat_mesures,0
+    goto LOOP
+    goto MODE_U
+MODE_N
+    ;mode mesures a cada angle
+    goto LOOP
     END
