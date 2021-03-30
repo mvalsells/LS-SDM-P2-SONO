@@ -358,16 +358,16 @@ LLEGIR_JOY
 ESPERA_CONVERSIO
    BTFSC ADCON0,1,0
    GOTO ESPERA_CONVERSIO
-   MOVFF ADRESH,bn_ascii
-   CALL BN_2_ASCII
-   CALL TX_BN_2_ASCII
-   MOVLW '-'
-   MOVWF TXREG,0
-   CALL ESPERA_TX
-   MOVFF ADRESL,bn_ascii
-   CALL BN_2_ASCII
-   CALL TX_BN_2_ASCII
-   CALL TX_ENTER
+;   MOVFF ADRESH,bn_ascii
+;   CALL BN_2_ASCII
+;   CALL TX_BN_2_ASCII
+;   MOVLW '-'
+;   MOVWF TXREG,0
+;   CALL ESPERA_TX
+;   MOVFF ADRESL,bn_ascii
+;   CALL BN_2_ASCII
+;   CALL TX_BN_2_ASCII
+;   CALL TX_ENTER
    RETURN
    
 ;-------------------------------------------------------------------------------
@@ -498,7 +498,6 @@ MODE_D
     BTFSC PORTB,1,0
     goto NEXT_BTN
     
-    
     movlw .175 ;valor maxim
     cpfslt count_pwm
     goto NEXT_BTN
@@ -530,10 +529,11 @@ NEXT_BTN
     decf count_pwm,f,0
     decf count_pwm,f,0
     decf count_pwm,f,0
+    
 ESPERA_BTN2
     btfss PORTB,2,0
     goto ESPERA_BTN2
- 
+    
 FI_D
     
     btfsc PIR1,RCIF,0
@@ -550,7 +550,7 @@ BUCLE2_D_1
     decfsz tmp3,f,0
     goto BUCLE_D_1
     return
-    
+
 MODE_I
     ;fixar 7seg a 0
     movff display0,LATD
@@ -759,7 +759,45 @@ MODE_S
     movff display4,LATD
     ;codi S
     CALL LLEGIR_JOY
-    GOTO LOOP
+    MOVLW .250
+    CPFSGT ADRESH,0
+    GOTO CP_LOW
+    movlw .175 ;valor maxim
+    cpfslt count_pwm
+    goto CP_LOW
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+    incf count_pwm,f,0
+BUCLE_JOY_H   
+    CALL LLEGIR_JOY
+    MOVLW .136
+    CPFSLT ADRESH,0
+    GOTO BUCLE_JOY_H   
+CP_LOW
+    CALL LLEGIR_JOY
+    MOVLW .5
+    CPFSLT ADRESH,0
+    GOTO FI_S
+    movlw .4 ;valor minim
+    cpfsgt count_pwm
+    goto FI_S
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+    decf count_pwm,f,0
+BUCLE_JOY_L
+    CALL LLEGIR_JOY
+    MOVLW .116
+    CPFSGT ADRESH,0
+    GOTO BUCLE_JOY_L
+FI_S
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_S
+
 MODE_T
     movff display5,LATD
     ;codi T
