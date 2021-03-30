@@ -39,6 +39,8 @@ ram_count EQU 0x1C
 tmp_timer EQU 0x1D
 tmp2_timer EQU 0x1E
 ram_200_bool EQU 0x1F
+estat_A EQU 0x20
+estat_mesures EQU 0x21
    
     ORG 0x000
     GOTO MAIN
@@ -93,10 +95,11 @@ INIT_VARS
     clrf count_pwm,0
     clrf FSR1L,0
     clrf FSR1H,0
-    
     movlw .200
     movwf ram_count,0
     clrf ram_200_bool,0
+    clrf estat_A,0
+    clrf estat_mesures,0
     
     return
 INIT_EUSART
@@ -113,7 +116,7 @@ INIT_EUSART
     return
 INIT_INTCONS
     BSF RCON,IPEN,0
-    MOVLW b'01100000' ;Només timer, ja canviarem quan anem fent els altres
+    MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
     MOVWF INTCON,0
     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
     ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
@@ -149,14 +152,14 @@ MAIN
     call INIT_ADCON
 LOOP
     ;codi
-    
-    BTFSC PORTB,0,0
-    goto NEXT_LOOP
-    ;control rebots
-    call CONTROL_REBOTS
-    ;control rebots
-    BTFSS PORTB,0,0
-    goto MODE_U
+;    
+;    BTFSC PORTB,0,0
+;    goto NEXT_LOOP
+;    ;control rebots
+;    call CONTROL_REBOTS
+;    ;control rebots
+;    BTFSS PORTB,0,0
+;    goto MODE_U
 
     
 NEXT_LOOP
@@ -201,6 +204,10 @@ BUCLE_PWM_GRAUS
     
 END_PWM
     bcf LATA,2,0;apaga servo
+    
+;PWM ACABAT; MESURES AUTO
+    btfsc estat_A,0
+    call MEDIR;si auto
     retfie FAST
     
 ;TIMER
@@ -443,12 +450,27 @@ NEXT_U
 ;---------------------------------------------------------------------------------
 MODE_A
     movff display7,LATD
-    BSF LATC,0,0
-    BSF LATC,1,0
-    ;acabat
-    BCF LATC,0,0
-    BCF LATC,1,0
-    GOTO LOOP
+    
+    btfss estat_mesures,0,0
+    goto ACTIVA_A
+    
+    btfss estat_A,0
+    goto ACTIVAR_AUTO;activar mesures
+    ;desactivar mesures
+DESACTIVAR_AUTO
+    bcf LATC,0,0
+    bcf LATC,1,0
+    clrf estat_A,0
+    goto LOOP
+ACTIVA_A
+    setf estat_mesures,0
+    goto LOOP
+ACTIVAR_AUTO
+    bsf LATC,0,0
+    bsf LATC,1,0
+    setf estat_A,0
+    goto LOOP
+
 MODE_D
     movff display3,LATD
     ;pulsadors +5º -5º per pulsados
@@ -520,7 +542,6 @@ MODE_I
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
     movlw .0 ;reinici adressa
     movwf eeprom_addr
-    
     ;llegir
 LLEGIR_I
 
@@ -544,7 +565,6 @@ ACABAT_I
     movlw b'00001101'
     movwf eeprom_data
     call EEPROM_WRITE
-
     ;acabat
     goto LOOP
     
@@ -556,8 +576,6 @@ MODE_M
     goto MOSTRAR_MESURA
     btfss ram_200_bool,0
     goto MOSTRA_GUIO2
-    
-    
     
 MOSTRAR_MESURA
     movff INDF1,bn_ascii
@@ -714,8 +732,6 @@ BUCLE_RAM1
     movff tmp3, FSR1L
     goto LOOP
     
-    
-    
 GUIO
     ;cas cap guardat
     movlw '-'
@@ -734,6 +750,10 @@ MODE_T
     ;codi T
     goto LOOP
 MODE_U
+    
+    btfsc estat_mesures,0,0
+    goto ACTIVAR_U
+    
     BSF LATC,0,0
     call MEDIR
     MOVFF us_echo_cm,bn_ascii
@@ -741,11 +761,14 @@ MODE_U
     CALL TX_BN_2_ASCII
     call TX_CM
     
-    ESPERA_BTN0
+ESPERA_BTN0
     btfss PORTB,0,0
     goto ESPERA_BTN0
     ;Acabat
     BCF LATC,0,0
     GOTO LOOP
-
+    
+ACTIVAR_U
+    clrf estat_mesures,0
+    goto DESACTIVAR_AUTO
     END
