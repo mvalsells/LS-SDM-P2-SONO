@@ -152,14 +152,16 @@ MAIN
     call INIT_ADCON
 LOOP
     ;codi
-;    
-;    BTFSC PORTB,0,0
-;    goto NEXT_LOOP
-;    ;control rebots
-;    call CONTROL_REBOTS
-;    ;control rebots
-;    BTFSS PORTB,0,0
-;    goto MODE_U
+    
+    BTFSC PORTB,0,0
+    goto NEXT_LOOP
+    ;control rebots
+    call CONTROL_REBOTS
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSS PORTB,0,0
+    goto MODE_BOTO
+    
 
     
 NEXT_LOOP
@@ -442,9 +444,7 @@ NEXT_T
     goto NEXT_U
     goto MODE_U
 NEXT_U
-    btfsc PORTB,0,0;mode u per boto, fer mesura
-    goto LOOP;no s'ha clicat cap tecla si arriba aqui
-    goto MODE_U
+    goto LOOP
     ;boto clicat
     
 ;---------------------------------------------------------------------------------
@@ -480,6 +480,7 @@ MODE_D
     goto NEXT_BTN
     ;control rebots
     call CONTROL_REBOTS
+    call CONTROL_REBOTS
     ;control rebots
     BTFSC PORTB,1,0
     goto NEXT_BTN
@@ -502,6 +503,7 @@ NEXT_BTN
     btfsc PORTB,2,0
     goto FI_D
     ;control rebots
+    call CONTROL_REBOTS
     call CONTROL_REBOTS
     ;control rebots
     BTFSC PORTB,2,0
@@ -760,15 +762,18 @@ MODE_U
     CALL BN_2_ASCII
     CALL TX_BN_2_ASCII
     call TX_CM
-    
-ESPERA_BTN0
-    btfss PORTB,0,0
-    goto ESPERA_BTN0
     ;Acabat
     BCF LATC,0,0
+    BCF LATC,1,0
     GOTO LOOP
     
 ACTIVAR_U
     clrf estat_mesures,0
     goto DESACTIVAR_AUTO
+MODE_BOTO
+    btfss PORTB,0,0
+    goto MODE_BOTO
+    btfss estat_mesures,0
+    goto MODE_U
+    goto MODE_A
     END
