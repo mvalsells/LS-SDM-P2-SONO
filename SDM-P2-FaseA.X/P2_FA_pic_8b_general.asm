@@ -35,6 +35,10 @@ tmp2 EQU 0x18
 count_pwm EQU 0x19
 tmp3 EQU 0x1A
 tmp4 EQU 0x1B
+ram_count EQU 0x1C
+tmp_timer EQU 0x1D
+tmp2_timer EQU 0x1E
+ram_200_bool EQU 0x1F
    
     ORG 0x000
     GOTO MAIN
@@ -60,8 +64,7 @@ INIT_PORTS
     bcf LATC,1,0;apagar 2n led
     ;D
     clrf TRISD,0
-    movlw b'00000000';apagar 7seg
-    movwf LATD,0
+    clrf LATD,0
     return
     
 INIT_VARS
@@ -87,8 +90,13 @@ INIT_VARS
     movwf display9,0
     movlw b'00001101';posem un carrier reurn a temp
     movwf carrier,0
-    
     clrf count_pwm,0
+    clrf FSR1L,0
+    clrf FSR1H,0
+    
+    movlw .200
+    movwf ram_count,0
+    clrf ram_200_bool,0
     
     return
 INIT_EUSART
@@ -105,7 +113,7 @@ INIT_EUSART
     return
 INIT_INTCONS
     BSF RCON,IPEN,0
-    MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
+    MOVLW b'01100000' ;Només timer, ja canviarem quan anem fent els altres
     MOVWF INTCON,0
     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
     ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
@@ -141,6 +149,17 @@ MAIN
     call INIT_ADCON
 LOOP
     ;codi
+    
+    BTFSC PORTB,0,0
+    goto NEXT_LOOP
+    ;control rebots
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSS PORTB,0,0
+    goto MODE_U
+
+    
+NEXT_LOOP
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
     goto LOOP
@@ -152,14 +171,14 @@ HIGH_RSI
     
     ;pwm 20ms + extra del nostre motor
     movlw .250;250
-    movwf tmp,0
+    movwf tmp_timer,0
 BUCLE_PWM_05
     movlw .6;5
-    movwf tmp2,0
+    movwf tmp2_timer,0
 BUCLE2_PWM_05
-    decfsz tmp2,f,0
+    decfsz tmp2_timer,f,0
     goto BUCLE2_PWM_05
-    decfsz tmp
+    decfsz tmp_timer
     goto BUCLE_PWM_05
     
     ;pwm angle precis
@@ -167,16 +186,16 @@ BUCLE2_PWM_05
     cpfsgt count_pwm,0
     goto END_PWM
    
-    movff count_pwm, tmp2
+    movff count_pwm, tmp2_timer
 BUCLE_PWM_COPS
     movlw .20
-    movwf tmp,0
+    movwf tmp_timer,0
 BUCLE_PWM_GRAUS
     NOP
     NOP
-    decfsz tmp,f,0
+    decfsz tmp_timer,f,0
     goto BUCLE_PWM_GRAUS
-    decfsz tmp2,f,0
+    decfsz tmp2_timer,f,0
     goto BUCLE_PWM_COPS
     
     
@@ -241,7 +260,6 @@ INCR_10us
 ESPERA_ECHO
     BTFSS PORTA,5,0 ; esperem el echo a high
     GOTO ESPERA_ECHO
-    ;BSF LATD,3,0
     CLRF us_echo_cm,0
 INICI_ECHO
     MOVLW .60 ;64		;1
@@ -255,7 +273,16 @@ COMPTAR_58
     DECF us_echo_cm,f,0
     
     ;guardar a ram
-    ;guardar a ram
+    movff us_echo_cm, PREINC1
+    decfsz ram_count,f,0
+    RETURN
+    
+    ;reiniciar el punter d ela ram
+    clrf FSR1L,0
+    clrf FSR1H,0
+    movlw .200
+    movwf ram_count,0
+    setf ram_200_bool,0
     RETURN
     
 ;Binary -> ASCII
@@ -330,7 +357,15 @@ ESPERA_CONVERSIO
    
 ;-------------------------------------------------------------------------------
 ;EUSART
-
+TX_CM
+    movlw 'c'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'm'
+    movwf TXREG,0
+    call ESPERA_TX
+    call TX_ENTER
+    return
 ESPERA_TX
     BTFSS TXSTA,TRMT,0
     GOTO ESPERA_TX
@@ -516,12 +551,33 @@ ACABAT_I
 MODE_M
     movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
+    movlw .200
+    cpfseq ram_count,0
+    goto MOSTRAR_MESURA
+    btfss ram_200_bool,0
+    goto MOSTRA_GUIO2
     
     
+    
+MOSTRAR_MESURA
+    movff INDF1,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
+    call TX_ENTER
+    goto M_FINAL
+MOSTRA_GUIO2
+    ;cas cap guardat
+    movlw '-'
+    movwf TXREG,0
+    call ESPERA_TX
+    call TX_ENTER
+    
+M_FINAL
     ;acabat
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_M
+    goto LOOP
     
 MODE_R;mostrar nom i 200 mesures
     movff display1,LATD
@@ -585,11 +641,88 @@ MOSTRA_MESURES
     movlw ':'
     movwf TXREG,0
     call ESPERA_TX
+    
     call TX_ENTER
     ;LLEGIR RAM
     
-        
-    ;acabat
+    movlw .200
+    cpfslt ram_count,0
+    goto MOSTRA_GUIO
+    
+    movff FSR1H, tmp2
+    movff FSR1L, tmp3
+    
+BUCLE_RAM2
+    movff POSTDEC1,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
+    
+    movlw .0
+    cpfseq FSR1L,0
+    goto BUCLE_RAM2
+    ;mostrar la 0
+    
+    ;si mostrar els que queden per fer la volta
+    btfss ram_200_bool,0
+    
+    movff tmp2, FSR1H
+    movff tmp3, FSR1L
+    goto LOOP;no volta
+    ;si volta
+    
+    movlw HIGH(.200)
+    movwf FSR1H,0
+    movlw LOW(.200)
+    movwf FSR1L,0
+BUCLE_RAM3
+    movff POSTDEC1,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
+    
+    movf tmp3,w,0
+    cpfseq FSR1L,0
+    goto BUCLE_RAM3
+    
+    movff tmp2, FSR1H
+    movff tmp3, FSR1L
+    goto LOOP
+MOSTRA_GUIO
+    btfss ram_200_bool,0
+    goto GUIO
+    ;cas si volta, 200 justos
+    movff FSR1H, tmp2
+    movff FSR1L, tmp3
+    
+    movlw HIGH(.200)
+    movwf FSR1H,0
+    movlw LOW(.200)
+    movwf FSR1L,0
+    
+    movlw .200
+    movwf tmp,0
+BUCLE_RAM1
+    movff POSTDEC1,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
+    decfsz tmp,f,0
+    goto BUCLE_RAM1
+    
+    movff tmp2, FSR1H
+    movff tmp3, FSR1L
+    goto LOOP
+    
+    
+    
+GUIO
+    ;cas cap guardat
+    movlw '-'
+    movwf TXREG,0
+    call ESPERA_TX
+    call TX_ENTER
+    
     goto LOOP
 MODE_S
     movff display4,LATD
@@ -606,14 +739,11 @@ MODE_U
     MOVFF us_echo_cm,bn_ascii
     CALL BN_2_ASCII
     CALL TX_BN_2_ASCII
-    MOVLW 'c'
-    MOVWF TXREG
-    CALL ESPERA_TX
-    MOVLW 'm'
-    MOVWF TXREG
-    CALL ESPERA_TX
-    CALL TX_ENTER
+    call TX_CM
     
+    ESPERA_BTN0
+    btfss PORTB,0,0
+    goto ESPERA_BTN0
     ;Acabat
     BCF LATC,0,0
     GOTO LOOP

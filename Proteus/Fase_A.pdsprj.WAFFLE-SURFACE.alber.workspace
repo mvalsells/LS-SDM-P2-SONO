@@ -63,7 +63,7 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="380" x="594" flags="00008009" y="231" h="171" pid="3" iid="1">
+   <POPUP w="52" x="594" flags="00008009" y="231" h="12" pid="3" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="16" x="208" flags="0000000a" y="295" h="32" pid="7" iid="1">
@@ -126,7 +126,7 @@
      <ITEM name="TopLineAddress">00300000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="142" x="328" flags="00000008" y="415" h="391" pid="10" iid="1">
+   <POPUP w="18" x="328" flags="00000008" y="415" h="32" pid="10" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="8" x="348" flags="00000002" y="435" h="8" pid="13" iid="1">
