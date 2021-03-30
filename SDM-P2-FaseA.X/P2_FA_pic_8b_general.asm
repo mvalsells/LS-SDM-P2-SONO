@@ -120,8 +120,6 @@ INIT_INTCONS
     MOVLW b'11100000' ;Només timer, ja canviarem quan anem fent els altres
     MOVWF INTCON,0
     BSF INTCON2,TMR0IP,0 ; Timer -> High priority
-    ;MOVLW b'0000100'; ;Només timer, ja canviarem quan anem fent els altres
-    ;MOVWF INTCON2,0
     return
 INIT_TIMER
     MOVLW b'10010001'
@@ -260,14 +258,13 @@ MEDIR
     MOVWF compt_10us
     BSF LATA,4,0 ; Trigger a high
 INCR_10us
-    INCF compt_10us,1,0
+    INCF compt_10us,f,0
     BTFSS STATUS,C
     GOTO INCR_10us
     NOP
     NOP
     NOP
     BCF LATA,4,0 ;Trigger a low
-        
 ESPERA_ECHO
     BTFSS PORTA,5,0 ; esperem el echo a high
     GOTO ESPERA_ECHO
@@ -283,17 +280,17 @@ COMPTAR_58
     GOTO INICI_ECHO	;2
     DECF us_echo_cm,f,0
     
-    ;guardar a ram
-    movff us_echo_cm, PREINC1
-    decfsz ram_count,f,0
     
     MOVFF us_echo_cm,bn_ascii
     CALL BN_2_ASCII
     CALL TX_BN_2_ASCII
     call TX_CM
-    RETURN
     
-    ;reiniciar el punter d ela ram
+    ;guardar a ram
+    movff us_echo_cm, PREINC1
+    decfsz ram_count,f,0
+    RETURN
+;    ;reiniciar el punter de la ram
     clrf FSR1L,0
     clrf FSR1H,0
     movlw .200
@@ -359,16 +356,6 @@ LLEGIR_JOY
 ESPERA_CONVERSIO
    BTFSC ADCON0,1,0
    GOTO ESPERA_CONVERSIO
-;   MOVFF ADRESH,bn_ascii
-;   CALL BN_2_ASCII
-;   CALL TX_BN_2_ASCII
-;   MOVLW '-'
-;   MOVWF TXREG,0
-;   CALL ESPERA_TX
-;   MOVFF ADRESL,bn_ascii
-;   CALL BN_2_ASCII
-;   CALL TX_BN_2_ASCII
-;   CALL TX_ENTER
    RETURN
    
 ;-------------------------------------------------------------------------------
@@ -854,32 +841,39 @@ MODE_BOTO
     cpfsgt estat_mesures,0
     goto LOOP
     goto MODE_U
+
 MODE_N
-    ;mode mesures a cada angle
-    CLRF count_pwm,0
-    CLRF estat_mesures,0
-    CLRF estat_A,0
-    BCF LATC,0,0
-    BCF LATC,1,0
-    ;CALL ESPERA_LLARGA
-    ;CALL ESPERA_LLARGA
+    clrf count_pwm,0
+    CALL DELAY
+    CALL DELAY
+    CALL DELAY
+    CALL DELAY
+    CALL DELAY
 BUCLE_N
-    CALL MEDIR
-    CALL ESPERA_LLARGA
-    INCF count_pwm,f,0
-    INCF count_pwm,f,0
-    MOVLW .89
-    CPFSGT count_pwm,0
-    GOTO BUCLE_N
+    call MEDIR
+    call DELAY
+    incf count_pwm,f,0
+    movlw .180
+    cpfseq count_pwm,0
+    goto BUCLE_N
     goto LOOP
     
-ESPERA_LLARGA
-    MOVLW .16
-    MOVWF espera_n,0
-BUCLE_ESPERA_LLARGA
-    CALL CONTROL_REBOTS
-    DECFSZ espera_n,f,0
-    GOTO BUCLE_ESPERA_LLARGA
-    RETURN
-
+DELAY
+    MOVLW .5
+    MOVWF tmp3,0
+DELAY_B0
+    movlw .255
+    movwf tmp,0
+DELAY_B1
+    movlw .255
+    movwf tmp2,0
+DELAY_B2
+    decfsz tmp2,f,0
+    goto DELAY_B2
+    decfsz tmp,f,0
+    goto DELAY_B1
+    DECFSZ tmp3,f,0
+    goto DELAY_B0
+    
+    return
     END

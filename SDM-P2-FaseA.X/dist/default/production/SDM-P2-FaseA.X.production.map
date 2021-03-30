@@ -1,5 +1,5 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Tue Mar 30 16:14:47 2021
+Linker Map File - Created Tue Mar 30 18:00:48 2021
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -7,7 +7,7 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
                    .org_0       code   0x000000    program   0x000004
                    .cinit    romdata   0x000004    program   0x000002
                    .org_1       code   0x000008    program   0x000004
-                   .org_2       code   0x000018    program   0x000654
+                   .org_2       code   0x000018    program   0x00066e
 .config_300001_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300001    program   0x000001
 .config_300003_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300003    program   0x000001
 .config_300005_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300005    program   0x000001
@@ -20,11 +20,11 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
                            ---------   ---------      
                             0x000000    0x000005      
                             0x000008    0x00000b      
-                            0x000018    0x00066b      
+                            0x000018    0x000685      
                             0x300001    0x300001      
                             0x300003    0x300003      
                             0x300005    0x300006      
-            1634 out of 8472 program addresses used, program memory utilization is 19%
+            1660 out of 8472 program addresses used, program memory utilization is 19%
 
 
 
@@ -41,10 +41,9 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
                BUCLE2_D_1   0x000394    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             BUCLE2_PWM_05   0x0000fa    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 BUCLE_D_1   0x000392    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-      BUCLE_ESPERA_LLARGA   0x000660    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               BUCLE_JOY_H   0x000582    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               BUCLE_JOY_L   0x0005ac    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                  BUCLE_N   0x000644    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                  BUCLE_N   0x000650    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 BUCLE_NOM   0x00044c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              BUCLE_PWM_05   0x0000f6    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            BUCLE_PWM_COPS   0x000112    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -58,6 +57,10 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
              CONTINUA_NOM   0x00046c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            CONTROL_REBOTS   0x000390    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    CP_LOW   0x00058e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                    DELAY   0x000666    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B0   0x00066a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B1   0x00066e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B2   0x000672    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
           DESACTIVAR_AUTO   0x000312    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             DESENES_ASCII   0x0001e4    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               EEPROM_READ   0x00013a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -68,7 +71,6 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
          ESPERA_CONVERSIO   0x00022c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               ESPERA_ECHO   0x000188    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
    ESPERA_EEPROM_ESCRIURE   0x00016a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            ESPERA_LLARGA   0x00065c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 ESPERA_TX   0x00024a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  FI_ASCII   0x000202    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      FI_D   0x000386    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -220,8 +222,10 @@ Linker Map File - Created Tue Mar 30 16:14:47 2021
                 ACTIVAR_U   0x000612    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 MODE_BOTO   0x000620    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_N   0x00063a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                  BUCLE_N   0x000644    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            ESPERA_LLARGA   0x00065c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-      BUCLE_ESPERA_LLARGA   0x000660    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                  BUCLE_N   0x000650    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                    DELAY   0x000666    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B0   0x00066a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B1   0x00066e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B2   0x000672    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
 
 
