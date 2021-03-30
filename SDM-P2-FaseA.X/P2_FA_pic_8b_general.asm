@@ -41,6 +41,7 @@ tmp2_timer EQU 0x1E
 ram_200_bool EQU 0x1F
 estat_A EQU 0x20
 estat_mesures EQU 0x21
+espera_n EQU 0x22
    
     ORG 0x000
     GOTO MAIN
@@ -800,8 +801,30 @@ FI_S
 
 MODE_T
     movff display5,LATD
-    ;codi T
-    goto LOOP
+    CALL LLEGIR_JOY
+    
+    MOVLW .90
+    CPFSLT ADRESH,0
+    GOTO MES_90
+    ;MENYS 90
+    MOVFF ADRESH,count_pwm
+    GOTO FI_T
+    
+MES_90
+    MOVLW .160
+    CPFSGT ADRESH,0
+    GOTO MIG
+    MOVLW .85
+    SUBWF ADRESH,w,0
+    MOVWF count_pwm,0
+    GOTO FI_T
+MIG
+    MOVLW .75
+    MOVWF count_pwm,0
+FI_T
+    btfsc PIR1,RCIF,0
+    goto LECTOR_EUSART
+    goto MODE_T
 MODE_U
     
     movlw .2
@@ -833,5 +856,30 @@ MODE_BOTO
     goto MODE_U
 MODE_N
     ;mode mesures a cada angle
+    CLRF count_pwm,0
+    CLRF estat_mesures,0
+    CLRF estat_A,0
+    BCF LATC,0,0
+    BCF LATC,1,0
+    ;CALL ESPERA_LLARGA
+    ;CALL ESPERA_LLARGA
+BUCLE_N
+    CALL MEDIR
+    CALL ESPERA_LLARGA
+    INCF count_pwm,f,0
+    INCF count_pwm,f,0
+    MOVLW .89
+    CPFSGT count_pwm,0
+    GOTO BUCLE_N
     goto LOOP
+    
+ESPERA_LLARGA
+    MOVLW .16
+    MOVWF espera_n,0
+BUCLE_ESPERA_LLARGA
+    CALL CONTROL_REBOTS
+    DECFSZ espera_n,f,0
+    GOTO BUCLE_ESPERA_LLARGA
+    RETURN
+
     END
