@@ -854,7 +854,7 @@ MODE_N
 BUCLE_N
     call MEDIR
     
-    ;mirar si es la mes llunyana / gran
+    ;mirar si es la mes llunyana / gran				       NO PROVAT
     movf us_echo_cm,0,0
     cpfsgt dist_major,0;dist_major > us_echo_cm ?? Si:skip | No:fes
     movff us_echo_cm, dist_major
@@ -867,7 +867,7 @@ BUCLE_N
     goto BUCLE_N
     
     ;anar a la mes llunyana / gran
-    call DELAY
+    call DELAY;							       NO PROVAT
     call DELAY
     call DELAY
     movff dist_major, count_pwm
