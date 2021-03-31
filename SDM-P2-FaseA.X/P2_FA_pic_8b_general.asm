@@ -42,6 +42,7 @@ ram_200_bool EQU 0x1F
 estat_A EQU 0x20
 estat_mesures EQU 0x21
 espera_n EQU 0x22
+dist_major EQU 0x23
    
     ORG 0x000
     GOTO MAIN
@@ -843,6 +844,7 @@ MODE_BOTO
     goto MODE_U
 
 MODE_N
+    clrf dist_major,0;distancia major
     clrf count_pwm,0
     CALL DELAY
     CALL DELAY
@@ -851,15 +853,31 @@ MODE_N
     CALL DELAY
 BUCLE_N
     call MEDIR
+    
+    ;mirar si es la mes llunyana / gran
+    movf us_echo_cm,0,0
+    cpfsgt dist_major,0;dist_major > us_echo_cm ?? Si:skip | No:fes
+    movff us_echo_cm, dist_major
+    ;-^
+    
     call DELAY
     incf count_pwm,f,0
     movlw .180
     cpfseq count_pwm,0
     goto BUCLE_N
+    
+    ;anar a la mes llunyana / gran
+    call DELAY
+    call DELAY
+    call DELAY
+    movff dist_major, count_pwm
+    call DELAY
+    ;-^
+   
     goto LOOP
     
 DELAY
-    MOVLW .5
+    MOVLW .6
     MOVWF tmp3,0
 DELAY_B0
     movlw .255
