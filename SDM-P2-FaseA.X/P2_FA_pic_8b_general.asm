@@ -102,6 +102,7 @@ INIT_VARS
     clrf ram_200_bool,0
     clrf estat_A,0
     clrf estat_mesures,0
+    clrf count_major,0
     
     return
 INIT_EUSART
@@ -845,24 +846,25 @@ MODE_BOTO
 
 MODE_N
     clrf dist_major,0;distancia major
+    
     clrf count_pwm,0
+    CALL DELAY;espera que torni a 0graus si no hi era
     CALL DELAY
     CALL DELAY
-    CALL DELAY
-    CALL DELAY
-    CALL DELAY
+    
+    call MEDIR;angle 0
 BUCLE_N
+    call DELAY
+    incf count_pwm,f,0
+    call DELAY
     call MEDIR
     
     ;mirar si es la mes llunyana / gran				       NO PROVAT
     movf us_echo_cm,0,0
     cpfsgt dist_major,0;dist_major > us_echo_cm ?? Si:skip | No:fes
-    movff us_echo_cm, dist_major
+    movff count_pwm, count_major
     ;-^
-    
-    call DELAY
-    incf count_pwm,f,0
-    movlw .180
+    movlw .180;180 graus+1 grau (grau 0) = 180 bucle + 1 fora abans
     cpfseq count_pwm,0
     goto BUCLE_N
     
@@ -870,14 +872,14 @@ BUCLE_N
     call DELAY;							       NO PROVAT
     call DELAY
     call DELAY
-    movff dist_major, count_pwm
+    movff count_major, count_pwm
     call DELAY
     ;-^
    
     goto LOOP
     
 DELAY
-    MOVLW .6
+    MOVLW .10
     MOVWF tmp3,0
 DELAY_B0
     movlw .255
