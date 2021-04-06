@@ -43,6 +43,9 @@ estat_A EQU 0x20
 estat_mesures EQU 0x21
 espera_n EQU 0x22
 dist_major EQU 0x23
+count_major EQU 0x24
+tmpRAMH EQU 0x25
+tmpRAML EQU 0x26
    
     ORG 0x000
     GOTO MAIN
@@ -103,6 +106,7 @@ INIT_VARS
     clrf estat_A,0
     clrf estat_mesures,0
     clrf count_major,0
+    clrf dist_major,0
     
     return
 INIT_EUSART
@@ -175,7 +179,6 @@ HIGH_RSI
     call CARREGA_TIMER;reiniciem el timer
     bsf LATA,2,0;reactivem el pin del servo
     
-    ;pwm 20ms + extra del nostre motor
     movlw .250;250
     movwf tmp_timer,0
 BUCLE_PWM_05
@@ -289,7 +292,7 @@ COMPTAR_58
     call TX_CM
     
     ;guardar a ram
-    movff us_echo_cm, PREINC1
+    movff us_echo_cm, POSTINC1
     decfsz ram_count,f,0
     RETURN
 ;    ;reiniciar el punter de la ram
@@ -668,75 +671,119 @@ MOSTRA_MESURES
     call TX_ENTER
     ;LLEGIR RAM
     
+    btfsc ram_200_bool,0;hem fet una volta?
+    goto MOSTRA_TOT
+    ;goto MOSTRA_ALTRES
+;MOSTRA_ALTRES
     movlw .200
-    cpfslt ram_count,0
-    goto MOSTRA_GUIO
-    
-    movff FSR1H, tmp2
-    movff FSR1L, tmp3
-    
-BUCLE_RAM2
-    movff POSTDEC1,bn_ascii
-    call BN_2_ASCII
-    call TX_BN_2_ASCII
-    call TX_CM
-    
-    movlw .0
-    cpfseq FSR1L,0
-    goto BUCLE_RAM2
-    ;mostrar la 0
-    
-    ;si mostrar els que queden per fer la volta
-    btfss ram_200_bool,0
-    
-    movff tmp2, FSR1H
-    movff tmp3, FSR1L
-    goto LOOP;no volta
-    ;si volta
-    
-    movlw HIGH(.200)
-    movwf FSR1H,0
-    movlw LOW(.200)
-    movwf FSR1L,0
-BUCLE_RAM3
-    movff POSTDEC1,bn_ascii
-    call BN_2_ASCII
-    call TX_BN_2_ASCII
-    call TX_CM
-    
-    movf tmp3,w,0
-    cpfseq FSR1L,0
-    goto BUCLE_RAM3
-    
-    movff tmp2, FSR1H
-    movff tmp3, FSR1L
-    goto LOOP
-MOSTRA_GUIO
-    btfss ram_200_bool,0
+    cpfslt ram_count,0;hem fet minim una?
     goto GUIO
-    ;cas si volta, 200 justos
-    movff FSR1H, tmp2
-    movff FSR1L, tmp3
-    
-    movlw HIGH(.200)
-    movwf FSR1H,0
-    movlw LOW(.200)
-    movwf FSR1L,0
-    
-    movlw .200
-    movwf tmp,0
-BUCLE_RAM1
-    movff POSTDEC1,bn_ascii
+    ;goto MOSTRA_PARCIAL
+;MOSTRA_PARCIAL
+    movff FSR1H, tmpRAMH;copia
+    movff FSR1L, tmpRAML
+BUCLE_RAM_PARCIAL
+    movff PREINC1,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
-    decfsz tmp,f,0
-    goto BUCLE_RAM1
     
-    movff tmp2, FSR1H
-    movff tmp3, FSR1L
+    decfsz tmpRAML,f,0
+    goto BUCLE_RAM_PARCIAL
+    
+    movff tmpRAMH, FSR1H ;retorna copia
+    movff tmpRAML, FSR1L
+    
     goto LOOP
+MOSTRA_TOT
+    movff FSR1H, tmpRAMH;copia
+    movff FSR1L, tmpRAML
+    clrf FSR1H,0
+    clrf FSR1L,0
+BUCLE_RAM_TOT
+    movff PREINC1,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
     
+    movlw .200
+    cpfseq FSR1L,0
+    goto BUCLE_RAM_TOT
+    
+    movff tmpRAMH, FSR1H ;retorna copia
+    movff tmpRAML, FSR1L
+    
+    goto LOOP 
+;    
+;    movlw .200
+;    cpfslt ram_count,0
+;    goto MOSTRA_GUIO;no n'hi ha cap
+;    
+;    movff FSR1H, tmp2;copia
+;    movff FSR1L, tmp3
+;    
+;BUCLE_RAM2
+;    movff POSTDEC1,bn_ascii
+;    call BN_2_ASCII
+;    call TX_BN_2_ASCII
+;    call TX_CM
+;    
+;    movlw .0
+;    cpfseq FSR1L,0
+;    goto BUCLE_RAM2
+;    ;mostrar la 0
+;    
+;    ;si mostrar els que queden per fer la volta
+;    btfss ram_200_bool,0
+;    
+;    movff tmp2, FSR1H
+;    movff tmp3, FSR1L
+;    goto LOOP;no volta
+;    ;si volta
+;    
+;    movlw HIGH(.200)
+;    movwf FSR1H,0
+;    movlw LOW(.200)
+;    movwf FSR1L,0
+;BUCLE_RAM3
+;    movff POSTDEC1,bn_ascii
+;    call BN_2_ASCII
+;    call TX_BN_2_ASCII
+;    call TX_CM
+;    
+;    movf tmp3,w,0
+;    cpfseq FSR1L,0
+;    goto BUCLE_RAM3
+;    
+;    movff tmp2, FSR1H
+;    movff tmp3, FSR1L
+;    goto LOOP
+;MOSTRA_GUIO
+;    btfss ram_200_bool,0
+;    goto GUIO
+;    ;cas si volta, 200 justos
+;    movff FSR1H, tmp2
+;    movff FSR1L, tmp3
+;    
+;    movlw HIGH(.200)
+;    movwf FSR1H,0
+;    movlw LOW(.200)
+;    movwf FSR1L,0
+;    
+;    movlw .200
+;    movwf tmp,0
+;BUCLE_RAM1
+;    movff POSTDEC1,bn_ascii
+;    call BN_2_ASCII
+;    call TX_BN_2_ASCII
+;    call TX_CM
+;    decfsz tmp,f,0
+;    goto BUCLE_RAM1
+;    
+;    movff tmp2, FSR1H
+;    movff tmp3, FSR1L
+;    goto LOOP
+;    
 GUIO
     ;cas cap guardat
     movlw '-'
@@ -745,6 +792,7 @@ GUIO
     call TX_ENTER
     
     goto LOOP
+    
 MODE_S
     movff display4,LATD
     ;codi S
@@ -846,34 +894,36 @@ MODE_BOTO
 
 MODE_N
     clrf dist_major,0;distancia major
-    
     clrf count_pwm,0
     CALL DELAY;espera que torni a 0graus si no hi era
     CALL DELAY
-    CALL DELAY
     
-    call MEDIR;angle 0
 BUCLE_N
-    call DELAY
+    ;call DELAY
+    CALL MEDIR
     incf count_pwm,f,0
     call DELAY
-    call MEDIR
+    ;CALL DELAY;DELAYS AQUI SOLS
     
-    ;mirar si es la mes llunyana / gran				       NO PROVAT
-    movf us_echo_cm,0,0
-    cpfsgt dist_major,0;dist_major > us_echo_cm ?? Si:skip | No:fes
-    movff count_pwm, count_major
+    ;mirar si es la mes llunyana / gran
+    movf us_echo_cm,w,0
+    cpfsgt dist_major,0
+    CALL SAVE_DIST
     ;-^
-    movlw .180;180 graus+1 grau (grau 0) = 180 bucle + 1 fora abans
+    
+    movlw .179;179;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;reduir a 10 pq funcioni
     cpfseq count_pwm,0
     goto BUCLE_N
     
     ;anar a la mes llunyana / gran
-    call DELAY;							       NO PROVAT
-    call DELAY
-    call DELAY
+    ;call DELAY;
+    call TX_ENTER
+    movff dist_major,bn_ascii
+    call BN_2_ASCII
+    call TX_BN_2_ASCII
+    call TX_CM
+    call TX_ENTER
     movff count_major, count_pwm
-    call DELAY
     ;-^
    
     goto LOOP
@@ -896,4 +946,9 @@ DELAY_B2
     goto DELAY_B0
     
     return
+SAVE_DIST
+    movff count_pwm, count_major
+    movff us_echo_cm, dist_major
+    RETURN
+    
     END
