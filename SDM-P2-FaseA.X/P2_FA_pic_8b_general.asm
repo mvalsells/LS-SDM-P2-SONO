@@ -792,26 +792,42 @@ FI_S
 
 MODE_T
     movff display5,LATD
-    CALL LLEGIR_JOY
     
-    MOVLW .90
-    CPFSLT ADRESH,0
-    GOTO MES_90
-    ;MENYS 90
-    MOVFF ADRESH,count_pwm
-    GOTO FI_T
+    ;    CALL LLEGIR_JOY
+;    
+;    MOVLW .90
+;    CPFSLT ADRESH,0
+;    GOTO MES_90
+;    ;MENYS 90
+;    MOVFF ADRESH,count_pwm
+;    GOTO FI_T
+;    
+;MES_90
+;    MOVLW .160
+;    CPFSGT ADRESH,0
+;    GOTO MIG
+;    MOVLW .85
+;    SUBWF ADRESH,w,0
+;    MOVWF count_pwm,0
+;    GOTO FI_T
+;MIG
+;    MOVLW .75
+;    MOVWF count_pwm,0
+
+    call LLEGIR_JOY
+    movlw .0
+BUCLE_T
+    cpfsgt ADRESH,0
+    goto T_TROBAT
+    addlw .1
+    btfsc STATUS,C,0
+    goto T_TROBAT
+    incf count_pwm,1,0
     
-MES_90
-    MOVLW .160
-    CPFSGT ADRESH,0
-    GOTO MIG
-    MOVLW .85
-    SUBWF ADRESH,w,0
-    MOVWF count_pwm,0
-    GOTO FI_T
-MIG
-    MOVLW .75
-    MOVWF count_pwm,0
+    ;goto BUCLE_T
+T_TROBAT
+    
+    
 FI_T
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
