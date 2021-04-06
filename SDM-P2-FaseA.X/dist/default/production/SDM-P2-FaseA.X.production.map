@@ -1,5 +1,5 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Tue Apr 06 17:12:33 2021
+Linker Map File - Created Tue Apr 06 17:24:02 2021
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -7,7 +7,7 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                    .org_0       code   0x000000    program   0x000004
                    .cinit    romdata   0x000004    program   0x000002
                    .org_1       code   0x000008    program   0x000004
-                   .org_2       code   0x000018    program   0x000660
+                   .org_2       code   0x000018    program   0x00066a
 .config_300001_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300001    program   0x000001
 .config_300003_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300003    program   0x000001
 .config_300005_BUILD/DEFAULT/PRODUCTION/P2_FA_P    romdata   0x300005    program   0x000001
@@ -20,11 +20,11 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                            ---------   ---------      
                             0x000000    0x000005      
                             0x000008    0x00000b      
-                            0x000018    0x000677      
+                            0x000018    0x000681      
                             0x300001    0x300001      
                             0x300003    0x300003      
                             0x300005    0x300006      
-            1646 out of 8472 program addresses used, program memory utilization is 19%
+            1656 out of 8472 program addresses used, program memory utilization is 19%
 
 
 
@@ -34,32 +34,32 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                  ACABAT_I   0x0003d0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 ACTIVAR_A   0x000322    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              ACTIVAR_AUTO   0x00031c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                ACTIVAR_U   0x0005e0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                ACTIVAR_U   0x0005ea    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                BN_2_ASCII   0x0001cc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
           BN_2_ASCII_LOOP   0x0001d2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
        BN_2_ASCII_LOOP_FI   0x0001fc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                BUCLE2_D_1   0x000398    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             BUCLE2_PWM_05   0x0000fe    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 BUCLE_D_1   0x000396    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              BUCLE_JOY_H   0x000550    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              BUCLE_JOY_L   0x00057a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                  BUCLE_N   0x000614    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              BUCLE_JOY_H   0x00055a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              BUCLE_JOY_L   0x000584    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                  BUCLE_N   0x00061e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 BUCLE_NOM   0x000454    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              BUCLE_PWM_05   0x0000fa    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            BUCLE_PWM_COPS   0x000116    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
           BUCLE_PWM_GRAUS   0x00011a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-        BUCLE_RAM_PARCIAL   0x0004cc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            BUCLE_RAM_TOT   0x0004fc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+        BUCLE_RAM_PARCIAL   0x0004d6    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+            BUCLE_RAM_TOT   0x000506    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             CARREGA_TIMER   0x000134    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            CENTENES_ASCII   0x0001f8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                COMPTAR_58   0x000198    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              CONTINUA_NOM   0x000474    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            CONTROL_REBOTS   0x000394    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   CP_LOW   0x00055c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                    DELAY   0x00064e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B0   0x000652    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B1   0x000656    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B2   0x00065a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   CP_LOW   0x000566    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                    DELAY   0x000658    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B0   0x00065c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B1   0x000660    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B2   0x000664    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
           DESACTIVAR_AUTO   0x000316    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             DESENES_ASCII   0x0001e8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
               EEPROM_READ   0x00013e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -74,9 +74,9 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                 ESPERA_TX   0x00024e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  FI_ASCII   0x000206    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      FI_D   0x00038a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     FI_S   0x000586    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     FI_T   0x0005be    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     GUIO   0x00051e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     FI_S   0x000590    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     FI_T   0x0005c8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     GUIO   0x000528    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  HIGH_RSI   0x0000ee    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                 INCR_10us   0x00017c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                INICI_ECHO   0x000194    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -94,22 +94,22 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                      LOOP   0x0000d0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                      MAIN   0x0000b0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                     MEDIR   0x000176    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MES_90   0x0005a8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                      MIG   0x0005ba    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MES_90   0x0005b2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                      MIG   0x0005c4    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_A   0x0002fc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                MODE_BOTO   0x0005ee    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                MODE_BOTO   0x0005f8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_D   0x00032e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_I   0x0003a6    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_M   0x0003e0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_N   0x000608    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_N   0x000612    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    MODE_R   0x000424    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_S   0x00052e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_T   0x000590    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_U   0x0005c8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_S   0x000538    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_T   0x00059a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_U   0x0005d2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            MOSTRAR_MESURA   0x0003f2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              MOSTRA_GUIO2   0x00040e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            MOSTRA_MESURES   0x00047a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-               MOSTRA_TOT   0x0004ee    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+               MOSTRA_TOT   0x0004f8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                   M_FINAL   0x00041a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    NEXT_A   0x000298    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  NEXT_BTN   0x00035e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -123,7 +123,7 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                    NEXT_T   0x0002e0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                    NEXT_U   0x0002ec    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  NO_ENTER   0x0003c6    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                SAVE_DIST   0x00066e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                SAVE_DIST   0x000678    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
             TX_BN_2_ASCII   0x000214    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                     TX_CM   0x000238    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
                  TX_ENTER   0x00026a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
@@ -206,28 +206,28 @@ Linker Map File - Created Tue Apr 06 17:12:33 2021
                 BUCLE_NOM   0x000454    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
              CONTINUA_NOM   0x000474    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
            MOSTRA_MESURES   0x00047a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-        BUCLE_RAM_PARCIAL   0x0004cc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-               MOSTRA_TOT   0x0004ee    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-            BUCLE_RAM_TOT   0x0004fc    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     GUIO   0x00051e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_S   0x00052e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              BUCLE_JOY_H   0x000550    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   CP_LOW   0x00055c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-              BUCLE_JOY_L   0x00057a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     FI_S   0x000586    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_T   0x000590    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MES_90   0x0005a8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                      MIG   0x0005ba    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                     FI_T   0x0005be    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_U   0x0005c8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                ACTIVAR_U   0x0005e0    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                MODE_BOTO   0x0005ee    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                   MODE_N   0x000608    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                  BUCLE_N   0x000614    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                    DELAY   0x00064e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B0   0x000652    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B1   0x000656    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                 DELAY_B2   0x00065a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
-                SAVE_DIST   0x00066e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+        BUCLE_RAM_PARCIAL   0x0004d6    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+               MOSTRA_TOT   0x0004f8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+            BUCLE_RAM_TOT   0x000506    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     GUIO   0x000528    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_S   0x000538    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              BUCLE_JOY_H   0x00055a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   CP_LOW   0x000566    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+              BUCLE_JOY_L   0x000584    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     FI_S   0x000590    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_T   0x00059a    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MES_90   0x0005b2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                      MIG   0x0005c4    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                     FI_T   0x0005c8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_U   0x0005d2    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                ACTIVAR_U   0x0005ea    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                MODE_BOTO   0x0005f8    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                   MODE_N   0x000612    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                  BUCLE_N   0x00061e    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                    DELAY   0x000658    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B0   0x00065c    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B1   0x000660    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                 DELAY_B2   0x000664    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
+                SAVE_DIST   0x000678    program     static C:\Users\alber\OneDrive - La Salle\Compus\P2\LS-SDM-P2-SONO\SDM-P2-FaseA.X\P2_FA_pic_8b_general.asm
 
 

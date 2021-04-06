@@ -302,7 +302,7 @@ COMPTAR_58
     decfsz ram_count,1,0
     goto END_SAVE_RAM
 ;    ;reiniciar el punter de la ram SI HEM FET 200
-    clrf FSR0,0
+    clrf FSR0L,0
     ;clrf FSR0H,0
     movlw .200
     movwf ram_count,0
@@ -686,13 +686,16 @@ MOSTRA_MESURES
     goto GUIO
 
     movff FSR0L, tmpRAML
+    movff FSR0H, tmpRAMH
+    movff tmpRAML,tmp
+    clrf FSR0L,0
 BUCLE_RAM_PARCIAL
     movff POSTINC0,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
     
-    decfsz tmpRAML,f,0
+    decfsz tmp,1,0
     goto BUCLE_RAM_PARCIAL
     
     movff tmpRAML, FSR0L
@@ -701,7 +704,7 @@ BUCLE_RAM_PARCIAL
 MOSTRA_TOT
     movff FSR0L, tmpRAML
     movff FSR0H, tmpRAMH
-    clrf FSR0,0
+    clrf FSR0L,0
     
     movlw .200
     movwf tmpRAMTOT,0
@@ -711,7 +714,7 @@ BUCLE_RAM_TOT
     call TX_BN_2_ASCII
     call TX_CM
     
-    decfsz tmp,1,0
+    decfsz tmpRAMTOT,1,0
     goto BUCLE_RAM_TOT
     
     movff tmpRAML, FSR0L
@@ -723,7 +726,6 @@ GUIO
     movwf TXREG,0
     call ESPERA_TX
     call TX_ENTER
-    
     goto LOOP
     
 MODE_S
