@@ -113,6 +113,7 @@ INIT_VARS
     clrf dist_major,0
     clrf tmpRAMTOT,0
     
+    
     return
 INIT_EUSART
     movlw b'00100100'
@@ -297,19 +298,19 @@ COMPTAR_58
     call TX_CM
     
     ;guardar a ram
-    bcf INTCON,GIE;no interrupts
+    ;bcf INTCON,GIE;no interrupts, tot i aixo hi ha problemes de que el nombre no es guara be'
     movff us_echo_cm, POSTINC0
+    ;bsf INTCON,GIE
+    
     decfsz ram_count,1,0
     goto END_SAVE_RAM
 ;    ;reiniciar el punter de la ram SI HEM FET 200
     clrf FSR0L,0
-    clrf FSR0H,0
-    ;clrf FSR0H,0
+    
     movlw .200
     movwf ram_count,0
     setf ram_200_bool,0
 END_SAVE_RAM
-    bsf INTCON,GIE
     RETURN
     
 ;Binary -> ASCII
@@ -723,6 +724,7 @@ MOSTRA_TOT
     movff FSR0H, tmpRAMH
     movlw .200
     movwf tmp,0
+    
     clrf FSR0L,0
     
 BUCLE_RAM_TOT
@@ -735,7 +737,7 @@ BUCLE_RAM_TOT
     goto BUCLE_RAM_TOT
     
     movff tmpRAML, FSR0L
-    ;movff tmpRAMH, FSR0H
+    movff tmpRAMH, FSR0H
     goto LOOP
 GUIO
     ;cas cap guardat
