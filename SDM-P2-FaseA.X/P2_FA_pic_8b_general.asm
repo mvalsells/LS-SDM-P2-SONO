@@ -297,17 +297,19 @@ COMPTAR_58
     call TX_CM
     
     ;guardar a ram
-    
+    bcf INTCON,GIE;no interrupts
     movff us_echo_cm, POSTINC0
     decfsz ram_count,1,0
     goto END_SAVE_RAM
 ;    ;reiniciar el punter de la ram SI HEM FET 200
     clrf FSR0L,0
+    clrf FSR0H,0
     ;clrf FSR0H,0
     movlw .200
     movwf ram_count,0
     setf ram_200_bool,0
 END_SAVE_RAM
+    bsf INTCON,GIE
     RETURN
     
 ;Binary -> ASCII
@@ -702,24 +704,39 @@ BUCLE_RAM_PARCIAL
     movff tmpRAMH, FSR0H
     goto LOOP
 MOSTRA_TOT
+    movlw 'T'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'O'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw 'T'
+    movwf TXREG,0
+    call ESPERA_TX
+    movlw ':'
+    movwf TXREG,0
+    call ESPERA_TX
+    call TX_ENTER
+
+    
     movff FSR0L, tmpRAML
     movff FSR0H, tmpRAMH
+    movlw .200
+    movwf tmp,0
     clrf FSR0L,0
     
-    movlw .200
-    movwf tmpRAMTOT,0
 BUCLE_RAM_TOT
     movff POSTINC0,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
     
-    decfsz tmpRAMTOT,1,0
+    decfsz tmp,1,0
     goto BUCLE_RAM_TOT
     
     movff tmpRAML, FSR0L
-    movff tmpRAMH, FSR0H
-    goto LOOP 
+    ;movff tmpRAMH, FSR0H
+    goto LOOP
 GUIO
     ;cas cap guardat
     movlw '-'
