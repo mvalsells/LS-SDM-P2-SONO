@@ -212,7 +212,6 @@ BUCLE_PWM_GRAUS
     decfsz tmp2_timer,f,0
     goto BUCLE_PWM_COPS
     
-    
 END_PWM
     bcf LATA,2,0;apaga servo
     
@@ -299,11 +298,11 @@ COMPTAR_58
     ;guardar a ram
     
     movff us_echo_cm, POSTINC0
-    decfsz ram_count,1,0
+    decfsz ram_count,f,0
     goto END_SAVE_RAM
 ;    ;reiniciar el punter de la ram SI HEM FET 200
     clrf FSR0L,0
-    ;clrf FSR0H,0
+    clrf FSR0H,0
     movlw .200
     movwf ram_count,0
     setf ram_200_bool,0
@@ -593,8 +592,8 @@ MODE_M
     goto MOSTRA_GUIO2
     
 MOSTRAR_MESURA
-    movff POSTDEC0,tmp
-    movff POSTINC0,bn_ascii
+    movff POSTDEC1,tmp
+    movff POSTINC1,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
