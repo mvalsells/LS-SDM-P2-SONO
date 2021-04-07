@@ -861,20 +861,30 @@ MODE_T
 ;MIG
 ;    MOVLW .75
 ;    MOVWF count_pwm,0
-
+    
     call LLEGIR_JOY
-    movlw .0
-    movwf tmp
+    clrf tmp,0
+    clrf tmp2,0
 BUCLE_T
+    movf tmp,0
     cpfsgt ADRESH,0
     goto T_TROBAT
     incf tmp,1,0
     btfsc STATUS,C,0;val C per tmp?
     goto T_TROBAT
-    incf count_pwm,1,0
+    incf tmp2,1,0
     
-    ;goto BUCLE_T
+    movf tmp,0
+    cpfsgt ADRESH,0
+    goto T_TROBAT
+    incf tmp,1,0
+    incf tmp,1,0
+    btfsc STATUS,C,0;val C per tmp?
+    goto T_TROBAT
+    incf tmp2,1,0
+    goto BUCLE_T
 T_TROBAT
+    movff tmp2, count_pwm
     
     
 FI_T
