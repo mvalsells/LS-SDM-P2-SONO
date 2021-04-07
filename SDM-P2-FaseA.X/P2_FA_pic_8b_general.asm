@@ -816,11 +816,12 @@ MODE_T
 
     call LLEGIR_JOY
     movlw .0
+    movwf tmp
 BUCLE_T
     cpfsgt ADRESH,0
     goto T_TROBAT
-    addlw .1
-    btfsc STATUS,C,0
+    incf tmp,1,0
+    btfsc STATUS,C,0;val C per tmp?
     goto T_TROBAT
     incf count_pwm,1,0
     
