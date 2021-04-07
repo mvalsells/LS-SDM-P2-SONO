@@ -1,4 +1,4 @@
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  1
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ Warning[215]: Processor superseded by command line.  Verify processor symbol.
   0000001E            00040 tmp2_timer EQU 0x1E
   0000001F            00041 ram_200_bool EQU 0x1F
   00000020            00042 estat_A EQU 0x20
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  2
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -71,7 +71,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
   00000026            00048 tmpRAML EQU 0x26
   00000027            00049 tmpRAMTOT EQU 0x27
   00000028            00050 modeAnterior EQU 0x28
-                      00051         ; Bit 7 -> Venim de pos
+                      00051         ; Bit 7 -> Venim de pos servo
                       00052         ; Bits 6-2 -> Unused
                       00053         ; Bit 1  \
                       00054         ;          ----> 0=Venim de Mode D; 1= Venim de Mode S; 2= Venim de mode T
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000044 6E03           00093     movwf display3,0
 000046 0E66           00094     movlw b'01100110'
 000048 6E04           00095     movwf display4,0
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  3
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00009A 0E91           00146     MOVLW b'10010001'
 00009C 6ED5           00147     MOVWF T0CON,0
 00009E 0012           00148     RETURN
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  4
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000FC                00199 BUCLE_PWM_05
 0000FC 0E06           00200     movlw .6;5
 0000FE 6E1E           00201     movwf tmp2_timer,0
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  5
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00252 ;Escriptura EEPROM
 000150                00253 EEPROM_WRITE
 000150 500E           00254     movf eeprom_addr,0
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  6
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -352,7 +352,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0001AE EC?? F???      00305     CALL BN_2_ASCII
 0001B2 EC?? F???      00306     CALL TX_BN_2_ASCII
 0001B6 EC?? F???      00307     call TX_CM
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  7
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -411,7 +411,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000208                00358 FI_ASCII
 000208 0E30           00359     MOVLW .48
 00020A 2614           00360     ADDWF ascii_u,f,0
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  8
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -470,7 +470,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00026A 6E0A           00411     movwf eusart_input,0
 00026C C00A FFAD      00412     movff eusart_input,TXREG
 000270 EC?? F???      00413     call ESPERA_TX
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE  9
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -529,7 +529,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002E4 EF?? F???      00464     goto NEXT_T
 0002E8 EF?? F???      00465     goto MODE_T
 0002EC                00466 NEXT_T
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 10
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -545,7 +545,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002FC EF?? F???      00474     goto NEXT_N
 000300 EF?? F???      00475     goto MODE_N
 000304                00476 NEXT_N
-000304 EF?? F???      00477     goto LOOP
+000304 EF?? F???      00477     goto FI_MODE_NO_SERVO
                       00478     ;boto clicat
                       00479     
                       00480 ;---------------------------------------------------------------------------------
@@ -564,546 +564,581 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00493     ;desactivar mesures, estava a 1
 000322                00494 DESACTIVAR_AUTO;mesures
 000322 6A20           00495     clrf estat_A,0
-000324 EF?? F???      00496     goto LOOP
+000324 EF?? F???      00496     goto FI_MODE_NO_SERVO
 000328                00497 ACTIVAR_AUTO
 000328 6820           00498     setf estat_A,0
-00032A EF?? F???      00499     goto LOOP
+00032A EF?? F???      00499     goto FI_MODE_NO_SERVO
 00032E                00500 ACTIVAR_A;mode A
 00032E 808B           00501     bsf LATC,0,0
 000330 828B           00502     bsf LATC,1,0
 000332 0E02           00503     movlw .2
 000334 6E21           00504     movwf estat_mesures,0
-000336 EF?? F???      00505     goto LOOP
+000336 EF?? F???      00505     goto FI_MODE_NO_SERVO
 00033A                00506 MODE_D
 00033A C003 FF8C      00507     movff display3,LATD
-                      00508     ;pulsadors +5º -5º per pulsados
-                      00509 
-                      00510     
-00033E B281           00511     BTFSC PORTB,1,0
-000340 EF?? F???      00512     goto NEXT_BTN
-                      00513     ;control rebots
-000344 EC?? F???      00514     call CONTROL_REBOTS
-000348 EC?? F???      00515     call CONTROL_REBOTS
-                      00516     ;control rebots
-00034C B281           00517     BTFSC PORTB,1,0
-00034E EF?? F???      00518     goto NEXT_BTN
-                      00519     
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 11
+00033E 6A28           00508     CLRF modeAnterior,0
+                      00509     ;pulsadors +5º -5º per pulsados
+                      00510 
+                      00511     
+000340 B281           00512     BTFSC PORTB,1,0
+000342 EF?? F???      00513     goto NEXT_BTN
+                      00514     ;control rebots
+000346 EC?? F???      00515     call CONTROL_REBOTS
+00034A EC?? F???      00516     call CONTROL_REBOTS
+                      00517     ;control rebots
+00034E B281           00518     BTFSC PORTB,1,0
+000350 EF?? F???      00519     goto NEXT_BTN
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000352 0EAF           00520     movlw .175 ;valor maxim
-000354 6019           00521     cpfslt count_pwm
-000356 EF?? F???      00522     goto NEXT_BTN
-00035A 2A19           00523     incf count_pwm,f,0
+                      00520     
+000354 0EAF           00521     movlw .175 ;valor maxim
+000356 6019           00522     cpfslt count_pwm
+000358 EF?? F???      00523     goto NEXT_BTN
 00035C 2A19           00524     incf count_pwm,f,0
 00035E 2A19           00525     incf count_pwm,f,0
 000360 2A19           00526     incf count_pwm,f,0
 000362 2A19           00527     incf count_pwm,f,0
-000364                00528 ESPERA_BTN1
-000364 A281           00529     btfss PORTB,1,0
-000366 EF?? F???      00530     goto ESPERA_BTN1
-                      00531     
-00036A                00532 NEXT_BTN
-                      00533     
-00036A B481           00534     btfsc PORTB,2,0
-00036C EF?? F???      00535     goto FI_D
-                      00536     ;control rebots
-000370 EC?? F???      00537     call CONTROL_REBOTS
-000374 EC?? F???      00538     call CONTROL_REBOTS
-                      00539     ;control rebots
-000378 B481           00540     BTFSC PORTB,2,0
-00037A EF?? F???      00541     goto FI_D
-                      00542     
-00037E 0E04           00543     movlw .4 ;valor minim
-000380 6419           00544     cpfsgt count_pwm
-000382 EF?? F???      00545     goto FI_D
-000386 0619           00546     decf count_pwm,f,0
+000364 2A19           00528     incf count_pwm,f,0
+000366                00529 ESPERA_BTN1
+000366 A281           00530     btfss PORTB,1,0
+000368 EF?? F???      00531     goto ESPERA_BTN1
+                      00532     
+00036C                00533 NEXT_BTN
+                      00534     
+00036C B481           00535     btfsc PORTB,2,0
+00036E EF?? F???      00536     goto FI_D
+                      00537     ;control rebots
+000372 EC?? F???      00538     call CONTROL_REBOTS
+000376 EC?? F???      00539     call CONTROL_REBOTS
+                      00540     ;control rebots
+00037A B481           00541     BTFSC PORTB,2,0
+00037C EF?? F???      00542     goto FI_D
+                      00543     
+000380 0E04           00544     movlw .4 ;valor minim
+000382 6419           00545     cpfsgt count_pwm
+000384 EF?? F???      00546     goto FI_D
 000388 0619           00547     decf count_pwm,f,0
 00038A 0619           00548     decf count_pwm,f,0
 00038C 0619           00549     decf count_pwm,f,0
 00038E 0619           00550     decf count_pwm,f,0
-                      00551     
-000390                00552 ESPERA_BTN2
-000390 A481           00553     btfss PORTB,2,0
-000392 EF?? F???      00554     goto ESPERA_BTN2
-                      00555     
-000396                00556 FI_D
-000396 0E40           00557     MOVLW b'1000000'
-000398 6E28           00558     MOVWF modeAnterior,0
-                      00559     ;Mirem si hi ha lletra
-00039A BA9E           00560     btfsc PIR1,RCIF,0
-00039C EF?? F???      00561     goto LECTOR_EUSART
-0003A0 EF?? F???      00562     GOTO MODE_D
-                      00563     
-                      00564     ;mirem si hi ha measure
-0003A4 B081           00565     BTFSC PORTB,0,0
-0003A6 EF?? F???      00566     GOTO MODE_D
-                      00567     ;control rebots
-0003AA EC?? F???      00568     call CONTROL_REBOTS
-0003AE EC?? F???      00569     call CONTROL_REBOTS
-                      00570     ;control rebots
-0003B2 A081           00571     BTFSS PORTB,0,0
-0003B4 EF?? F???      00572     goto MODE_BOTO
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 12
+000390 0619           00551     decf count_pwm,f,0
+                      00552     
+000392                00553 ESPERA_BTN2
+000392 A481           00554     btfss PORTB,2,0
+000394 EF?? F???      00555     goto ESPERA_BTN2
+                      00556     
+000398                00557 FI_D
+000398 0E80           00558     MOVLW b'10000000'
+00039A 6E28           00559     MOVWF modeAnterior,0
+                      00560     ;Mirem si hi ha lletra
+00039C BA9E           00561     btfsc PIR1,RCIF,0
+00039E EF?? F???      00562     goto LECTOR_EUSART
+                      00563     ;GOTO MODE_D
+                      00564     
+                      00565     ;mirem si hi ha measure
+0003A2 B081           00566     BTFSC PORTB,0,0
+0003A4 EF?? F???      00567     GOTO MODE_D
+                      00568     ;control rebots
+0003A8 EC?? F???      00569     call CONTROL_REBOTS
+0003AC EC?? F???      00570     call CONTROL_REBOTS
+                      00571     ;control rebots
+0003B0 A081           00572     BTFSS PORTB,0,0
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00573     
-0003B8 6A28           00574     CLRF modeAnterior
-                      00575     
-0003BA                00576 CONTROL_REBOTS
-0003BA 681A           00577     setf tmp3,0
-0003BC                00578 BUCLE_D_1
-0003BC 681B           00579     setf tmp4,0
-0003BE                00580 BUCLE2_D_1
-0003BE 2E1B           00581     decfsz tmp4,f,0
-0003C0 EF?? F???      00582     goto BUCLE2_D_1
-0003C4 2E1A           00583     decfsz tmp3,f,0
-0003C6 EF?? F???      00584     goto BUCLE_D_1
-0003CA 0012           00585     return
-                      00586 
-0003CC                00587 MODE_I
-0003CC 9E28           00588     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
-                      00589     ;fixar 7seg a 0
-0003CE C000 FF8C      00590     movff display0,LATD
-                      00591     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
-0003D2 0E00           00592     movlw .0 ;reinici adressa
-0003D4 6E0E           00593     movwf eeprom_addr
-                      00594     ;llegir
-0003D6                00595 LLEGIR_I
-                      00596 
-0003D6 EC?? F???      00597     call LLEGIR_RX
-0003DA C00A F00F      00598     movff eusart_input,eeprom_data
-0003DE EC?? F???      00599     call EEPROM_WRITE
-                      00600 
-0003E2 0E0D           00601     movlw '\r';esperem a un enter
-0003E4 620A           00602     cpfseq eusart_input,0
-0003E6 EF?? F???      00603     goto NO_ENTER
-0003EA EF?? F???      00604     goto ACABAT_I
-0003EE                00605 NO_ENTER
-0003EE 2A0E           00606     incf eeprom_addr;seguent adr
-0003F0 0E78           00607     movlw .120          ;mirar si >120
-0003F2 620E           00608     cpfseq eeprom_addr,0
-0003F4 EF?? F???      00609     goto LLEGIR_I
-                      00610 
-0003F8                00611 ACABAT_I
-0003F8 EC?? F???      00612     call TX_ENTER
-                      00613      ;guardar un carrier return extra
-0003FC 0E0D           00614     movlw b'00001101'
-0003FE 6E0F           00615     movwf eeprom_data
-000400 EC?? F???      00616     call EEPROM_WRITE
-                      00617     ;acabat
-000404 EF?? F???      00618     goto LOOP
-                      00619     
-000408                00620 MODE_M
-000408 9E28           00621     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
-00040A C002 FF8C      00622     movff display2,LATD
-                      00623     ;mostrar ultima mesura si no estem a 0 de mesures
-00040E 0EC8           00624     movlw .200
-000410 621C           00625     cpfseq ram_count,0
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 13
+0003B2 EF?? F???      00573     goto MODE_BOTO
+                      00574     
+0003B6 EF?? F???      00575     GOTO MODE_D
+                      00576     
+0003BA                00577 CONTROL_REBOTS
+0003BA 681A           00578     setf tmp3,0
+0003BC                00579 BUCLE_D_1
+0003BC 681B           00580     setf tmp4,0
+0003BE                00581 BUCLE2_D_1
+0003BE 2E1B           00582     decfsz tmp4,f,0
+0003C0 EF?? F???      00583     goto BUCLE2_D_1
+0003C4 2E1A           00584     decfsz tmp3,f,0
+0003C6 EF?? F???      00585     goto BUCLE_D_1
+0003CA 0012           00586     return
+                      00587 
+0003CC                00588 MODE_I
+0003CC 6A28           00589    CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+                      00590     ;fixar 7seg a 0
+0003CE C000 FF8C      00591     movff display0,LATD
+                      00592     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
+0003D2 0E00           00593     movlw .0 ;reinici adressa
+0003D4 6E0E           00594     movwf eeprom_addr
+                      00595     ;llegir
+0003D6                00596 LLEGIR_I
+                      00597 
+0003D6 EC?? F???      00598     call LLEGIR_RX
+0003DA C00A F00F      00599     movff eusart_input,eeprom_data
+0003DE EC?? F???      00600     call EEPROM_WRITE
+                      00601 
+0003E2 0E0D           00602     movlw '\r';esperem a un enter
+0003E4 620A           00603     cpfseq eusart_input,0
+0003E6 EF?? F???      00604     goto NO_ENTER
+0003EA EF?? F???      00605     goto ACABAT_I
+0003EE                00606 NO_ENTER
+0003EE 2A0E           00607     incf eeprom_addr;seguent adr
+0003F0 0E78           00608     movlw .120          ;mirar si >120
+0003F2 620E           00609     cpfseq eeprom_addr,0
+0003F4 EF?? F???      00610     goto LLEGIR_I
+                      00611 
+0003F8                00612 ACABAT_I
+0003F8 EC?? F???      00613     call TX_ENTER
+                      00614      ;guardar un carrier return extra
+0003FC 0E0D           00615     movlw b'00001101'
+0003FE 6E0F           00616     movwf eeprom_data
+000400 EC?? F???      00617     call EEPROM_WRITE
+                      00618     ;acabat
+000404 EF?? F???      00619     goto LOOP
+                      00620     
+000408                00621 MODE_M
+000408 6A28           00622     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+00040A C002 FF8C      00623     movff display2,LATD
+                      00624     ;mostrar ultima mesura si no estem a 0 de mesures
+00040E 0EC8           00625     movlw .200
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000412 EF?? F???      00626     goto MOSTRAR_MESURA
-000416 A01F           00627     btfss ram_200_bool,0
-000418 EF?? F???      00628     goto MOSTRA_GUIO2
-                      00629     
-00041C                00630 MOSTRAR_MESURA
-00041C CFED F017      00631     movff POSTDEC0,tmp
-000420 CFEE F013      00632     movff POSTINC0,bn_ascii
-000424 EC?? F???      00633     call BN_2_ASCII
-000428 EC?? F???      00634     call TX_BN_2_ASCII
-00042C EC?? F???      00635     call TX_CM
-000430 EC?? F???      00636     call TX_ENTER
-000434 EF?? F???      00637     goto M_FINAL
-000438                00638 MOSTRA_GUIO2
-                      00639     ;cas cap guardat
-000438 0E2D           00640     movlw '-'
-00043A 6EAD           00641     movwf TXREG,0
-00043C EC?? F???      00642     call ESPERA_TX
-000440 EC?? F???      00643     call TX_ENTER
-                      00644     
-000444                00645 M_FINAL
-                      00646     ;acabat
-000444 BA9E           00647     btfsc PIR1,RCIF,0
-000446 EF?? F???      00648     goto LECTOR_EUSART
-00044A EF?? F???      00649     goto LOOP
-                      00650     
-00044E                00651 MODE_R;mostrar nom i 200 mesures
-00044E 9E28           00652     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
-000450 C001 FF8C      00653     movff display1,LATD
-                      00654     ;MOSTRAR NOM (part 1/2)
-000454 0E4E           00655     movlw 'N'
-000456 6EAD           00656     movwf TXREG,0
-000458 EC?? F???      00657     call ESPERA_TX
-00045C 0E6F           00658     movlw 'o'
-00045E 6EAD           00659     movwf TXREG,0
-000460 EC?? F???      00660     call ESPERA_TX
-000464 0E6D           00661     movlw 'm'
-000466 6EAD           00662     movwf TXREG,0
-000468 EC?? F???      00663     call ESPERA_TX
-00046C 0E3A           00664     movlw ':'
-00046E 6EAD           00665     movwf TXREG,0
-000470 EC?? F???      00666     call ESPERA_TX
-000474 0E20           00667     movlw ' '
-000476 6EAD           00668     movwf TXREG,0
-000478 EC?? F???      00669     call ESPERA_TX
-00047C 0E00           00670     movlw .0 ;reinici adressa
-00047E 6E0E           00671     movwf eeprom_addr
-                      00672     
-000480                00673 BUCLE_NOM
-                      00674     ;call ESPERA_TX
-000480 EC?? F???      00675     call EEPROM_READ
-000484 C00F FFAD      00676     movff eeprom_data, TXREG
-000488 EC?? F???      00677     call ESPERA_TX
-00048C 0E0D           00678     movlw '\r' ;carrier
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 14
+000410 621C           00626     cpfseq ram_count,0
+000412 EF?? F???      00627     goto MOSTRAR_MESURA
+000416 A01F           00628     btfss ram_200_bool,0
+000418 EF?? F???      00629     goto MOSTRA_GUIO2
+                      00630     
+00041C                00631 MOSTRAR_MESURA
+00041C CFED F017      00632     movff POSTDEC0,tmp
+000420 CFEE F013      00633     movff POSTINC0,bn_ascii
+000424 EC?? F???      00634     call BN_2_ASCII
+000428 EC?? F???      00635     call TX_BN_2_ASCII
+00042C EC?? F???      00636     call TX_CM
+000430 EC?? F???      00637     call TX_ENTER
+000434 EF?? F???      00638     goto M_FINAL
+000438                00639 MOSTRA_GUIO2
+                      00640     ;cas cap guardat
+000438 0E2D           00641     movlw '-'
+00043A 6EAD           00642     movwf TXREG,0
+00043C EC?? F???      00643     call ESPERA_TX
+000440 EC?? F???      00644     call TX_ENTER
+                      00645     
+000444                00646 M_FINAL
+                      00647     ;acabat
+000444 BA9E           00648     btfsc PIR1,RCIF,0
+000446 EF?? F???      00649     goto LECTOR_EUSART
+00044A EF?? F???      00650     goto LOOP
+                      00651     
+00044E                00652 MODE_R;mostrar nom i 200 mesures
+00044E 6A28           00653     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+000450 C001 FF8C      00654     movff display1,LATD
+                      00655     ;MOSTRAR NOM (part 1/2)
+000454 0E4E           00656     movlw 'N'
+000456 6EAD           00657     movwf TXREG,0
+000458 EC?? F???      00658     call ESPERA_TX
+00045C 0E6F           00659     movlw 'o'
+00045E 6EAD           00660     movwf TXREG,0
+000460 EC?? F???      00661     call ESPERA_TX
+000464 0E6D           00662     movlw 'm'
+000466 6EAD           00663     movwf TXREG,0
+000468 EC?? F???      00664     call ESPERA_TX
+00046C 0E3A           00665     movlw ':'
+00046E 6EAD           00666     movwf TXREG,0
+000470 EC?? F???      00667     call ESPERA_TX
+000474 0E20           00668     movlw ' '
+000476 6EAD           00669     movwf TXREG,0
+000478 EC?? F???      00670     call ESPERA_TX
+00047C 0E00           00671     movlw .0 ;reinici adressa
+00047E 6E0E           00672     movwf eeprom_addr
+                      00673     
+000480                00674 BUCLE_NOM
+                      00675     ;call ESPERA_TX
+000480 EC?? F???      00676     call EEPROM_READ
+000484 C00F FFAD      00677     movff eeprom_data, TXREG
+000488 EC?? F???      00678     call ESPERA_TX
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 14
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00048E 620F           00679     cpfseq eeprom_data,0
-000490 EF?? F???      00680     goto CONTINUA_NOM
-000494 0E0A           00681     movlw '\n'
-000496 6EAD           00682     movwf TXREG,0
-000498 EC?? F???      00683     call ESPERA_TX
-00049C EF?? F???      00684     goto MOSTRA_MESURES
-0004A0                00685 CONTINUA_NOM
-0004A0 2A0E           00686     incf eeprom_addr
-0004A2 EF?? F???      00687     goto BUCLE_NOM  
-                      00688     
-                      00689     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
-0004A6                00690 MOSTRA_MESURES
-0004A6 0E4D           00691     movlw 'M'
-0004A8 6EAD           00692     movwf TXREG,0
-0004AA EC?? F???      00693     call ESPERA_TX
-0004AE 0E65           00694     movlw 'e'
-0004B0 6EAD           00695     movwf TXREG,0
-0004B2 EC?? F???      00696     call ESPERA_TX
-0004B6 0E73           00697     movlw 's'
-0004B8 6EAD           00698     movwf TXREG,0
-0004BA EC?? F???      00699     call ESPERA_TX
-0004BE 0E75           00700     movlw 'u'
-0004C0 6EAD           00701     movwf TXREG,0
-0004C2 EC?? F???      00702     call ESPERA_TX
-0004C6 0E72           00703     movlw 'r'
-0004C8 6EAD           00704     movwf TXREG,0
-0004CA 0E65           00705     movlw 'e'
-0004CC 6EAD           00706     movwf TXREG,0
-0004CE EC?? F???      00707     call ESPERA_TX
-0004D2 0E73           00708     movlw 's'
-0004D4 6EAD           00709     movwf TXREG,0
-0004D6 EC?? F???      00710     call ESPERA_TX
-0004DA 0E3A           00711     movlw ':'
-0004DC 6EAD           00712     movwf TXREG,0
-0004DE EC?? F???      00713     call ESPERA_TX
-                      00714     
-0004E2 EC?? F???      00715     call TX_ENTER
-                      00716     ;LLEGIR RAM
-0004E6 B01F           00717     btfsc ram_200_bool,0;hem fet una volta?
-0004E8 EF?? F???      00718     goto MOSTRA_TOT
-                      00719 
-0004EC 0EC8           00720     movlw .200
-0004EE 601C           00721     cpfslt ram_count,0;hem fet minim una?
-0004F0 EF?? F???      00722     goto GUIO
-                      00723 
-0004F4 CFE9 F026      00724     movff FSR0L, tmpRAML
-0004F8 CFEA F025      00725     movff FSR0H, tmpRAMH
-0004FC C026 F017      00726     movff tmpRAML,tmp
-000500 6AE9           00727     clrf FSR0L,0
-000502                00728 BUCLE_RAM_PARCIAL
-000502 CFEE F013      00729     movff POSTINC0,bn_ascii
-000506 EC?? F???      00730     call BN_2_ASCII
-00050A EC?? F???      00731     call TX_BN_2_ASCII
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 15
+00048C 0E0D           00679     movlw '\r' ;carrier
+00048E 620F           00680     cpfseq eeprom_data,0
+000490 EF?? F???      00681     goto CONTINUA_NOM
+000494 0E0A           00682     movlw '\n'
+000496 6EAD           00683     movwf TXREG,0
+000498 EC?? F???      00684     call ESPERA_TX
+00049C EF?? F???      00685     goto MOSTRA_MESURES
+0004A0                00686 CONTINUA_NOM
+0004A0 2A0E           00687     incf eeprom_addr
+0004A2 EF?? F???      00688     goto BUCLE_NOM  
+                      00689     
+                      00690     ;MOSTRAR ULTIMES 200 MESURES (PART 2/2)
+0004A6                00691 MOSTRA_MESURES
+0004A6 0E4D           00692     movlw 'M'
+0004A8 6EAD           00693     movwf TXREG,0
+0004AA EC?? F???      00694     call ESPERA_TX
+0004AE 0E65           00695     movlw 'e'
+0004B0 6EAD           00696     movwf TXREG,0
+0004B2 EC?? F???      00697     call ESPERA_TX
+0004B6 0E73           00698     movlw 's'
+0004B8 6EAD           00699     movwf TXREG,0
+0004BA EC?? F???      00700     call ESPERA_TX
+0004BE 0E75           00701     movlw 'u'
+0004C0 6EAD           00702     movwf TXREG,0
+0004C2 EC?? F???      00703     call ESPERA_TX
+0004C6 0E72           00704     movlw 'r'
+0004C8 6EAD           00705     movwf TXREG,0
+0004CA 0E65           00706     movlw 'e'
+0004CC 6EAD           00707     movwf TXREG,0
+0004CE EC?? F???      00708     call ESPERA_TX
+0004D2 0E73           00709     movlw 's'
+0004D4 6EAD           00710     movwf TXREG,0
+0004D6 EC?? F???      00711     call ESPERA_TX
+0004DA 0E3A           00712     movlw ':'
+0004DC 6EAD           00713     movwf TXREG,0
+0004DE EC?? F???      00714     call ESPERA_TX
+                      00715     
+0004E2 EC?? F???      00716     call TX_ENTER
+                      00717     ;LLEGIR RAM
+0004E6 B01F           00718     btfsc ram_200_bool,0;hem fet una volta?
+0004E8 EF?? F???      00719     goto MOSTRA_TOT
+                      00720 
+0004EC 0EC8           00721     movlw .200
+0004EE 601C           00722     cpfslt ram_count,0;hem fet minim una?
+0004F0 EF?? F???      00723     goto GUIO
+                      00724 
+0004F4 CFE9 F026      00725     movff FSR0L, tmpRAML
+0004F8 CFEA F025      00726     movff FSR0H, tmpRAMH
+0004FC C026 F017      00727     movff tmpRAML,tmp
+000500 6AE9           00728     clrf FSR0L,0
+000502                00729 BUCLE_RAM_PARCIAL
+000502 CFEE F013      00730     movff POSTINC0,bn_ascii
+000506 EC?? F???      00731     call BN_2_ASCII
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 15
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00050E EC?? F???      00732     call TX_CM
-                      00733     
-000512 2E17           00734     decfsz tmp,1,0
-000514 EF?? F???      00735     goto BUCLE_RAM_PARCIAL
-                      00736     
-000518 C026 FFE9      00737     movff tmpRAML, FSR0L
-00051C C025 FFEA      00738     movff tmpRAMH, FSR0H
-000520 EF?? F???      00739     goto LOOP
-000524                00740 MOSTRA_TOT
-000524 0E54           00741     movlw 'T'
-000526 6EAD           00742     movwf TXREG,0
-000528 EC?? F???      00743     call ESPERA_TX
-00052C 0E4F           00744     movlw 'O'
-00052E 6EAD           00745     movwf TXREG,0
-000530 EC?? F???      00746     call ESPERA_TX
-000534 0E54           00747     movlw 'T'
-000536 6EAD           00748     movwf TXREG,0
-000538 EC?? F???      00749     call ESPERA_TX
-00053C 0E3A           00750     movlw ':'
-00053E 6EAD           00751     movwf TXREG,0
-000540 EC?? F???      00752     call ESPERA_TX
-000544 EC?? F???      00753     call TX_ENTER
-                      00754 
-                      00755     
-000548 CFE9 F026      00756     movff FSR0L, tmpRAML
-00054C CFEA F025      00757     movff FSR0H, tmpRAMH
-000550 0EC8           00758     movlw .200
-000552 6E17           00759     movwf tmp,0
-                      00760     
-000554 6AE9           00761     clrf FSR0L,0
-                      00762     
-000556                00763 BUCLE_RAM_TOT
-000556 CFEE F013      00764     movff POSTINC0,bn_ascii
-00055A EC?? F???      00765     call BN_2_ASCII
-00055E EC?? F???      00766     call TX_BN_2_ASCII
-000562 EC?? F???      00767     call TX_CM
-                      00768     
-000566 2E17           00769     decfsz tmp,1,0
-000568 EF?? F???      00770     goto BUCLE_RAM_TOT
-                      00771     
-00056C C026 FFE9      00772     movff tmpRAML, FSR0L
-000570 C025 FFEA      00773     movff tmpRAMH, FSR0H
-000574 EF?? F???      00774     goto LOOP
-000578                00775 GUIO
-                      00776     ;cas cap guardat
-000578 0E2D           00777     movlw '-'
-00057A 6EAD           00778     movwf TXREG,0
-00057C EC?? F???      00779     call ESPERA_TX
-000580 EC?? F???      00780     call TX_ENTER
-000584 EF?? F???      00781     goto LOOP
-                      00782     
-000588                00783 MODE_S
-000588 C004 FF8C      00784     movff display4,LATD
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 16
+00050A EC?? F???      00732     call TX_BN_2_ASCII
+00050E EC?? F???      00733     call TX_CM
+                      00734     
+000512 2E17           00735     decfsz tmp,1,0
+000514 EF?? F???      00736     goto BUCLE_RAM_PARCIAL
+                      00737     
+000518 C026 FFE9      00738     movff tmpRAML, FSR0L
+00051C C025 FFEA      00739     movff tmpRAMH, FSR0H
+000520 EF?? F???      00740     goto LOOP
+000524                00741 MOSTRA_TOT
+000524 0E54           00742     movlw 'T'
+000526 6EAD           00743     movwf TXREG,0
+000528 EC?? F???      00744     call ESPERA_TX
+00052C 0E4F           00745     movlw 'O'
+00052E 6EAD           00746     movwf TXREG,0
+000530 EC?? F???      00747     call ESPERA_TX
+000534 0E54           00748     movlw 'T'
+000536 6EAD           00749     movwf TXREG,0
+000538 EC?? F???      00750     call ESPERA_TX
+00053C 0E3A           00751     movlw ':'
+00053E 6EAD           00752     movwf TXREG,0
+000540 EC?? F???      00753     call ESPERA_TX
+000544 EC?? F???      00754     call TX_ENTER
+                      00755 
+                      00756     
+000548 CFE9 F026      00757     movff FSR0L, tmpRAML
+00054C CFEA F025      00758     movff FSR0H, tmpRAMH
+000550 0EC8           00759     movlw .200
+000552 6E17           00760     movwf tmp,0
+                      00761     
+000554 6AE9           00762     clrf FSR0L,0
+                      00763     
+000556                00764 BUCLE_RAM_TOT
+000556 CFEE F013      00765     movff POSTINC0,bn_ascii
+00055A EC?? F???      00766     call BN_2_ASCII
+00055E EC?? F???      00767     call TX_BN_2_ASCII
+000562 EC?? F???      00768     call TX_CM
+                      00769     
+000566 2E17           00770     decfsz tmp,1,0
+000568 EF?? F???      00771     goto BUCLE_RAM_TOT
+                      00772     
+00056C C026 FFE9      00773     movff tmpRAML, FSR0L
+000570 C025 FFEA      00774     movff tmpRAMH, FSR0H
+000574 EF?? F???      00775     goto LOOP
+000578                00776 GUIO
+                      00777     ;cas cap guardat
+000578 0E2D           00778     movlw '-'
+00057A 6EAD           00779     movwf TXREG,0
+00057C EC?? F???      00780     call ESPERA_TX
+000580 EC?? F???      00781     call TX_ENTER
+000584 EF?? F???      00782     goto LOOP
+                      00783     
+000588                00784 MODE_S
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 16
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00785     ;codi S
-00058C EC?? F???      00786     CALL LLEGIR_JOY
-000590 0EFA           00787     MOVLW .250
-000592 64C4           00788     CPFSGT ADRESH,0
-000594 EF?? F???      00789     GOTO CP_LOW
-000598 0EAF           00790     movlw .175 ;valor maxim
-00059A 6019           00791     cpfslt count_pwm
-00059C EF?? F???      00792     goto CP_LOW
-0005A0 2A19           00793     incf count_pwm,f,0
-0005A2 2A19           00794     incf count_pwm,f,0
-0005A4 2A19           00795     incf count_pwm,f,0
-0005A6 2A19           00796     incf count_pwm,f,0
-0005A8 2A19           00797     incf count_pwm,f,0
-0005AA                00798 BUCLE_JOY_H   
-0005AA EC?? F???      00799     CALL LLEGIR_JOY
-0005AE 0E88           00800     MOVLW .136
-0005B0 60C4           00801     CPFSLT ADRESH,0
-0005B2 EF?? F???      00802     GOTO BUCLE_JOY_H   
-0005B6                00803 CP_LOW
-0005B6 EC?? F???      00804     CALL LLEGIR_JOY
-0005BA 0E05           00805     MOVLW .5
-0005BC 60C4           00806     CPFSLT ADRESH,0
-0005BE EF?? F???      00807     GOTO FI_S
-0005C2 0E04           00808     movlw .4 ;valor minim
-0005C4 6419           00809     cpfsgt count_pwm
-0005C6 EF?? F???      00810     goto FI_S
-0005CA 0619           00811     decf count_pwm,f,0
-0005CC 0619           00812     decf count_pwm,f,0
-0005CE 0619           00813     decf count_pwm,f,0
-0005D0 0619           00814     decf count_pwm,f,0
-0005D2 0619           00815     decf count_pwm,f,0
-0005D4                00816 BUCLE_JOY_L
-0005D4 EC?? F???      00817     CALL LLEGIR_JOY
-0005D8 0E74           00818     MOVLW .116
-0005DA 64C4           00819     CPFSGT ADRESH,0
-0005DC EF?? F???      00820     GOTO BUCLE_JOY_L
-0005E0                00821 FI_S
-0005E0 BA9E           00822     btfsc PIR1,RCIF,0
-0005E2 EF?? F???      00823     goto LECTOR_EUSART
-0005E6 EF?? F???      00824     goto MODE_S
-                      00825 
-0005EA                00826 MODE_T
-0005EA C005 FF8C      00827     movff display5,LATD
+000588 C004 FF8C      00785     movff display4,LATD
+                      00786     ;codi S
+00058C EC?? F???      00787     CALL LLEGIR_JOY
+000590 0EFA           00788     MOVLW .250
+000592 64C4           00789     CPFSGT ADRESH,0
+000594 EF?? F???      00790     GOTO CP_LOW
+000598 0EAF           00791     movlw .175 ;valor maxim
+00059A 6019           00792     cpfslt count_pwm
+00059C EF?? F???      00793     goto CP_LOW
+0005A0 2A19           00794     incf count_pwm,f,0
+0005A2 2A19           00795     incf count_pwm,f,0
+0005A4 2A19           00796     incf count_pwm,f,0
+0005A6 2A19           00797     incf count_pwm,f,0
+0005A8 2A19           00798     incf count_pwm,f,0
+0005AA                00799 BUCLE_JOY_H   
+0005AA EC?? F???      00800     CALL LLEGIR_JOY
+0005AE 0E88           00801     MOVLW .136
+0005B0 60C4           00802     CPFSLT ADRESH,0
+0005B2 EF?? F???      00803     GOTO BUCLE_JOY_H   
+0005B6                00804 CP_LOW
+0005B6 EC?? F???      00805     CALL LLEGIR_JOY
+0005BA 0E05           00806     MOVLW .5
+0005BC 60C4           00807     CPFSLT ADRESH,0
+0005BE EF?? F???      00808     GOTO FI_S
+0005C2 0E04           00809     movlw .4 ;valor minim
+0005C4 6419           00810     cpfsgt count_pwm
+0005C6 EF?? F???      00811     goto FI_S
+0005CA 0619           00812     decf count_pwm,f,0
+0005CC 0619           00813     decf count_pwm,f,0
+0005CE 0619           00814     decf count_pwm,f,0
+0005D0 0619           00815     decf count_pwm,f,0
+0005D2 0619           00816     decf count_pwm,f,0
+0005D4                00817 BUCLE_JOY_L
+0005D4 EC?? F???      00818     CALL LLEGIR_JOY
+0005D8 0E74           00819     MOVLW .116
+0005DA 64C4           00820     CPFSGT ADRESH,0
+0005DC EF?? F???      00821     GOTO BUCLE_JOY_L
+0005E0                00822 FI_S
+0005E0 0E81           00823     MOVLW b'10000001'
+0005E2 6E28           00824     MOVWF modeAnterior,0
+                      00825     ;Mirem si hi ha lletra
+0005E4 BA9E           00826     btfsc PIR1,RCIF,0
+0005E6 EF?? F???      00827     goto LECTOR_EUSART
                       00828     
-                      00829     ;    CALL LLEGIR_JOY
-                      00830 ;    
-                      00831 ;    MOVLW .90
-                      00832 ;    CPFSLT ADRESH,0
-                      00833 ;    GOTO MES_90
-                      00834 ;    ;MENYS 90
-                      00835 ;    MOVFF ADRESH,count_pwm
-                      00836 ;    GOTO FI_T
-                      00837 ;    
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 17
+                      00829     ;mirem si hi ha measure
+0005EA B081           00830     BTFSC PORTB,0,0
+0005EC EF?? F???      00831     GOTO MODE_S
+                      00832     ;control rebots
+0005F0 EC?? F???      00833     call CONTROL_REBOTS
+0005F4 EC?? F???      00834     call CONTROL_REBOTS
+                      00835     ;control rebots
+0005F8 A081           00836     BTFSS PORTB,0,0
+0005FA EF?? F???      00837     goto MODE_BOTO
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 17
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00838 ;MES_90
-                      00839 ;    MOVLW .160
-                      00840 ;    CPFSGT ADRESH,0
-                      00841 ;    GOTO MIG
-                      00842 ;    MOVLW .85
-                      00843 ;    SUBWF ADRESH,w,0
-                      00844 ;    MOVWF count_pwm,0
-                      00845 ;    GOTO FI_T
-                      00846 ;MIG
-                      00847 ;    MOVLW .75
-                      00848 ;    MOVWF count_pwm,0
-                      00849 
-0005EE EC?? F???      00850     call LLEGIR_JOY
-0005F2 0E00           00851     movlw .0
-0005F4 6E17           00852     movwf tmp
-0005F6                00853 BUCLE_T
-0005F6 64C4           00854     cpfsgt ADRESH,0
-0005F8 EF?? F???      00855     goto T_TROBAT
-0005FC 2A17           00856     incf tmp,1,0
-0005FE B0D8           00857     btfsc STATUS,C,0;val C per tmp?
-000600 EF?? F???      00858     goto T_TROBAT
-000604 2A19           00859     incf count_pwm,1,0
-                      00860     
-                      00861     ;goto BUCLE_T
-000606                00862 T_TROBAT
-                      00863     
-                      00864     
-000606                00865 FI_T
-000606 BA9E           00866     btfsc PIR1,RCIF,0
-000608 EF?? F???      00867     goto LECTOR_EUSART
-00060C EF?? F???      00868     goto MODE_T
-000610                00869 MODE_U
-                      00870     
-000610 0E02           00871     movlw .2
-000612 6021           00872     cpfslt estat_mesures,0
-000614 EF?? F???      00873     goto ACTIVAR_U
-000618 0E01           00874     movlw .1
-00061A 6221           00875     cpfseq estat_mesures,0
-00061C EF?? F???      00876     goto ACTIVAR_U
-000620 EC?? F???      00877     call MEDIR
-000624 EF?? F???      00878     goto LOOP
+                      00838     
+0005FE EF?? F???      00839     GOTO MODE_S
+                      00840 
+000602                00841 MODE_T
+000602 C005 FF8C      00842     movff display5,LATD
+                      00843     
+                      00844     ;    CALL LLEGIR_JOY
+                      00845 ;    
+                      00846 ;    MOVLW .90
+                      00847 ;    CPFSLT ADRESH,0
+                      00848 ;    GOTO MES_90
+                      00849 ;    ;MENYS 90
+                      00850 ;    MOVFF ADRESH,count_pwm
+                      00851 ;    GOTO FI_T
+                      00852 ;    
+                      00853 ;MES_90
+                      00854 ;    MOVLW .160
+                      00855 ;    CPFSGT ADRESH,0
+                      00856 ;    GOTO MIG
+                      00857 ;    MOVLW .85
+                      00858 ;    SUBWF ADRESH,w,0
+                      00859 ;    MOVWF count_pwm,0
+                      00860 ;    GOTO FI_T
+                      00861 ;MIG
+                      00862 ;    MOVLW .75
+                      00863 ;    MOVWF count_pwm,0
+                      00864 
+000606 EC?? F???      00865     call LLEGIR_JOY
+00060A 0E00           00866     movlw .0
+00060C 6E17           00867     movwf tmp
+00060E                00868 BUCLE_T
+00060E 64C4           00869     cpfsgt ADRESH,0
+000610 EF?? F???      00870     goto T_TROBAT
+000614 2A17           00871     incf tmp,1,0
+000616 B0D8           00872     btfsc STATUS,C,0;val C per tmp?
+000618 EF?? F???      00873     goto T_TROBAT
+00061C 2A19           00874     incf count_pwm,1,0
+                      00875     
+                      00876     ;goto BUCLE_T
+00061E                00877 T_TROBAT
+                      00878     
                       00879     
-000628                00880 ACTIVAR_U
-000628 808B           00881     BSF LATC,0,0
-00062A 928B           00882     bcf LATC,1,0
-00062C 0E01           00883     movlw .1
-00062E 6E21           00884     movwf estat_mesures,0
-000630 6A20           00885     clrf estat_A,0
-000632 EF?? F???      00886     goto LOOP
-000636                00887 MODE_BOTO
-000636 A081           00888     btfss PORTB,0,0
-000638 EF?? F???      00889     goto MODE_BOTO
-                      00890     
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 18
+00061E                00880 FI_T
+00061E 0E80           00881     MOVLW b'10000000'
+000620 6E28           00882     MOVWF modeAnterior,0
+                      00883     ;Mirem si hi ha lletra
+000622 BA9E           00884     btfsc PIR1,RCIF,0
+000624 EF?? F???      00885     goto LECTOR_EUSART
+                      00886     
+                      00887     ;mirem si hi ha measure
+000628 B081           00888     BTFSC PORTB,0,0
+00062A EF?? F???      00889     GOTO MODE_T
+                      00890     ;control rebots
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 18
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00063C 0E02           00891     movlw .2
-00063E 6021           00892     cpfslt estat_mesures,0
-000640 EF?? F???      00893     goto MODE_A
-000644 0E00           00894     movlw .0
-000646 6421           00895     cpfsgt estat_mesures,0
-000648 EF?? F???      00896     goto LOOP; Potser GOTO FI_LLEGIR
-00064C EF?? F???      00897     goto MODE_U
-                      00898 
-000650                00899 MODE_N
-000650 9E28           00900     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
-000652 6A23           00901     clrf dist_major,0;distancia major
-000654 6A19           00902     clrf count_pwm,0
-000656 EC?? F???      00903     CALL DELAY;espera que torni a 0graus si no hi era
-00065A EC?? F???      00904     CALL DELAY
-                      00905     
-00065E                00906 BUCLE_N
-                      00907     ;call DELAY
-00065E EC?? F???      00908     CALL MEDIR
-000662 2A19           00909     incf count_pwm,f,0
-000664 EC?? F???      00910     call DELAY
-                      00911     ;CALL DELAY;DELAYS AQUI SOLS
-                      00912     
-                      00913     ;mirar si es la mes llunyana / gran
-000668 5012           00914     movf us_echo_cm,w,0
-00066A 6423           00915     cpfsgt dist_major,0
-00066C EC?? F???      00916     CALL SAVE_DIST
-                      00917     ;-^
-                      00918     
-000670 0EB3           00919     movlw .179;179;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;reduir a 10 pq funcioni
-000672 6219           00920     cpfseq count_pwm,0
-000674 EF?? F???      00921     goto BUCLE_N
-                      00922     
-                      00923     ;anar a la mes llunyana / gran
-                      00924     ;call DELAY;
-000678 EC?? F???      00925     call TX_ENTER
-00067C C023 F013      00926     movff dist_major,bn_ascii
-000680 EC?? F???      00927     call BN_2_ASCII
-000684 EC?? F???      00928     call TX_BN_2_ASCII
-000688 EC?? F???      00929     call TX_CM
-00068C EC?? F???      00930     call TX_ENTER
-000690 C024 F019      00931     movff count_major, count_pwm
-                      00932     ;-^
-                      00933    
-000694 EF?? F???      00934     goto LOOP
-                      00935     
-000698                00936 DELAY
-000698 0E0A           00937     MOVLW .10
-00069A 6E1A           00938     MOVWF tmp3,0
-00069C                00939 DELAY_B0
-00069C 0EFF           00940     movlw .255
-00069E 6E17           00941     movwf tmp,0
-0006A0                00942 DELAY_B1
-0006A0 0EFF           00943     movlw .255
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 19
+00062E EC?? F???      00891     call CONTROL_REBOTS
+000632 EC?? F???      00892     call CONTROL_REBOTS
+                      00893     ;control rebots
+000636 A081           00894     BTFSS PORTB,0,0
+000638 EF?? F???      00895     goto MODE_BOTO
+                      00896     
+00063C EF?? F???      00897     GOTO MODE_T
+000640                00898 MODE_U
+000640 0E02           00899     movlw .2
+000642 6021           00900     cpfslt estat_mesures,0
+000644 EF?? F???      00901     goto ACTIVAR_U
+000648 0E01           00902     movlw .1
+00064A 6221           00903     cpfseq estat_mesures,0
+00064C EF?? F???      00904     goto ACTIVAR_U
+000650 EC?? F???      00905     call MEDIR
+000654 EF?? F???      00906     goto  FI_MODE_NO_SERVO
+                      00907     
+000658                00908 ACTIVAR_U
+000658 808B           00909     BSF LATC,0,0
+00065A 928B           00910     bcf LATC,1,0
+00065C 0E01           00911     movlw .1
+00065E 6E21           00912     movwf estat_mesures,0
+000660 6A20           00913     clrf estat_A,0
+000662 EF?? F???      00914     goto FI_MODE_NO_SERVO
+                      00915 
+000666                00916 MODE_BOTO
+000666 A081           00917     btfss PORTB,0,0
+000668 EF?? F???      00918     goto MODE_BOTO
+                      00919     
+00066C 0E02           00920     movlw .2
+00066E 6021           00921     cpfslt estat_mesures,0
+000670 EF?? F???      00922     goto MODE_A
+000674 0E00           00923     movlw .0
+000676 6421           00924     cpfsgt estat_mesures,0
+000678 EF?? F???      00925     goto LOOP; Potser GOTO FI_MODE_NO_SERVO
+00067C EF?? F???      00926     goto MODE_U
+                      00927 
+000680                00928 MODE_N
+000680 9E28           00929     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
+000682 6A23           00930     clrf dist_major,0;distancia major
+000684 6A19           00931     clrf count_pwm,0
+000686 EC?? F???      00932     CALL DELAY;espera que torni a 0graus si no hi era
+00068A EC?? F???      00933     CALL DELAY
+                      00934     
+00068E                00935 BUCLE_N
+                      00936     ;call DELAY
+00068E EC?? F???      00937     CALL MEDIR
+000692 2A19           00938     incf count_pwm,f,0
+000694 EC?? F???      00939     call DELAY
+                      00940     ;CALL DELAY;DELAYS AQUI SOLS
+                      00941     
+                      00942     ;mirar si es la mes llunyana / gran
+000698 5012           00943     movf us_echo_cm,w,0
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 19
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0006A2 6E18           00944     movwf tmp2,0
-0006A4                00945 DELAY_B2
-0006A4 2E18           00946     decfsz tmp2,f,0
-0006A6 EF?? F???      00947     goto DELAY_B2
-0006AA 2E17           00948     decfsz tmp,f,0
-0006AC EF?? F???      00949     goto DELAY_B1
-0006B0 2E1A           00950     DECFSZ tmp3,f,0
-0006B2 EF?? F???      00951     goto DELAY_B0
-                      00952     
-0006B6 0012           00953     return
-0006B8                00954 SAVE_DIST
-0006B8 C019 F024      00955     movff count_pwm, count_major
-0006BC C012 F023      00956     movff us_echo_cm, dist_major
-0006C0 0012           00957     RETURN
-                      00958     
-0006C2                00959 FI_LLEGIR
-                      00960 ;Mirem de on venim
-0006C2 0E80           00961     MOVLW b'10000000' ; mirem si veniem de D
-0006C4 6228           00962     CPFSEQ modeAnterior,0
-0006C6 EF?? F???      00963     GOTO NO_D
-0006CA 6A28           00964     CLRF modeAnterior,0
-0006CC EF?? F???      00965     GOTO MODE_D
-0006D0                00966 NO_D
-0006D0 0E41           00967     MOVLW b'1000001' ; mirem si veniem de S
-0006D2 6228           00968     CPFSEQ modeAnterior,0
-0006D4 EF?? F???      00969     GOTO NO_S
-0006D8 6A28           00970     CLRF modeAnterior,0
-0006DA EF?? F???      00971     GOTO MODE_S
-0006DE                00972 NO_S
-0006DE 0E42           00973     MOVLW b'1000010' ; mirem si veniem de T
-0006E0 6228           00974     CPFSEQ modeAnterior,0
-0006E2 EF?? F???      00975     GOTO NO_T
-0006E6 6A28           00976     CLRF modeAnterior,0
-0006E8 EF?? F???      00977     GOTO MODE_T
-0006EC                00978 NO_T
-0006EC EF?? F???      00979     GOTO LOOP ;????????
-                      00980     END
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 20
+00069A 6423           00944     cpfsgt dist_major,0
+00069C EC?? F???      00945     CALL SAVE_DIST
+                      00946     ;-^
+                      00947     
+0006A0 0EB3           00948     movlw .179;179;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;reduir a 10 pq funcioni
+0006A2 6219           00949     cpfseq count_pwm,0
+0006A4 EF?? F???      00950     goto BUCLE_N
+                      00951     
+                      00952     ;anar a la mes llunyana / gran
+                      00953     ;call DELAY;
+0006A8 EC?? F???      00954     call TX_ENTER
+0006AC C023 F013      00955     movff dist_major,bn_ascii
+0006B0 EC?? F???      00956     call BN_2_ASCII
+0006B4 EC?? F???      00957     call TX_BN_2_ASCII
+0006B8 EC?? F???      00958     call TX_CM
+0006BC EC?? F???      00959     call TX_ENTER
+0006C0 C024 F019      00960     movff count_major, count_pwm
+                      00961     ;-^
+                      00962    
+0006C4 EF?? F???      00963     goto LOOP
+                      00964     
+0006C8                00965 DELAY
+0006C8 0E0A           00966     MOVLW .10
+0006CA 6E1A           00967     MOVWF tmp3,0
+0006CC                00968 DELAY_B0
+0006CC 0EFF           00969     movlw .255
+0006CE 6E17           00970     movwf tmp,0
+0006D0                00971 DELAY_B1
+0006D0 0EFF           00972     movlw .255
+0006D2 6E18           00973     movwf tmp2,0
+0006D4                00974 DELAY_B2
+0006D4 2E18           00975     decfsz tmp2,f,0
+0006D6 EF?? F???      00976     goto DELAY_B2
+0006DA 2E17           00977     decfsz tmp,f,0
+0006DC EF?? F???      00978     goto DELAY_B1
+0006E0 2E1A           00979     DECFSZ tmp3,f,0
+0006E2 EF?? F???      00980     goto DELAY_B0
+                      00981     
+0006E6 0012           00982     return
+0006E8                00983 SAVE_DIST
+0006E8 C019 F024      00984     movff count_pwm, count_major
+0006EC C012 F023      00985     movff us_echo_cm, dist_major
+0006F0 0012           00986     RETURN
+                      00987     
+0006F2                00988 FI_MODE_NO_SERVO
+                      00989 ;Mirem de on venim
+0006F2 0E80           00990     MOVLW b'10000000' ; mirem si veniem de D
+0006F4 6228           00991     CPFSEQ modeAnterior,0
+0006F6 EF?? F???      00992     GOTO NO_D
+0006FA 6A28           00993     CLRF modeAnterior,0
+0006FC EF?? F???      00994     GOTO MODE_D
+000700                00995 NO_D
+000700 0E81           00996     MOVLW b'10000001' ; mirem si veniem de S
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000702 6228           00997     CPFSEQ modeAnterior,0
+000704 EF?? F???      00998     GOTO NO_S
+000708 6A28           00999     CLRF modeAnterior,0
+00070A EF?? F???      01000     GOTO MODE_S
+00070E                01001 NO_S
+00070E 0E82           01002     MOVLW b'10000010' ; mirem si veniem de T
+000710 6228           01003     CPFSEQ modeAnterior,0
+000712 EF?? F???      01004     GOTO NO_T
+000716 6A28           01005     CLRF modeAnterior,0
+000718 EF?? F???      01006     GOTO MODE_T
+00071C                01007 NO_T
+00071C EF?? F???      01008     GOTO LOOP
+                      01009     END
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 21
 
 
 SYMBOL TABLE
@@ -1122,7 +1157,7 @@ ACQT1                             00000004
 ACQT2                             00000005
 ACTIVAR_A                         0000032E
 ACTIVAR_AUTO                      00000328
-ACTIVAR_U                         00000628
+ACTIVAR_U                         00000658
 ADCON0                            00000FC2
 ADCON1                            00000FC1
 ADCON2                            00000FC0
@@ -1162,7 +1197,7 @@ BAUDCON                           00000FB8
 BAUDCTL                           00000FB8
 BCLIE                             00000003
 BCLIF                             00000003
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 21
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 22
 
 
 SYMBOL TABLE
@@ -1183,14 +1218,14 @@ BUCLE2_PWM_05                     00000100
 BUCLE_D_1                         000003BC
 BUCLE_JOY_H                       000005AA
 BUCLE_JOY_L                       000005D4
-BUCLE_N                           0000065E
+BUCLE_N                           0000068E
 BUCLE_NOM                         00000480
 BUCLE_PWM_05                      000000FC
 BUCLE_PWM_COPS                    00000118
 BUCLE_PWM_GRAUS                   0000011C
 BUCLE_RAM_PARCIAL                 00000502
 BUCLE_RAM_TOT                     00000556
-BUCLE_T                           000005F6
+BUCLE_T                           0000060E
 C                                 00000000
 C1INV                             00000004
 C1N                               00000000
@@ -1221,7 +1256,7 @@ CCP2IP                            00000000
 CCP2M0                            00000000
 CCP2M1                            00000001
 CCP2M2                            00000002
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 22
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 23
 
 
 SYMBOL TABLE
@@ -1280,7 +1315,7 @@ DC1B0                             00000004
 DC1B1                             00000005
 DC2B0                             00000004
 DC2B1                             00000005
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 23
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 24
 
 
 SYMBOL TABLE
@@ -1291,10 +1326,10 @@ DDRB                              TRISB
 DDRC                              TRISC
 DDRD                              TRISD
 DDRE                              TRISE
-DELAY                             00000698
-DELAY_B0                          0000069C
-DELAY_B1                          000006A0
-DELAY_B2                          000006A4
+DELAY                             000006C8
+DELAY_B0                          000006CC
+DELAY_B1                          000006D0
+DELAY_B2                          000006D4
 DESACTIVAR_AUTO                   00000322
 DESENES_ASCII                     000001EA
 DONE                              00000001
@@ -1319,8 +1354,8 @@ EEPROM_READ                       00000140
 EEPROM_WRITE                      00000150
 END_PWM                           0000012C
 END_SAVE_RAM                      000001CC
-ESPERA_BTN1                       00000364
-ESPERA_BTN2                       00000390
+ESPERA_BTN1                       00000366
+ESPERA_BTN2                       00000392
 ESPERA_CONVERSIO                  00000232
 ESPERA_ECHO                       0000018E
 ESPERA_EEPROM_ESCRIURE            00000170
@@ -1328,10 +1363,10 @@ ESPERA_TX                         0000025A
 FAST                              00000001
 FERR                              00000002
 FI_ASCII                          00000208
-FI_D                              00000396
-FI_LLEGIR                         000006C2
+FI_D                              00000398
+FI_MODE_NO_SERVO                  000006F2
 FI_S                              000005E0
-FI_T                              00000606
+FI_T                              0000061E
 FLT0                              00000000
 FLTS                              00000002
 FREE                              00000004
@@ -1339,7 +1374,7 @@ FSR0                              00000000
 FSR0H                             00000FEA
 FSR0L                             00000FE9
 FSR1                              00000001
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 24
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 25
 
 
 SYMBOL TABLE
@@ -1398,7 +1433,7 @@ INT1IF                            00000000
 INT1IP                            00000006
 INT1P                             00000006
 INT2                              00000002
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 25
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 26
 
 
 SYMBOL TABLE
@@ -1457,7 +1492,7 @@ LATC5                             00000005
 LATC6                             00000006
 LATC7                             00000007
 LATD                              00000F8C
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 26
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 27
 
 
 SYMBOL TABLE
@@ -1497,15 +1532,15 @@ MAIN                              000000B2
 MCLR                              00000003
 MEDIR                             00000178
 MODE_A                            00000308
-MODE_BOTO                         00000636
+MODE_BOTO                         00000666
 MODE_D                            0000033A
 MODE_I                            000003CC
 MODE_M                            00000408
-MODE_N                            00000650
+MODE_N                            00000680
 MODE_R                            0000044E
 MODE_S                            00000588
-MODE_T                            000005EA
-MODE_U                            00000610
+MODE_T                            00000602
+MODE_U                            00000640
 MOSTRAR_MESURA                    0000041C
 MOSTRA_GUIO2                      00000438
 MOSTRA_MESURES                    000004A6
@@ -1513,10 +1548,10 @@ MOSTRA_TOT                        00000524
 M_FINAL                           00000444
 N                                 00000004
 NEXT_A                            000002A4
-NEXT_BTN                          0000036A
+NEXT_BTN                          0000036C
 NEXT_D                            000002B0
 NEXT_I                            000002BC
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 27
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 28
 
 
 SYMBOL TABLE
@@ -1547,10 +1582,10 @@ NOT_TO                            00000003
 NOT_W                             00000002
 NOT_WR                            00000001
 NOT_WRITE                         00000002
-NO_D                              000006D0
+NO_D                              00000700
 NO_ENTER                          000003EE
-NO_S                              000006DE
-NO_T                              000006EC
+NO_S                              0000070E
+NO_T                              0000071C
 OBF                               00000006
 OERR                              00000001
 OSC1                              00000007
@@ -1575,7 +1610,7 @@ PCFG1                             00000001
 PCFG2                             00000002
 PCFG3                             00000003
 PCL                               00000FF9
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 28
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 29
 
 
 SYMBOL TABLE
@@ -1634,7 +1669,7 @@ PSP4                              00000004
 PSP5                              00000005
 PSP6                              00000006
 PSP7                              00000007
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 29
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 30
 
 
 SYMBOL TABLE
@@ -1693,7 +1728,7 @@ RD1                               00000001
 RD16                              00000007
 RD2                               00000002
 RD3                               00000003
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 30
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 31
 
 
 SYMBOL TABLE
@@ -1716,7 +1751,7 @@ RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
-SAVE_DIST                         000006B8
+SAVE_DIST                         000006E8
 SBOREN                            00000006
 SCK                               00000003
 SCKP                              00000004
@@ -1752,7 +1787,7 @@ SSPM1                             00000001
 SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 31
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 32
 
 
 SYMBOL TABLE
@@ -1811,7 +1846,7 @@ TMR0H                             00000FD7
 TMR0IE                            00000005
 TMR0IF                            00000002
 TMR0IP                            00000002
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 32
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 33
 
 
 SYMBOL TABLE
@@ -1870,7 +1905,7 @@ TRISB7                            00000007
 TRISC                             00000F94
 TRISC0                            00000000
 TRISC1                            00000001
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 33
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 34
 
 
 SYMBOL TABLE
@@ -1914,7 +1949,7 @@ TXSTA                             00000FAC
 TX_BN_2_ASCII                     00000216
 TX_CM                             00000244
 TX_ENTER                          00000276
-T_TROBAT                          00000606
+T_TROBAT                          0000061E
 UA                                00000001
 VCFG0                             00000004
 VCFG1                             00000005
@@ -1929,7 +1964,7 @@ WR                                00000001
 WREG                              00000FE8
 WREN                              00000002
 WRERR                             00000003
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 34
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 35
 
 
 SYMBOL TABLE
@@ -1988,7 +2023,7 @@ _IDLOC3                           00200003
 _IDLOC4                           00200004
 _IDLOC5                           00200005
 _IDLOC6                           00200006
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 35
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 36
 
 
 SYMBOL TABLE
@@ -2047,7 +2082,7 @@ _WRTC_OFF_6H                      000000FF
 _WRTC_ON_6H                       000000DF
 _WRTD_OFF_6H                      000000FF
 _WRTD_ON_6H                       0000007F
-MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  13:02:23         PAGE 36
+MPASM 5.87  /HOME/MVALSELLS/NEXTCLOUD/SALLEU   4-7-2021  15:58:00         PAGE 37
 
 
 SYMBOL TABLE

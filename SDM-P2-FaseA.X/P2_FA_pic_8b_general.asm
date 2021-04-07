@@ -48,7 +48,7 @@ tmpRAMH EQU 0x25
 tmpRAML EQU 0x26
 tmpRAMTOT EQU 0x27
 modeAnterior EQU 0x28
-	; Bit 7 -> Venim de pos
+	; Bit 7 -> Venim de pos servo
 	; Bits 6-2 -> Unused
 	; Bit 1  \
 	;	   ----> 0=Venim de Mode D; 1= Venim de Mode S; 2= Venim de mode T
@@ -474,7 +474,7 @@ NEXT_U
     goto NEXT_N
     goto MODE_N
 NEXT_N
-    goto LOOP
+    goto FI_MODE_NO_SERVO
     ;boto clicat
     
 ;---------------------------------------------------------------------------------
@@ -493,18 +493,19 @@ MODE_A
     ;desactivar mesures, estava a 1
 DESACTIVAR_AUTO;mesures
     clrf estat_A,0
-    goto LOOP
+    goto FI_MODE_NO_SERVO
 ACTIVAR_AUTO
     setf estat_A,0
-    goto LOOP
+    goto FI_MODE_NO_SERVO
 ACTIVAR_A;mode A
     bsf LATC,0,0
     bsf LATC,1,0
     movlw .2
     movwf estat_mesures,0
-    goto LOOP
+    goto FI_MODE_NO_SERVO
 MODE_D
     movff display3,LATD
+    CLRF modeAnterior,0
     ;pulsadors +5º -5º per pulsados
 
     
@@ -554,12 +555,12 @@ ESPERA_BTN2
     goto ESPERA_BTN2
     
 FI_D
-    MOVLW b'1000000'
+    MOVLW b'10000000'
     MOVWF modeAnterior,0
     ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    GOTO MODE_D
+    ;GOTO MODE_D
     
     ;mirem si hi ha measure
     BTFSC PORTB,0,0
@@ -571,7 +572,7 @@ FI_D
     BTFSS PORTB,0,0
     goto MODE_BOTO
     
-    CLRF modeAnterior
+    GOTO MODE_D
     
 CONTROL_REBOTS
     setf tmp3,0
@@ -585,7 +586,7 @@ BUCLE2_D_1
     return
 
 MODE_I
-    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
+   CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
     ;fixar 7seg a 0
     movff display0,LATD
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
@@ -618,7 +619,7 @@ ACABAT_I
     goto LOOP
     
 MODE_M
-    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
+    CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
     movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
     movlw .200
@@ -649,7 +650,7 @@ M_FINAL
     goto LOOP
     
 MODE_R;mostrar nom i 200 mesures
-    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
+    CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
     movff display1,LATD
     ;MOSTRAR NOM (part 1/2)
     movlw 'N'
@@ -819,9 +820,23 @@ BUCLE_JOY_L
     CPFSGT ADRESH,0
     GOTO BUCLE_JOY_L
 FI_S
+    MOVLW b'10000001'
+    MOVWF modeAnterior,0
+    ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_S
+    
+    ;mirem si hi ha measure
+    BTFSC PORTB,0,0
+    GOTO MODE_S
+    ;control rebots
+    call CONTROL_REBOTS
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSS PORTB,0,0
+    goto MODE_BOTO
+    
+    GOTO MODE_S
 
 MODE_T
     movff display5,LATD
@@ -863,11 +878,24 @@ T_TROBAT
     
     
 FI_T
+    MOVLW b'10000000'
+    MOVWF modeAnterior,0
+    ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_T
-MODE_U
     
+    ;mirem si hi ha measure
+    BTFSC PORTB,0,0
+    GOTO MODE_T
+    ;control rebots
+    call CONTROL_REBOTS
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSS PORTB,0,0
+    goto MODE_BOTO
+    
+    GOTO MODE_T
+MODE_U
     movlw .2
     cpfslt estat_mesures,0
     goto ACTIVAR_U
@@ -875,7 +903,7 @@ MODE_U
     cpfseq estat_mesures,0
     goto ACTIVAR_U
     call MEDIR
-    goto LOOP
+    goto  FI_MODE_NO_SERVO
     
 ACTIVAR_U
     BSF LATC,0,0
@@ -883,7 +911,8 @@ ACTIVAR_U
     movlw .1
     movwf estat_mesures,0
     clrf estat_A,0
-    goto LOOP
+    goto FI_MODE_NO_SERVO
+
 MODE_BOTO
     btfss PORTB,0,0
     goto MODE_BOTO
@@ -893,7 +922,7 @@ MODE_BOTO
     goto MODE_A
     movlw .0
     cpfsgt estat_mesures,0
-    goto LOOP; Potser GOTO FI_LLEGIR
+    goto LOOP; Potser GOTO FI_MODE_NO_SERVO
     goto MODE_U
 
 MODE_N
@@ -956,7 +985,7 @@ SAVE_DIST
     movff us_echo_cm, dist_major
     RETURN
     
-FI_LLEGIR
+FI_MODE_NO_SERVO
 ;Mirem de on venim
     MOVLW b'10000000' ; mirem si veniem de D
     CPFSEQ modeAnterior,0
@@ -964,17 +993,17 @@ FI_LLEGIR
     CLRF modeAnterior,0
     GOTO MODE_D
 NO_D
-    MOVLW b'1000001' ; mirem si veniem de S
+    MOVLW b'10000001' ; mirem si veniem de S
     CPFSEQ modeAnterior,0
     GOTO NO_S
     CLRF modeAnterior,0
     GOTO MODE_S
 NO_S
-    MOVLW b'1000010' ; mirem si veniem de T
+    MOVLW b'10000010' ; mirem si veniem de T
     CPFSEQ modeAnterior,0
     GOTO NO_T
     CLRF modeAnterior,0
     GOTO MODE_T
 NO_T
-    GOTO LOOP ;????????
+    GOTO LOOP
     END
