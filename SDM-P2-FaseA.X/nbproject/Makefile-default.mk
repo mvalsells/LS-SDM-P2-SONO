@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -99,7 +99,7 @@ ${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefil
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
 	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\\\" -e\\\"${OBJECTDIR}/P2_FA_pic_8b_general.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/P2_FA_pic_8b_general.o\\\" \\\"P2_FA_pic_8b_general.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
 	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
@@ -108,7 +108,7 @@ ${OBJECTDIR}/P2_FA_pic_8b_general.o: P2_FA_pic_8b_general.asm  nbproject/Makefil
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o.d 
 	@${RM} ${OBJECTDIR}/P2_FA_pic_8b_general.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\" -e\"${OBJECTDIR}/P2_FA_pic_8b_general.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/P2_FA_pic_8b_general.o\" \"P2_FA_pic_8b_general.asm\" 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/P2_FA_pic_8b_general.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/P2_FA_pic_8b_general.lst\\\" -e\\\"${OBJECTDIR}/P2_FA_pic_8b_general.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/P2_FA_pic_8b_general.o\\\" \\\"P2_FA_pic_8b_general.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/P2_FA_pic_8b_general.o"
 	@${FIXDEPS} "${OBJECTDIR}/P2_FA_pic_8b_general.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
@@ -142,7 +142,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

@@ -47,7 +47,14 @@ count_major EQU 0x24
 tmpRAMH EQU 0x25
 tmpRAML EQU 0x26
 tmpRAMTOT EQU 0x27
-   
+modeAnterior EQU 0x28
+	; Bit 7 -> Venim de pos
+	; Bits 6-2 -> Unused
+	; Bit 1  \
+	;	   ----> 0=Venim de Mode D; 1= Venim de Mode S; 2= Venim de mode T
+	; Bit 0	 /
+ 
+ 
     ORG 0x000
     GOTO MAIN
     ORG 0x008
@@ -112,6 +119,8 @@ INIT_VARS
     clrf count_major,0
     clrf dist_major,0
     clrf tmpRAMTOT,0
+    
+    CLRF modeAnterior,0
     
     
     return
@@ -373,6 +382,13 @@ ESPERA_CONVERSIO
    GOTO ESPERA_CONVERSIO
    RETURN
    
+; --
+   
+SORTIR_POS
+    BTFSC PIR1,RCIF,0
+    GOTO LECTOR_EUSART
+    GOTO MODE_D
+   
 ;-------------------------------------------------------------------------------
 ;EUSART
 TX_CM
@@ -538,10 +554,24 @@ ESPERA_BTN2
     goto ESPERA_BTN2
     
 FI_D
-    
+    MOVLW b'1000000'
+    MOVWF modeAnterior,0
+    ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
     goto LECTOR_EUSART
-    goto MODE_D
+    GOTO MODE_D
+    
+    ;mirem si hi ha measure
+    BTFSC PORTB,0,0
+    GOTO MODE_D
+    ;control rebots
+    call CONTROL_REBOTS
+    call CONTROL_REBOTS
+    ;control rebots
+    BTFSS PORTB,0,0
+    goto MODE_BOTO
+    
+    CLRF modeAnterior
     
 CONTROL_REBOTS
     setf tmp3,0
@@ -555,6 +585,7 @@ BUCLE2_D_1
     return
 
 MODE_I
+    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
     ;fixar 7seg a 0
     movff display0,LATD
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
@@ -587,6 +618,7 @@ ACABAT_I
     goto LOOP
     
 MODE_M
+    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
     movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
     movlw .200
@@ -617,6 +649,7 @@ M_FINAL
     goto LOOP
     
 MODE_R;mostrar nom i 200 mesures
+    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
     movff display1,LATD
     ;MOSTRAR NOM (part 1/2)
     movlw 'N'
@@ -860,10 +893,11 @@ MODE_BOTO
     goto MODE_A
     movlw .0
     cpfsgt estat_mesures,0
-    goto LOOP
+    goto LOOP; Potser GOTO FI_LLEGIR
     goto MODE_U
 
 MODE_N
+    BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
     clrf dist_major,0;distancia major
     clrf count_pwm,0
     CALL DELAY;espera que torni a 0graus si no hi era
@@ -922,4 +956,25 @@ SAVE_DIST
     movff us_echo_cm, dist_major
     RETURN
     
+FI_LLEGIR
+;Mirem de on venim
+    MOVLW b'10000000' ; mirem si veniem de D
+    CPFSEQ modeAnterior,0
+    GOTO NO_D
+    CLRF modeAnterior,0
+    GOTO MODE_D
+NO_D
+    MOVLW b'1000001' ; mirem si veniem de S
+    CPFSEQ modeAnterior,0
+    GOTO NO_S
+    CLRF modeAnterior,0
+    GOTO MODE_S
+NO_S
+    MOVLW b'1000010' ; mirem si veniem de T
+    CPFSEQ modeAnterior,0
+    GOTO NO_T
+    CLRF modeAnterior,0
+    GOTO MODE_T
+NO_T
+    GOTO LOOP ;????????
     END
