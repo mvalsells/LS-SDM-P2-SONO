@@ -479,6 +479,7 @@ NEXT_N
     
 ;---------------------------------------------------------------------------------
 MODE_A
+    CLRF LATD,0
     movff display7,LATD
     
     movlw .0
@@ -504,6 +505,7 @@ ACTIVAR_A;mode A
     movwf estat_mesures,0
     goto FI_MODE_NO_SERVO
 MODE_D
+    CLRF LATD,0
     movff display3,LATD
     CLRF modeAnterior,0
     ;pulsadors +5º -5º per pulsados
@@ -586,8 +588,9 @@ BUCLE2_D_1
     return
 
 MODE_I
-   CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+    CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
     ;fixar 7seg a 0
+    CLRF LATD,0
     movff display0,LATD
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
     movlw .0 ;reinici adressa
@@ -620,6 +623,7 @@ ACABAT_I
     
 MODE_M
     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+    CLRF LATD,0
     movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
     movlw .200
@@ -651,6 +655,7 @@ M_FINAL
     
 MODE_R;mostrar nom i 200 mesures
     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+    CLRF LATD,0
     movff display1,LATD
     ;MOSTRAR NOM (part 1/2)
     movlw 'N'
@@ -782,6 +787,7 @@ GUIO
     goto LOOP
     
 MODE_S
+    CLRF LATD,0
     movff display4,LATD
     ;codi S
     CALL LLEGIR_JOY
@@ -839,6 +845,7 @@ FI_S
     GOTO MODE_S
 
 MODE_T
+    CLRF LATD,0
     movff display5,LATD
     
     ;    CALL LLEGIR_JOY
@@ -888,7 +895,7 @@ T_TROBAT
     
     
 FI_T
-    MOVLW b'10000000'
+    MOVLW b'10000010'
     MOVWF modeAnterior,0
     ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
