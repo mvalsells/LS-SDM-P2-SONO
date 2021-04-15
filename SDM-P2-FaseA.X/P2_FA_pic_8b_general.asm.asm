@@ -48,6 +48,9 @@ tmpRAMH EQU 0x25
 tmpRAML EQU 0x26
 tmpRAMTOT EQU 0x27
 modeAnterior EQU 0x28
+pwm_n EQU 0x29
+mode_n EQU 0x2A
+cops_n EQU 0x2B
 	; Bit 7 -> Venim de pos servo
 	; Bits 6-2 -> Unused
 	; Bit 1  \
@@ -106,9 +109,14 @@ INIT_VARS
     movlw b'00001101';posem un carrier reurn a temp
     movwf carrier,0
     clrf count_pwm,0
+    clrf pwm_n,0
+    clrf mode_n,0
+    clrf cops_n,0
     
-    clrf FSR0L,0
-    ;clrf FSR0H,0
+    
+    
+    clrf FSR1L,0
+    bsf FSR1H,0,0
     
     movlw .200
     movwf ram_count,0
@@ -210,6 +218,10 @@ BUCLE2_PWM_05
     cpfsgt count_pwm,0
     goto END_PWM
    
+    movlw .0
+    cpfseq mode_n,0
+    goto PWM_MODE_N
+    
     movff count_pwm, tmp2_timer
 BUCLE_PWM_COPS
     movlw .20
@@ -232,7 +244,11 @@ END_PWM
     
     retfie FAST
     
-;TIMER
+PWM_MODE_N
+    movff pwm_n, tmp2_timer
+    goto BUCLE_PWM_COPS
+    
+    ;TIMER
 CARREGA_TIMER
     MOVLW HIGH(.15536);cada 20ms
     MOVWF TMR0H,0
@@ -308,14 +324,14 @@ COMPTAR_58
     
     ;guardar a ram
     ;bcf INTCON,GIE;no interrupts, tot i aixo hi ha problemes de que el nombre no es guara be'
-    movff us_echo_cm, POSTINC0
-    ;bsf INTCON,GIE
-    
+    movff us_echo_cm, POSTINC1
+;    ;bsf INTCON,GIE
+;    
     decfsz ram_count,1,0
     goto END_SAVE_RAM
-;    ;reiniciar el punter de la ram SI HEM FET 200
-    clrf FSR0L,0
-    
+;;    ;reiniciar el punter de la ram SI HEM FET 200
+    clrf FSR1L,0
+;    
     movlw .200
     movwf ram_count,0
     setf ram_200_bool,0
@@ -479,7 +495,6 @@ NEXT_N
     
 ;---------------------------------------------------------------------------------
 MODE_A
-    CLRF LATD,0
     movff display7,LATD
     
     movlw .0
@@ -505,7 +520,6 @@ ACTIVAR_A;mode A
     movwf estat_mesures,0
     goto FI_MODE_NO_SERVO
 MODE_D
-    CLRF LATD,0
     movff display3,LATD
     CLRF modeAnterior,0
     ;pulsadors +5º -5º per pulsados
@@ -588,9 +602,8 @@ BUCLE2_D_1
     return
 
 MODE_I
-    CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
+   CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
     ;fixar 7seg a 0
-    CLRF LATD,0
     movff display0,LATD
     ;llegir caracters  fins un /n (no ven bé \n). Guardar-lo cada cop que el reben.
     movlw .0 ;reinici adressa
@@ -623,7 +636,6 @@ ACABAT_I
     
 MODE_M
     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
-    CLRF LATD,0
     movff display2,LATD
     ;mostrar ultima mesura si no estem a 0 de mesures
     movlw .200
@@ -633,8 +645,8 @@ MODE_M
     goto MOSTRA_GUIO2
     
 MOSTRAR_MESURA
-    movff POSTDEC0,tmp
-    movff POSTINC0,bn_ascii
+    movff POSTDEC1,tmp
+    movff POSTINC1,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
@@ -655,7 +667,6 @@ M_FINAL
     
 MODE_R;mostrar nom i 200 mesures
     CLRF modeAnterior,0 ;Ja no venim de un mode de posiconament
-    CLRF LATD,0
     movff display1,LATD
     ;MOSTRAR NOM (part 1/2)
     movlw 'N'
@@ -727,12 +738,12 @@ MOSTRA_MESURES
     cpfslt ram_count,0;hem fet minim una?
     goto GUIO
 
-    movff FSR0L, tmpRAML
-    movff FSR0H, tmpRAMH
+    movff FSR1L, tmpRAML
+    ;movff FSR1H, tmpRAMH
     movff tmpRAML,tmp
-    clrf FSR0L,0
+    clrf FSR1L,0
 BUCLE_RAM_PARCIAL
-    movff POSTINC0,bn_ascii
+    movff POSTINC1,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
@@ -740,8 +751,8 @@ BUCLE_RAM_PARCIAL
     decfsz tmp,1,0
     goto BUCLE_RAM_PARCIAL
     
-    movff tmpRAML, FSR0L
-    movff tmpRAMH, FSR0H
+    movff tmpRAML, FSR1L
+    ;movff tmpRAMH, FSR1H
     goto LOOP
 MOSTRA_TOT
     movlw 'T'
@@ -759,15 +770,15 @@ MOSTRA_TOT
     call TX_ENTER
 
     
-    movff FSR0L, tmpRAML
-    movff FSR0H, tmpRAMH
+    movff FSR1L, tmpRAML
+    ;movff FSR1H, tmpRAMH
     movlw .200
     movwf tmp,0
     
-    clrf FSR0L,0
+    clrf FSR1L,0
     
 BUCLE_RAM_TOT
-    movff POSTINC0,bn_ascii
+    movff POSTINC1,bn_ascii
     call BN_2_ASCII
     call TX_BN_2_ASCII
     call TX_CM
@@ -775,8 +786,8 @@ BUCLE_RAM_TOT
     decfsz tmp,1,0
     goto BUCLE_RAM_TOT
     
-    movff tmpRAML, FSR0L
-    movff tmpRAMH, FSR0H
+    movff tmpRAML, FSR1L
+    ;movff tmpRAMH, FSR1H
     goto LOOP
 GUIO
     ;cas cap guardat
@@ -787,7 +798,6 @@ GUIO
     goto LOOP
     
 MODE_S
-    CLRF LATD,0
     movff display4,LATD
     ;codi S
     CALL LLEGIR_JOY
@@ -845,7 +855,6 @@ FI_S
     GOTO MODE_S
 
 MODE_T
-    CLRF LATD,0
     movff display5,LATD
     
     ;    CALL LLEGIR_JOY
@@ -895,7 +904,7 @@ T_TROBAT
     
     
 FI_T
-    MOVLW b'10000010'
+    MOVLW b'10000000'
     MOVWF modeAnterior,0
     ;Mirem si hi ha lletra
     btfsc PIR1,RCIF,0
@@ -943,16 +952,23 @@ MODE_BOTO
     goto MODE_U
 
 MODE_N
+    setf mode_n,0
+    movlw .1
+    movwf count_pwm,0
     BCF modeAnterior,7,0 ;Ja no venim de un mode de posiconament
     clrf dist_major,0;distancia major
-    clrf count_pwm,0
-    CALL DELAY;espera que torni a 0graus si no hi era
-    CALL DELAY
+    clrf pwm_n,0
+    clrf cops_n,0
+    
+    ;CALL DELAY;espera que torni a 0graus si no hi era
+    ;CALL DELAY
     
 BUCLE_N
     ;call DELAY
+    
     CALL MEDIR
-    incf count_pwm,f,0
+    incf pwm_n,1,0
+    incf cops_n,1,0
     call DELAY
     ;CALL DELAY;DELAYS AQUI SOLS
     
@@ -961,22 +977,21 @@ BUCLE_N
     cpfsgt dist_major,0
     CALL SAVE_DIST
     ;-^
-    
+    MOVFF cops_n,bn_ascii
+    CALL BN_2_ASCII
+    CALL TX_BN_2_ASCII
+    call TX_ENTER
     movlw .179;179;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;reduir a 10 pq funcioni
-    cpfseq count_pwm,0
+    cpfseq cops_n,0
     goto BUCLE_N
     
     ;anar a la mes llunyana / gran
     ;call DELAY;
-    call TX_ENTER
-    movff dist_major,bn_ascii
-    call BN_2_ASCII
-    call TX_BN_2_ASCII
-    call TX_CM
-    call TX_ENTER
-    movff count_major, count_pwm
+    movff count_major, pwm_n
+    MOVFF count_major, count_pwm
     ;-^
    
+    clrf mode_n,0
     goto LOOP
     
 DELAY
@@ -998,7 +1013,7 @@ DELAY_B2
     
     return
 SAVE_DIST
-    movff count_pwm, count_major
+    movff pwm_n, count_major
     movff us_echo_cm, dist_major
     RETURN
     
